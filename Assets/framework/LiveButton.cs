@@ -1,9 +1,16 @@
+using System;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class LiveButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
+    public GameObject progress;
+    public TextMeshProUGUI text;
+    
     public void OnPointerEnter(PointerEventData eventData)
     {
         transform.DOScale(new Vector3(1.1f, 1.1f, 1f), 0.5f)
@@ -25,8 +32,11 @@ public class LiveButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         transform.rotation = Quaternion.identity;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public async void OnPointerClick(PointerEventData eventData)
     {
-        // Do nothing
+        progress.SetActive(true);
+        text.enabled = false;
+        await SceneManager.LoadSceneAsync("MainScene");
+        await UniTask.WaitForSeconds(2);
     }
 }
