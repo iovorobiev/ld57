@@ -46,4 +46,19 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: WebGL
+
+      # Zip release build
+      - uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r build/html.zip  build/WebGL
+
+      - name: Upload to itch
+        uses: Ayowel/butler-to-itch@v1
+        with:
+          butler_key: ${{ secrets.BUTLER_CREDENTIALS }}
+          itch_user: iovorobiev
+          itch_game: ld57
+          version: ${{ github.ref_name }}
+          files: |
+                   build/html.zip
         
