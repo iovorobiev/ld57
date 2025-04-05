@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GameEngine.Comments;
+using GameEngine.Encounters;
 
 namespace GameEngine
 {
@@ -8,6 +9,8 @@ namespace GameEngine
         string getPrefabAddress();
         int getLikes();
         LikeInteractionType getLikeInteractionType();
+
+        EncounterExecutable getScript();
         List<Comment> getComments();
     }
 
@@ -17,6 +20,7 @@ namespace GameEngine
         RESTORE_DEVICE_POWER,
         NO_EFFECT,
         INCREASE_STRESS,
-        REDUCE_DEVICE_POWER
+        REDUCE_DEVICE_POWER,
+        SKIP_TURN,
     }
 }

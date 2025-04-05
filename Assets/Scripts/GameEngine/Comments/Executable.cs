@@ -5,7 +5,6 @@ namespace GameEngine.Comments
 {
     public interface Executable
     {
-        List<Requirement> getRequirements();
-        UniTask execute(Comment comment);
+        UniTask execute();
     }
 }

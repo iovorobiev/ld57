@@ -9,7 +9,10 @@ namespace GameEngine.Comments.CommentsData
             var allComments = new List<Comment>();
 
             allComments.Add(
-                    new Comment("WTF??", "WTF will definitely get 1 like", 1, new AttackExecutable()));
+                new Comment("WTF??", "WTF will definitely get 1 like", 1, LikeInteractionType.REDUCE_STRESS,
+                    new EmptyExecutable()));
+            allComments.Add(new Comment("Refresh", "It is extremely stressful that I need to find words!", 0,
+                LikeInteractionType.SKIP_TURN, new RefreshExecutable()));
             return allComments;
         }
 

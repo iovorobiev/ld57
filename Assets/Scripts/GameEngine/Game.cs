@@ -8,42 +8,41 @@ namespace GameEngine
     {
         public static Encounter currentEncounter;
         public static EncountersPresenter encountersPresenter;
+        public static EncounterController currentEncounterController;
         public static UI ui;
         public static Keyboard keyboard;
         public static CommentView commentView;
+        public static int currentDepth = 0;
 
         public static async UniTask GameLoop()
         {
-            // while (!Player.winCondition())
-            // {
-            while (!Player.winCondition() && !Player.loseCondition())
+            Player.prepareVocabulary();
+            while (!Player.winCondition())
             {
-                    Debug.Log("Presenting encounter");
+                while (!Player.winCondition() && !Player.loseCondition())
+                {
+                    currentDepth++;
+                    Player.prepareEncounterDeck();
                     await encountersPresenter.presentEcnounter();
-                    Debug.Log("Changing encounter");
                     await encountersPresenter.changeEncounter();
-            }
-            //     if (Player.loseCondition())
-            //     {
-            //         Debug.Log("Awaiting lose");
-            //
-            //         await loseSequence();
-            //     }    
-            // }
-            //
-            // Debug.Log("Awaiting win");
-            // await winSequence();
+                }
 
+                if (Player.loseCondition())
+                {
+                    await loseSequence();
+                }
+            }
+
+            Debug.Log("Awaiting win");
+            await winSequence();
         }
 
         private static async UniTask loseSequence()
         {
-            
         }
 
         private static async UniTask winSequence()
         {
-            
         }
     }
 }

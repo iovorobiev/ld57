@@ -1,7 +1,9 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using GameEngine.Comments;
 using UnityEngine;
 using utils;
 
@@ -20,17 +22,20 @@ namespace GameEngine
         private Encounter currentEncounter;
         private Encounter nextEncounter;
 
+        private EncounterController nextEncounterController;
+
         private Vector3 encounterPosition;
         private Vector3 nextEncounterPosition;
 
-        private AwaitableClickListener _clickListener = new();
-        
+        private AwaitableClickListener<bool> swipeAwayListener = new();
+
+        private CancellationTokenSource encounterCancellationToken;
+
         private bool firstEncounter = true;
 
         private void Awake()
         {
             Game.encountersPresenter = this;
-            Player.prepareVocabulary();
         }
 
         public async UniTask OnSwipe()
@@ -42,7 +47,7 @@ namespace GameEngine
             else
             {
                 Debug.Log("Notifying click");
-                _clickListener.notifyClick();
+                swipeAwayListener.notifyClick(true);
             }
         }
 
@@ -57,11 +62,9 @@ namespace GameEngine
                 await openKeyboard();
             }
         }
-        
+
         public async UniTask openKeyboard()
         {
-            Player.prepareEncounterDeck();
-            keyboardOpened = true;
             var keyboardHeight = keyboard.GetComponent<Renderer>().bounds.size.y;
             var newPos = new Vector3(keyboard.transform.position.x,
                 keyboard.transform.position.y + keyboardHeight, keyboard.transform.position.z);
@@ -70,12 +73,14 @@ namespace GameEngine
                 Game.ui.openKeyboard(keyboardHeight)
             );
             await Game.keyboard.OnShow();
+            keyboardOpened = true;
         }
-        
+
         public async UniTask closeKeyboard()
         {
             var newPos = new Vector3(keyboard.transform.position.x,
-                keyboard.transform.position.y - keyboard.GetComponent<Renderer>().bounds.size.y, keyboard.transform.position.z);
+                keyboard.transform.position.y - keyboard.GetComponent<Renderer>().bounds.size.y,
+                keyboard.transform.position.z);
             await UniTask.WhenAll(
                 keyboard.transform.DOMove(newPos, 0.5f).ToUniTask(),
                 Game.ui.closeKeyboard()
@@ -92,22 +97,31 @@ namespace GameEngine
                     .DOMove(encounterPosition, 0.5f).ToUniTask());
             Game.currentEncounter = nextEncounter;
             await Player.receivePowerDamage(SWIPE_COST);
+            Game.currentEncounterController.destroy();
+            Game.currentEncounterController = nextEncounterController;
+            Game.commentView = nextEncounterView.gameObject.GetComponentInChildren<CommentView>();
+            encounterCancellationToken.Cancel();
+            encounterCancellationToken = new CancellationTokenSource();
             createNextEncounter();
         }
 
         void createNextEncounter()
         {
+            Debug.Log("Creating next encounter");
             (encounterView, nextEncounterView) = (nextEncounterView, encounterView);
             nextEncounterView.transform.position = nextEncounterPosition;
             nextEncounter = deck.getNextEncounter();
-            InflateEncounter(nextEncounter, nextEncounterView);
+            nextEncounterController = InflateEncounter(nextEncounter, nextEncounterView);
+            nextEncounterView.GetComponentInChildren<CommentView>().clearComments();
         }
 
-        private void InflateEncounter(Encounter encounter, GameObject view)
+        private EncounterController InflateEncounter(Encounter encounter, GameObject view)
         {
             var prefab = Resources.Load(encounter.getPrefabAddress()) as GameObject;
-            Debug.Log("Instantiating enocunter");
-            Instantiate(prefab, view.transform);
+            var gameObject = Instantiate(prefab, view.transform);
+            var encounterController = gameObject.GetComponent<EncounterController>();
+            encounterController.setEncounterData(encounter);
+            return encounterController;
         }
 
         public async UniTask changeEncounter()
@@ -117,25 +131,36 @@ namespace GameEngine
 
         public async UniTask presentEcnounter()
         {
-            Debug.Log("Presenting enocunter");
             if (firstEncounter)
             {
-                Debug.Log("First enocunter");
                 encounterPosition = encounterView.transform.position;
                 nextEncounterPosition = nextEncounterView.transform.position;
                 Game.currentEncounter = deck.getCurrentEncounter();
                 nextEncounter = deck.getNextEncounter();
-                InflateEncounter(Game.currentEncounter, encounterView);
-                InflateEncounter(nextEncounter, nextEncounterView);    
+                Game.currentEncounterController = InflateEncounter(Game.currentEncounter, encounterView);
+                nextEncounterController = InflateEncounter(nextEncounter, nextEncounterView);
+                encounterCancellationToken = new CancellationTokenSource();
+                firstEncounter = false;
             }
 
-            await _clickListener.awaitClick();
-            Debug.Log("Click awaited");
+            await UniTask.WhenAny(
+                swipeAwayListener.awaitClick().AttachExternalCancellation(encounterCancellationToken.Token),
+                Game.currentEncounterController.runExecutable()
+                    .AttachExternalCancellation(encounterCancellationToken.Token));
+            encounterCancellationToken.Cancel();
         }
 
         public async UniTask encounterCompleted()
         {
-            return;
+            swipeAwayListener.awaitClick();
+        }
+
+        public async UniTask<Comment> playersComment()
+        {
+            Debug.Log("Waiting keyboard");
+            await UniTask.WaitUntil(() => keyboardOpened, cancellationToken: encounterCancellationToken.Token);
+            Debug.Log("Keyboard opened, waiting comment");
+            return await keyboard.GetComponent<Keyboard>().awaitComment(encounterCancellationToken.Token);
         }
     }
 }

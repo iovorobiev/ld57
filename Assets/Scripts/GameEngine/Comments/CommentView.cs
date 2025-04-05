@@ -30,4 +30,13 @@ public class CommentView : MonoBehaviour
         comments.Add(commentItem);
         await UniTask.WhenAll(tasksList);
     }
+
+    public void clearComments()
+    {
+        foreach (var commentItem in comments)
+        {
+            Destroy(commentItem.gameObject);
+        }
+        comments.Clear();
+    }
 }

@@ -21,11 +21,6 @@ namespace GameEngine
         
         public static void prepareEncounterDeck()
         {
-            if (currentEncounterDeck.Count > 0)
-            {
-                return;
-            }
-
             var checkedPositions = new bool[vocabulary.Count];
             foreach (var _ in vocabulary)
             {
@@ -47,6 +42,12 @@ namespace GameEngine
             await Game.ui.changeBatteryLevel(from, powerLevel);
         }
 
+        public static async UniTask receiveStressDamage(int dmg)
+        {
+            stressLevel += dmg;
+            // Do nothing atm
+        }
+        
         public static bool winCondition()
         {
             return stressLevel == 0;
@@ -54,7 +55,7 @@ namespace GameEngine
 
         public static bool loseCondition()
         {
-            return stressLevel == 100 || powerLevel == 0;
+            return stressLevel >= 100 || powerLevel < 0;
         }
     }
 }

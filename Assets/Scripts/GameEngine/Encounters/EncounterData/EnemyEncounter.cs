@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GameEngine.Comments;
+using GameEngine.Encounters;
 using UnityEngine;
 
 namespace GameEngine.EncounterData
@@ -23,6 +24,11 @@ namespace GameEngine.EncounterData
         public LikeInteractionType getLikeInteractionType()
         {
             return LikeInteractionType.INCREASE_STRESS;
+        }
+
+        public EncounterExecutable getScript()
+        {
+            return new EnemyExecutable(getLikes());
         }
 
         public List<Comment> getComments()
