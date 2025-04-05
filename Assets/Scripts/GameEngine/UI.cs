@@ -38,7 +38,10 @@ namespace GameEngine
 
         private void setCountersFromEncounter()
         {
-            likesCount.text = Game.currentEncounter.getLikes().ToString();
+            if (Game.currentEncounter != null)
+            {
+                likesCount.text = Game.currentEncounter.getLikes().ToString();
+            }
         }
 
         public async UniTask changeBatteryLevel(int from, int to)

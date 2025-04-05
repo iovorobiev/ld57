@@ -1,7 +1,9 @@
 using System;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
+using utils;
 
 namespace GameEngine
 {
@@ -21,21 +23,14 @@ namespace GameEngine
         private Vector3 encounterPosition;
         private Vector3 nextEncounterPosition;
 
+        private AwaitableClickListener _clickListener = new();
+        
+        private bool firstEncounter = true;
+
         private void Awake()
         {
             Game.encountersPresenter = this;
             Player.prepareVocabulary();
-        }
-
-        private void Start()
-        {
-            
-            encounterPosition = encounterView.transform.position;
-            nextEncounterPosition = nextEncounterView.transform.position;
-            Game.currentEncounter = deck.getCurrentEncounter();
-            nextEncounter = deck.getNextEncounter();
-            InflateEncounter(Game.currentEncounter, encounterView);
-            InflateEncounter(nextEncounter, nextEncounterView);
         }
 
         public async UniTask OnSwipe()
@@ -46,7 +41,8 @@ namespace GameEngine
             }
             else
             {
-                await swipeEncounter();
+                Debug.Log("Notifying click");
+                _clickListener.notifyClick();
             }
         }
 
@@ -74,11 +70,6 @@ namespace GameEngine
                 Game.ui.openKeyboard(keyboardHeight)
             );
             await Game.keyboard.OnShow();
-        }
-
-        public async UniTask commentEncounter()
-        {
-            
         }
         
         public async UniTask closeKeyboard()
@@ -115,7 +106,36 @@ namespace GameEngine
         private void InflateEncounter(Encounter encounter, GameObject view)
         {
             var prefab = Resources.Load(encounter.getPrefabAddress()) as GameObject;
-            var nextEncounterObject = Instantiate(prefab, view.transform);
+            Debug.Log("Instantiating enocunter");
+            Instantiate(prefab, view.transform);
+        }
+
+        public async UniTask changeEncounter()
+        {
+            await swipeEncounter();
+        }
+
+        public async UniTask presentEcnounter()
+        {
+            Debug.Log("Presenting enocunter");
+            if (firstEncounter)
+            {
+                Debug.Log("First enocunter");
+                encounterPosition = encounterView.transform.position;
+                nextEncounterPosition = nextEncounterView.transform.position;
+                Game.currentEncounter = deck.getCurrentEncounter();
+                nextEncounter = deck.getNextEncounter();
+                InflateEncounter(Game.currentEncounter, encounterView);
+                InflateEncounter(nextEncounter, nextEncounterView);    
+            }
+
+            await _clickListener.awaitClick();
+            Debug.Log("Click awaited");
+        }
+
+        public async UniTask encounterCompleted()
+        {
+            return;
         }
     }
 }

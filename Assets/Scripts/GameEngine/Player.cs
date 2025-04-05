@@ -6,7 +6,7 @@ namespace GameEngine
 {
     public class Player
     {
-        public static int stressLevel = 100;
+        public static int stressLevel = 50;
         public static int powerLevel = 20;
         public static List<Comments.Comment> vocabulary;
         public static Queue<Comments.Comment> currentEncounterDeck = new();
@@ -45,6 +45,16 @@ namespace GameEngine
             int from = powerLevel;
             powerLevel -= dmg;
             await Game.ui.changeBatteryLevel(from, powerLevel);
-        } 
+        }
+
+        public static bool winCondition()
+        {
+            return stressLevel == 0;
+        }
+
+        public static bool loseCondition()
+        {
+            return stressLevel == 100 || powerLevel == 0;
+        }
     }
 }

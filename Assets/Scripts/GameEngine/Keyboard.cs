@@ -29,6 +29,7 @@ public class Keyboard : MonoBehaviour
         {
             var prefab = Resources.Load(currentHand[i].prefab) as GameObject;
             var comment = Instantiate(prefab, transform);
+            comment.GetComponent<CommentItem>().isInHand = true;
             comment.transform.position = positionsForComments[i].transform.position;
         }
     }
