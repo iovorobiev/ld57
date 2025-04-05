@@ -20,6 +20,8 @@ namespace GameEngine
         public Image battery;
         public TextMeshProUGUI batteryLevel;
 
+        public TextMeshProUGUI stressLevel;
+
         private void Awake()
         {
             Game.ui = this;
@@ -47,6 +49,11 @@ namespace GameEngine
         public async UniTask changeBatteryLevel(int from, int to)
         {
             batteryLevel.text = to + "%";
+        }
+
+        public async UniTask changeStressLevel(int from, int to)
+        {
+            stressLevel.text = to + "%";
         }
 
         public async UniTask openKeyboard(float sizeWorld)

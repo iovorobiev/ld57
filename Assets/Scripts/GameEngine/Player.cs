@@ -44,9 +44,9 @@ namespace GameEngine
 
         public static async UniTask receiveStressDamage(int dmg)
         {
+            var prev = stressLevel;
             stressLevel += dmg;
-            Debug.Log("Stress level: " + stressLevel);
-            // Do nothing atm
+            await Game.ui.changeStressLevel(prev, stressLevel);
         }
         
         public static bool winCondition()
