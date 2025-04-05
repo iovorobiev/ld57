@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEditor.Experimental;
 using UnityEngine;
@@ -11,7 +12,20 @@ namespace GameEngine
         public Image likes;
         public TextMeshProUGUI likesCount;
         public Image comments;
-        
+
+        public Image battery;
+        public TextMeshProUGUI batteryLevel;
+
+        private void Awake()
+        {
+            Game.ui = this;
+        }
+
+        private void Start()
+        {
+            changeBatteryLevel(Player.powerLevel, Player.powerLevel);
+        }
+
         private void Update()
         {
             setCountersFromEncounter();
@@ -20,6 +34,11 @@ namespace GameEngine
         private void setCountersFromEncounter()
         {
             likesCount.text = Game.currentEncounter.getLikes().ToString();
+        }
+
+        public async UniTask changeBatteryLevel(int from, int to)
+        {
+            batteryLevel.text = to + "%";
         }
     }
 }

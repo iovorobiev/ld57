@@ -7,6 +7,7 @@ namespace GameEngine
 {
     public class EncountersPresenter : MonoBehaviour
     {
+        private static int SWIPE_COST = 1;
         private EncountersDeck deck = new();
         public GameObject encounterView;
         public GameObject nextEncounterView;
@@ -54,6 +55,7 @@ namespace GameEngine
                 nextEncounterView.transform
                     .DOMove(encounterPosition, 0.5f).ToUniTask());
             Game.currentEncounter = nextEncounter;
+            await Player.receivePowerDamage(SWIPE_COST);
             createNextEncounter();
         }
 
