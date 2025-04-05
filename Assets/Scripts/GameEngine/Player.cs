@@ -45,6 +45,7 @@ namespace GameEngine
         public static async UniTask receiveStressDamage(int dmg)
         {
             stressLevel += dmg;
+            Debug.Log("Stress level: " + stressLevel);
             // Do nothing atm
         }
         

@@ -26,11 +26,6 @@ namespace GameEngine.EncounterData
                 this.encounterController.changeTotalHp(maxHp)
             );
         }
-        
-        public List<Requirement> getRequirements()
-        {
-            return new List<Requirement>();
-        }
 
         public async UniTask receiveDamage(int dmg)
         {
@@ -40,6 +35,8 @@ namespace GameEngine.EncounterData
 
         public async UniTask execute()
         {
+            await Player.receiveStressDamage(maxHp - currentHp);
+            
             while (currentHp < maxHp && !Player.loseCondition() && !Player.winCondition())
             {
                 var playersComment = await Game.encountersPresenter.playersComment();
@@ -55,10 +52,10 @@ namespace GameEngine.EncounterData
                 if (playersComment.type == LikeInteractionType.SKIP_TURN)
                 {
                     Debug.Log("Receiving stress");
-                    await Player.receiveStressDamage(currentHp);
+                    await Player.receiveStressDamage(maxHp - currentHp);
                 }
             }
-
+            Debug.Log("Encounter completed");
             await Game.encountersPresenter.encounterCompleted();
         }
     }

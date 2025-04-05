@@ -23,6 +23,8 @@ namespace GameEngine
                 {
                     currentDepth++;
                     Player.prepareEncounterDeck();
+                    encountersPresenter.closeKeyboard();
+                    keyboard.clearHand();
                     await encountersPresenter.presentEcnounter();
                     await encountersPresenter.changeEncounter();
                 }

@@ -5,6 +5,7 @@ using DG.Tweening;
 using GameEngine;
 using GameEngine.Comments;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 public class CommentView : MonoBehaviour
@@ -28,6 +29,7 @@ public class CommentView : MonoBehaviour
                 );
         }
         comments.Add(commentItem);
+        commentItem.changeSortingLayer("Encounter");
         await UniTask.WhenAll(tasksList);
     }
 

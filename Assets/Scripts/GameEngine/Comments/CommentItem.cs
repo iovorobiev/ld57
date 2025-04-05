@@ -11,6 +11,17 @@ public class CommentItem : MonoBehaviour
 
     public Comment comment;
     public readonly AwaitableClickListener<CommentItem> clickListener = new();
+    public Canvas canvas;
+    public GameObject text;
+
+    public void changeSortingLayer(string layer)
+    {
+        var rend = GetComponent<Renderer>();
+        rend.sortingLayerName = layer;
+        rend.sortingOrder = 3;
+        canvas.sortingLayerName = layer;
+        canvas.sortingOrder = 4;
+    }
     
     private void OnMouseDown()
     {

@@ -21,7 +21,7 @@ public class Keyboard : MonoBehaviour
         Game.keyboard = this;
         refresh.comment = Comments.getAllComments()[1];
     }
-
+    
     public async UniTask OnShow()
     {
         var hand = new List<Comment>();

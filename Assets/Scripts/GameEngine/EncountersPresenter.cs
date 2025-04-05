@@ -65,6 +65,10 @@ namespace GameEngine
 
         public async UniTask openKeyboard()
         {
+            if (keyboardOpened)
+            {
+                return;
+            }
             var keyboardHeight = keyboard.GetComponent<Renderer>().bounds.size.y;
             var newPos = new Vector3(keyboard.transform.position.x,
                 keyboard.transform.position.y + keyboardHeight, keyboard.transform.position.z);
@@ -78,6 +82,10 @@ namespace GameEngine
 
         public async UniTask closeKeyboard()
         {
+            if (!keyboardOpened)
+            {
+                return;
+            }
             var newPos = new Vector3(keyboard.transform.position.x,
                 keyboard.transform.position.y - keyboard.GetComponent<Renderer>().bounds.size.y,
                 keyboard.transform.position.z);
@@ -144,15 +152,17 @@ namespace GameEngine
             }
 
             await UniTask.WhenAny(
-                swipeAwayListener.awaitClick().AttachExternalCancellation(encounterCancellationToken.Token),
+                swipeAwayListener.awaitClick(),
                 Game.currentEncounterController.runExecutable()
                     .AttachExternalCancellation(encounterCancellationToken.Token));
+            Debug.Log("Encounter completed");
             encounterCancellationToken.Cancel();
         }
 
         public async UniTask encounterCompleted()
         {
-            swipeAwayListener.awaitClick();
+            Debug.Log("Encounter completed");
+            
         }
 
         public async UniTask<Comment> playersComment()
