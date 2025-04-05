@@ -12,14 +12,24 @@ namespace GameEngine
         public GameObject encounterView;
         public GameObject nextEncounterView;
 
+        public GameObject keyboard;
+        public bool keyboardOpened = false;
+
         private Encounter currentEncounter;
         private Encounter nextEncounter;
 
         private Vector3 encounterPosition;
         private Vector3 nextEncounterPosition;
 
+        private void Awake()
+        {
+            Game.encountersPresenter = this;
+            Player.prepareVocabulary();
+        }
+
         private void Start()
         {
+            
             encounterPosition = encounterView.transform.position;
             nextEncounterPosition = nextEncounterView.transform.position;
             Game.currentEncounter = deck.getCurrentEncounter();
@@ -28,23 +38,58 @@ namespace GameEngine
             InflateEncounter(nextEncounter, nextEncounterView);
         }
 
-        private async void Update()
+        public async UniTask OnSwipe()
         {
-            await detectClick();
-        }
-
-        async UniTask detectClick()
-        {
-            if (Input.GetMouseButtonDown(0))
+            if (keyboardOpened)
             {
-                await UniTask.WaitForSeconds(0.1f);
-                await OnClick();
+                await closeKeyboard();
+            }
+            else
+            {
+                await swipeEncounter();
             }
         }
 
-        async UniTask OnClick()
+        public async UniTask toggleKeyboard()
         {
-            await swipeEncounter();
+            if (keyboardOpened)
+            {
+                await closeKeyboard();
+            }
+            else
+            {
+                await openKeyboard();
+            }
+        }
+        
+        public async UniTask openKeyboard()
+        {
+            Player.prepareEncounterDeck();
+            keyboardOpened = true;
+            var keyboardHeight = keyboard.GetComponent<Renderer>().bounds.size.y;
+            var newPos = new Vector3(keyboard.transform.position.x,
+                keyboard.transform.position.y + keyboardHeight, keyboard.transform.position.z);
+            await UniTask.WhenAll(
+                keyboard.transform.DOMove(newPos, 0.5f).ToUniTask(),
+                Game.ui.openKeyboard(keyboardHeight)
+            );
+            await Game.keyboard.OnShow();
+        }
+
+        public async UniTask commentEncounter()
+        {
+            
+        }
+        
+        public async UniTask closeKeyboard()
+        {
+            var newPos = new Vector3(keyboard.transform.position.x,
+                keyboard.transform.position.y - keyboard.GetComponent<Renderer>().bounds.size.y, keyboard.transform.position.z);
+            await UniTask.WhenAll(
+                keyboard.transform.DOMove(newPos, 0.5f).ToUniTask(),
+                Game.ui.closeKeyboard()
+            );
+            keyboardOpened = false;
         }
 
         async UniTask swipeEncounter()

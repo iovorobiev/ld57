@@ -12,8 +12,8 @@ TagManager:
   - Water
   - UI
   - Encounter
-  - 
-  - 
+  - Keyboard
+  - Keyboard_item
   - 
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
     locked: 0
   - name: Encounter
     uniqueID: 3217084495
+    locked: 0
+  - name: Keyboard
+    uniqueID: 359395497
     locked: 0
   m_RenderingLayers:
   - Default

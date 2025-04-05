@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace GameEngine
 {
@@ -6,7 +8,38 @@ namespace GameEngine
     {
         public static int stressLevel = 100;
         public static int powerLevel = 20;
+        public static List<Comments.Comment> vocabulary;
+        public static Queue<Comments.Comment> currentEncounterDeck = new();
+        
+        public static int drawHandSize = 3;
+        public static int maxHandSize = 6;
 
+        public static void prepareVocabulary()
+        {
+            vocabulary = Comments.CommentsData.Comments.getInitialVocabulary();
+        }
+        
+        public static void prepareEncounterDeck()
+        {
+            if (currentEncounterDeck.Count > 0)
+            {
+                return;
+            }
+
+            var checkedPositions = new bool[vocabulary.Count];
+            foreach (var _ in vocabulary)
+            {
+                int index; 
+                do
+                {
+                    index = Random.Range(0, vocabulary.Count);
+                } while (checkedPositions[index]);
+
+                checkedPositions[index] = false;
+                currentEncounterDeck.Enqueue(vocabulary[index]);
+            }
+        }
+        
         public static async UniTask receivePowerDamage(int dmg)
         {
             int from = powerLevel;
