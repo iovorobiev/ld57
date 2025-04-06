@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using GameEngine.OSUpgrades;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace GameEngine.Comments.CommentsData
@@ -11,9 +13,9 @@ namespace GameEngine.Comments.CommentsData
             var allComments = new List<Comment>();
             
             allComments.Add(
-                new Comment("WTF??", "WTF will definitely get 1 like", () => 1, LikeInteractionType.REDUCE_STRESS,
+                new Comment("WTF??", "WTF will definitely get 1 like for 1% battery", () => 1, LikeInteractionType.REDUCE_STRESS,
                     0,
-                    new EmptyExecutable()));
+                    new BatteryCostExecutable(1)));
             allComments.Add(new Comment(
                 "Refresh",
                 "It is extremely stressful that I need to find words!",
@@ -46,7 +48,7 @@ namespace GameEngine.Comments.CommentsData
             allComments.Add(new Comment(
                 "lol",
                 "lol gets 1 like per ha commented. Costs 3 power",
-                () => Player.currentHaCount,
+                () => (int)(Player.currentHaCount * Mathf.Pow(2, Player.upgrades.FindAll((up) => OSUpgradesBase.FINISHERS == up.upgradeID).Count)),
                 LikeInteractionType.REDUCE_STRESS,
                 1,
                 new BatteryCostExecutable(3))
@@ -73,7 +75,7 @@ namespace GameEngine.Comments.CommentsData
             allComments.Add(new Comment(
                 "0xdeadbeef",
                 "Gets 1 like per 1 power spent on this post. Costs 2 power",
-                () => Player.batteryUnderPost,
+                () => Player.batteryUnderPost + Player.upgrades.FindAll(up => OSUpgradesBase.BAT_ATTACK == up.upgradeID).Count,
                 LikeInteractionType.REDUCE_STRESS,
                 1,
                 new BatteryCostExecutable(2))
@@ -100,7 +102,7 @@ namespace GameEngine.Comments.CommentsData
                 int maxRarity = 1;
                 var rarity = randomRarity();
                 var allCommentsThisRarity = getAllComments().FindAll((comment) => rarity == comment.rarity);
-                var index = Random.Range(0, allCommentsThisRarity.Count - 1);
+                var index = Random.Range(0, allCommentsThisRarity.Count);
                 result.Add(allCommentsThisRarity[index]);
             }
 

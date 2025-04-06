@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using GameEngine.Comments;
 using GameEngine.OSUpgrades;
+using Unity.Mathematics.Geometry;
 using UnityEngine;
 
 namespace GameEngine
@@ -30,8 +31,8 @@ namespace GameEngine
 
         public static void reset()
         {
-            stressLevel = initStressLevel;
-            powerLevel = initPowerLevel;
+            stressLevel = initStressLevel - upgrades.FindAll((up) => up.upgradeID == OSUpgradesBase.EASY_START).Count ;
+            powerLevel = initPowerLevel + upgrades.FindAll((up) => up.upgradeID == OSUpgradesBase.CHARGE_MORE).Count;
             prepareVocabulary();
         }
         
@@ -97,13 +98,18 @@ namespace GameEngine
         public static async UniTask receiveStressDamage(int dmg)
         {
             var prev = stressLevel;
+            if (dmg > 0)
+            {
+                dmg -= upgrades.FindAll((up) => OSUpgrades.OSUpgradesBase.ARMOR == up.upgradeID).Count;
+                dmg = Mathf.Max(dmg, 0);
+            }
             stressLevel += dmg;
             await Game.ui.changeStressLevel(prev, stressLevel);
         }
         
         public static bool winCondition()
         {
-            return stressLevel == 0;
+            return stressLevel <= 0;
         }
 
         public static bool loseCondition()

@@ -81,6 +81,7 @@ namespace GameEngine
 
         private static async UniTask winSequence()
         {
+            await turnOffSequence.doWinSequence();
         }
     }
 }

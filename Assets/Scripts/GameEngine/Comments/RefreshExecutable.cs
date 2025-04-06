@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using GameEngine.OSUpgrades;
 using UnityEngine;
 
 namespace GameEngine.Comments
@@ -10,7 +11,8 @@ namespace GameEngine.Comments
             Debug.Log("Executing refresh");
             await Game.keyboard.clearHand();
             await Game.keyboard.OnShow();
-            await Player.receiveStressDamage(5);
+            int refDmg = 5 - Player.upgrades.FindAll(up => up.upgradeID == OSUpgradesBase.BETTER_REFRESH).Count;
+            await Player.receiveStressDamage(Mathf.Max(refDmg, 1));
             Debug.Log("Finish refresh");
         }
     }

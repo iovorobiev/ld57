@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using GameEngine.Comments;
 using GameEngine.Comments.CommentsData;
 using GameEngine.Encounters;
+using GameEngine.OSUpgrades;
 using UnityEngine;
 
 namespace GameEngine.EncounterData
@@ -54,7 +55,7 @@ namespace GameEngine.EncounterData
 
                 if (playersComment.type == LikeInteractionType.REDUCE_STRESS)
                 {
-                    await receiveDamage(playersComment.value());
+                    await receiveDamage(playersComment.value() + Player.upgrades.FindAll((up) => up.upgradeID == OSUpgradesBase.INFLUENCER).Count);
                 } 
             }
             

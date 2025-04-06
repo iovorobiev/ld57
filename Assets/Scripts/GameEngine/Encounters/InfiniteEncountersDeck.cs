@@ -30,26 +30,26 @@ namespace GameEngine
             );
             
             enemyEncounters.Add(
-                new EnemyEncounter(Random.Range(3,5), enemyPrefab: EnemyEncounter.ENEMY_PATH + "Clock")
+                new EnemyEncounter(Random.Range(3,9), enemyPrefab: EnemyEncounter.ENEMY_PATH + "Clock")
                 );
             
             enemyEncounters.Add(
-                new EnemyEncounter(Random.Range(3,5), enemyPrefab: EnemyEncounter.ENEMY_PATH + "Dress")
+                new EnemyEncounter(Random.Range(3,9), enemyPrefab: EnemyEncounter.ENEMY_PATH + "Dress")
             );
             enemyEncounters.Add(
-                new EnemyEncounter(Random.Range(3,5), enemyPrefab: EnemyEncounter.ENEMY_PATH + "Gnome")
+                new EnemyEncounter(Random.Range(3,9), enemyPrefab: EnemyEncounter.ENEMY_PATH + "Gnome")
             );
             enemyEncounters.Add(
-                new EnemyEncounter(Random.Range(3,5), enemyPrefab: EnemyEncounter.ENEMY_PATH + "Knight")
+                new EnemyEncounter(Random.Range(3,9), enemyPrefab: EnemyEncounter.ENEMY_PATH + "Knight")
             );
             enemyEncounters.Add(
-                new EnemyEncounter(Random.Range(3,5), enemyPrefab: EnemyEncounter.ENEMY_PATH + "RIP")
+                new EnemyEncounter(Random.Range(5,10), enemyPrefab: EnemyEncounter.ENEMY_PATH + "RIP")
             );
             enemyEncounters.Add(
                 new EnemyEncounter(Random.Range(3,5), enemyPrefab: EnemyEncounter.ENEMY_PATH + "Troll", blocking: true)
             );
             enemyEncounters.Add(
-                new EnemyEncounter(Random.Range(3,5), enemyPrefab: EnemyEncounter.ENEMY_PATH + "Screamer", blocking: true)
+                new EnemyEncounter(Random.Range(3,10), enemyPrefab: EnemyEncounter.ENEMY_PATH + "Screamer", blocking: false)
             );
         }
         
@@ -63,11 +63,11 @@ namespace GameEngine
             var prob = Random.Range(0f, 1f);
             if (prob < 0.75)
             {
-                return enemyEncounters[Random.Range(0, enemyEncounters.Count - 1)];
+                return enemyEncounters[Random.Range(0, enemyEncounters.Count)];
             }
             else
             {
-                return memeEncounters[Random.Range(0, memeEncounters.Count - 1)];
+                return memeEncounters[Random.Range(0, memeEncounters.Count)];
             }
             
         }

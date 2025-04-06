@@ -103,7 +103,10 @@ namespace GameEngine
                 nextEncounterView.transform
                     .DOMove(encounterPosition, 0.5f).ToUniTask());
             Game.currentEncounter = nextEncounter;
-            await Player.receivePowerDamage(SWIPE_COST);
+            if (Player.upgrades.Find((up) => up.upgradeID == OSUpgrades.OSUpgradesBase.EFFECTIVE_BATTERY) == null)
+            {
+                await Player.receivePowerDamage(SWIPE_COST);
+            }
             Game.currentEncounterController.destroy();
             Game.currentEncounterController = nextEncounterController;
             Game.commentView = nextEncounterView.gameObject.GetComponentInChildren<CommentView>();

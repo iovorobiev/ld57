@@ -12,6 +12,7 @@ using utils;
 public class TurnOffSequence : MonoBehaviour
 {
     public List<Button> options = new();
+    public TextMeshProUGUI text;
     private CancellationTokenSource source = new();
 
     private void Awake()
@@ -38,7 +39,31 @@ public class TurnOffSequence : MonoBehaviour
             allAwaitables.Add(listener.awaitClick().AttachExternalCancellation(cancellationToken: source.Token));
         }
         var (_, result) = await UniTask.WhenAny(allAwaitables);
-        Player.AddOSUpgrade(result);
-        source.Cancel();
+        var alreadyHas = 0;
+        if (result.maxRepeats != -1)
+        {
+            var alreadyHasList = Player.upgrades.FindAll((up) => result.upgradeID == up.upgradeID);
+            alreadyHas = alreadyHasList.Count;
+        }
+
+        if (alreadyHas < result.maxRepeats)
+        {
+            Player.AddOSUpgrade(result);
+        }
+        else
+        {
+            Game.hint.showHint("I already maxed this out, shoot!");
+        }
+        // source.Cancel();
+    }
+
+    public async UniTask doWinSequence()
+    {
+        gameObject.SetActive(true);
+        text.text = "Finally, you reached tranquility. Now go, spend some time outside.";
+        foreach (var option in options)
+        {
+            option.gameObject.SetActive(false);
+        }
     }
 }

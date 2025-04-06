@@ -31,7 +31,7 @@ namespace GameEngine.Encounters
 
             if (!keepComments)
             {
-                Game.ui.comments.gameObject.SetActive(false);
+                // Game.ui.comments.gameObject.SetActive(false);
             }
         }
 
