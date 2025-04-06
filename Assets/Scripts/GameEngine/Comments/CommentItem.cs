@@ -9,7 +9,7 @@ using utils;
 
 public class CommentItem : MonoBehaviour
 {
-    public bool isInHand;
+    public bool isInHand = true;
 
     public Comment comment;
     public readonly AwaitableClickListener<CommentItem> clickListener = new();

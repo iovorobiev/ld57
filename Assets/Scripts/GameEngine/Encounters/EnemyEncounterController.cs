@@ -18,6 +18,7 @@ namespace GameEngine.Encounters
 
         public List<Button> options;
 
+        public Image bg;
         public Image icon;
         public GameObject stats;
         public TextMeshProUGUI currentHp;
@@ -53,6 +54,7 @@ namespace GameEngine.Encounters
         {
             icon.gameObject.SetActive(true);
             stats.SetActive(true);
+            bg.gameObject.SetActive(true);
         }
 
         public async UniTask<Comment> showReward(List<Comment> reward)
@@ -64,9 +66,10 @@ namespace GameEngine.Encounters
             {
                 var listener = new AwaitableClickListener<Comment>();
                 var comment = reward[i];
+                
                 options[i].GetComponentInChildren<TextMeshProUGUI>().text = comment.text;
                 options[i].gameObject.SetActive(true);
-                
+                options[i].GetComponent<Hintable>().SetStringToHint(comment.description);
                 options[i].onClick.AddListener(() =>
                 {
                     listener.notifyClick(comment);

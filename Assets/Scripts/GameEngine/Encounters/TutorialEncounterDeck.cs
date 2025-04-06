@@ -25,7 +25,7 @@ namespace GameEngine.Encounters
                 "Emm?..",
                 "Prefabs/Enemy/DoubleTextEnemy",
                 true));
-            deck.Add(new TutorialEncounter(0, "Try to relax now! Keep your stress meter at 0 :)", "Click to continue", "Wow, this indeed felt better! Maybe I need to scroll more to feel better..."));
+            deck.Add(new TutorialEncounter(0, "To completely relax, and reach 0 stress, you need to comment!", "Click to continue", "Wow, this indeed felt better! I will comment until I reach 0 stress then..."));
         }
         
         public Encounter getCurrentEncounter()

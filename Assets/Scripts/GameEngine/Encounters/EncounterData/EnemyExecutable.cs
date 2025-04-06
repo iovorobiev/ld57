@@ -41,6 +41,7 @@ namespace GameEngine.EncounterData
         {
             await encounterController.showEncounter();
             await Player.receiveStressDamage(maxHp - currentHp);
+            
             if (hint != "")
             {
                 UniTask.WaitForSeconds(0.2f);
@@ -56,13 +57,14 @@ namespace GameEngine.EncounterData
                     await receiveDamage(playersComment.value());
                 } 
             }
-
+            
             await Player.receiveStressDamage(-currentHp);
+            Game.commentView.clearComments();
+            await Game.encountersPresenter.closeKeyboard();
             var reward = CommentsBase.rollComments(3);
             var chosenReward = await encounterController.showReward(reward);
             await Player.addToVocabulary(chosenReward);
             await encounterController.finishEncounter();
-
         }
     }
 }
