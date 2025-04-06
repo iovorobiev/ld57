@@ -12,13 +12,14 @@ namespace GameEngine
         public static UI ui;
         public static Keyboard keyboard;
         public static CommentView commentView;
+        public static TurnOffSequence turnOffSequence;
         public static int currentDepth = 0;
 
         public static async UniTask GameLoop()
         {
-            Player.prepareVocabulary();
             while (!Player.winCondition())
             {
+                Player.reset();
                 while (!Player.winCondition() && !Player.loseCondition())
                 {
                     currentDepth++;
@@ -41,6 +42,9 @@ namespace GameEngine
 
         private static async UniTask loseSequence()
         {
+            turnOffSequence.gameObject.SetActive(true);
+            await turnOffSequence.doTurnOffSequence();
+            turnOffSequence.gameObject.SetActive(false);
         }
 
         private static async UniTask winSequence()

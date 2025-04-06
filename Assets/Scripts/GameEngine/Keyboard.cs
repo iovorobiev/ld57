@@ -28,7 +28,7 @@ public class Keyboard : MonoBehaviour
         var hand = new List<Comment>();
         if (currentHand.Count == 0)
         {
-            for (int i = 0; i < Player.drawHandSize && Player.currentEncounterDeck.Count > 0; i++)
+            for (int i = 0; i < Player.getDrawHandSize() && Player.currentEncounterDeck.Count > 0; i++)
             {
                 hand.Add(Player.currentEncounterDeck.Dequeue());
             }

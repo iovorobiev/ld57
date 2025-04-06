@@ -1,20 +1,43 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using GameEngine.Comments;
+using GameEngine.OSUpgrades;
 using UnityEngine;
 
 namespace GameEngine
 {
     public class Player
     {
+        private static int initStressLevel = 50;
+        private static int initPowerLevel = 20;
         public static int stressLevel = 50;
         public static int powerLevel = 20;
-        public static List<Comments.Comment> vocabulary;
-        public static Queue<Comments.Comment> currentEncounterDeck = new();
+        public static List<Comment> vocabulary;
+        public static Queue<Comment> currentEncounterDeck = new();
         
-        public static int drawHandSize = 3;
+        private static int drawHandSize = 3;
         public static int maxHandSize = 6;
 
+        public static List<OSUpgrade> upgrades = new();
+
+        public static void AddOSUpgrade(OSUpgrade upgrade)
+        {
+            upgrades.Add(upgrade);
+        }
+
+        public static void reset()
+        {
+            stressLevel = initStressLevel;
+            powerLevel = initPowerLevel;
+            prepareVocabulary();
+        }
+        
+        public static int getDrawHandSize()
+        {
+            var handUps = upgrades.FindAll((up) => up.upgradeID == OSUpgradesBase.ENHANCED_HAND);
+            return drawHandSize + handUps.Count;
+        }
+        
         public static void prepareVocabulary()
         {
             vocabulary = Comments.CommentsData.CommentsBase.getInitialVocabulary();
@@ -62,7 +85,7 @@ namespace GameEngine
 
         public static bool loseCondition()
         {
-            return stressLevel >= 100 || powerLevel < 0;
+            return stressLevel >= 100 || powerLevel <= 0;
         }
     }
 }
