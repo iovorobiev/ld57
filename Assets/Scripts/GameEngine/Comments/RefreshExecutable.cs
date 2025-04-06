@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace GameEngine.Comments
 {
@@ -6,9 +7,10 @@ namespace GameEngine.Comments
     {
         public async UniTask execute()
         {
-            
+            Debug.Log("Executing refresh");
             await Game.keyboard.clearHand();
             await Game.keyboard.OnShow();
+            Debug.Log("Finish refresh");
         }
     }
 }

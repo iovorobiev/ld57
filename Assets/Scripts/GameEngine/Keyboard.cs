@@ -24,6 +24,7 @@ public class Keyboard : MonoBehaviour
     
     public async UniTask OnShow()
     {
+        Debug.Log("On Show");
         var hand = new List<Comment>();
         if (currentHand.Count == 0)
         {
@@ -45,13 +46,9 @@ public class Keyboard : MonoBehaviour
         }
     }
 
-    public bool isEmpty()
-    {
-        return currentHand.Count == 0;
-    }
-
     public async UniTask clearHand()
     {
+        Debug.Log("Clear hand");
         var discardTasks = new List<UniTask>();
         foreach (var item in currentHand)
         {
@@ -71,9 +68,11 @@ public class Keyboard : MonoBehaviour
             clickListeners.Add(commentItem.clickListener.awaitClickWithCancellation(cancellationToken));
         }
         clickListeners.Add(refresh.clickListener.awaitClickWithCancellation(cancellationToken));
+        Debug.Log("Listening for " + clickListeners.Count + " click listeners");
         var (_, result) = await UniTask.WhenAny(clickListeners).AttachExternalCancellation(cancellationToken);
         if (result == refresh)
         {
+            Debug.Log("Refresh picked");
             return result.comment;
         }
         

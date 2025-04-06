@@ -1,5 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using GameEngine;
 using GameEngine.Comments;
 using UnityEngine;
@@ -25,15 +26,16 @@ public class CommentItem : MonoBehaviour
     
     private void OnMouseDown()
     {
+        Debug.Log("On mouse down " + isInHand);
         if (isInHand)
         {
-            isInHand = false;
             clickListener.notifyClick(this);
         }
     }
 
     public async UniTask discard()
     {
+        await GetComponent<SpriteRenderer>().DOFade(0f, 0.5f);
         Destroy(gameObject);
     }
 }

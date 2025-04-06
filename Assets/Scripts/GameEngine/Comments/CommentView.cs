@@ -30,6 +30,7 @@ public class CommentView : MonoBehaviour
         }
         comments.Add(commentItem);
         commentItem.changeSortingLayer("Encounter");
+        commentItem.isInHand = false;
         await UniTask.WhenAll(tasksList);
     }
 

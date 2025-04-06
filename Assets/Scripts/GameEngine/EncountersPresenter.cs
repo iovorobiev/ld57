@@ -151,12 +151,20 @@ namespace GameEngine
                 firstEncounter = false;
             }
 
-            await UniTask.WhenAny(
+            
+            var (leftResult, result) = await UniTask.WhenAny(
                 swipeAwayListener.awaitClick(),
                 Game.currentEncounterController.runExecutable()
                     .AttachExternalCancellation(encounterCancellationToken.Token));
-            Debug.Log("Encounter completed");
-            encounterCancellationToken.Cancel();
+            Debug.Log(leftResult + " " + result);
+            if (leftResult)
+            {
+                encounterCancellationToken.Cancel();
+            }
+            else
+            {
+                await swipeAwayListener.awaitClick();
+            }
         }
 
         public async UniTask encounterCompleted()
@@ -167,8 +175,15 @@ namespace GameEngine
 
         public async UniTask<Comment> playersComment()
         {
-            Debug.Log("Waiting keyboard");
-            await UniTask.WaitUntil(() => keyboardOpened, cancellationToken: encounterCancellationToken.Token);
+            Debug.Log("Waiting keyboard " + keyboardOpened);
+            if (!keyboardOpened)
+            {
+                await UniTask.WaitUntil(() =>
+                {
+                    Debug.Log("Checking keyboard " + keyboardOpened);
+                    return keyboardOpened;
+                }, cancellationToken: encounterCancellationToken.Token);
+            }
             Debug.Log("Keyboard opened, waiting comment");
             return await keyboard.GetComponent<Keyboard>().awaitComment(encounterCancellationToken.Token);
         }

@@ -9,6 +9,7 @@ namespace GameEngine.Comments
             this.description = description;
             this.value = value;
             this.script = script;
+            this.type = type;
         }
 
         public string text;
