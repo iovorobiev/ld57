@@ -39,7 +39,7 @@ namespace GameEngine.Encounters
             encounterView.SetActive(true);
             rewardView.SetActive(false);
             Debug.Log("Loading enemy");
-            var enemy = await Resources.LoadAsync(EnemyEncounter.ENEMY_PATH + ((EnemyEncounter)encounterData).enemyPrefabPath) as GameObject;
+            var enemy = await Resources.LoadAsync(((EnemyEncounter)encounterData).enemyPrefabPath) as GameObject;
             var enemyObject = Instantiate(enemy, encounterView.transform);
             Debug.Log("Encounter instantiated!");
             var encounterController = enemyObject.GetComponent<EncounterController>();

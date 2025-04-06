@@ -22,7 +22,7 @@ namespace GameEngine
         {
             var tutorialDeck = new TutorialEncounterDeck();
             var deck = new InfiniteEncountersDeck();
-            
+            deck.initDeck();
             Player.reset();
             await encountersPresenter.init(tutorialDeck.getCurrentEncounter(), tutorialDeck.getNextEncounter());
             while (!tutorialDeck.isEmpty())
@@ -52,6 +52,7 @@ namespace GameEngine
                 {
                     currentDepth++;
                     Player.prepareEncounter();
+                    ui.comments.gameObject.SetActive(true);
                     encountersPresenter.closeKeyboard();
                     keyboard.clearHand();
                     Debug.Log("Presenting encounter");
@@ -63,6 +64,7 @@ namespace GameEngine
                 if (Player.loseCondition())
                 {
                     await loseSequence();
+                    deck.initDeck();
                 }
             }
 

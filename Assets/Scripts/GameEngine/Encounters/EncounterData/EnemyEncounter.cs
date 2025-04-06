@@ -15,9 +15,9 @@ namespace GameEngine.EncounterData
         public string hint;
         public string prefabPath;
         public string enemyPrefabPath;
-        private readonly EnemySpecificData data;
+        private readonly SpecificData data;
 
-        public EnemyEncounter(int likes, EnemySpecificData data = null, string hint = "", string enemyPrefab = "Square",  bool blocking = false)
+        public EnemyEncounter(int likes, SpecificData data = null, string hint = "", string enemyPrefab = "Square",  bool blocking = false)
         {
             this.likes = likes;
             this.blocking = blocking;
@@ -51,7 +51,7 @@ namespace GameEngine.EncounterData
             return new List<Comment>();
         }
 
-        public EnemySpecificData getEnemyData()
+        public SpecificData getData()
         {
             return data;
         }

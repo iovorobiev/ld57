@@ -12,18 +12,18 @@ namespace GameEngine.Encounters
         public TutorialEncounterDeck()
         {
             deck.Add(
-                new TutorialEncounter(0, "", "click to continue")
+                new TutorialEncounter(0, "", "click to continue", hideComments: true)
                 );
             deck.Add(
-                new TutorialEncounter(0, "Congrats! You reached the depths of the internet.", "click to continue")
+                new TutorialEncounter(0, "Congrats! You reached the depths of the internet.", "click to continue", hideComments: true)
                 );
-            deck.Add(new TutorialEncounter(0, "Here you may encounter stressful content. It will increase your stress.", "click to continue", "If this was a first time..."));
-            deck.Add(new TutorialEncounter(0, "National Health Association states if your comments get more likes then post, you get your stress relieved!", "", "Ah, fake news again..."));
+            deck.Add(new TutorialEncounter(0, "Here you may encounter stressful content. Watch your stress meter, or you will rage quit :)", "click to continue", "If this was for the first time...", hideComments: true));
+            deck.Add(new TutorialEncounter(0, "National Health Association states if your comments get more likes then post, you get your stress relieved!", "", "Ah, fake news again...", hideComments: true));
             deck.Add(new EnemyEncounter(
                 4, 
-                new DoubleTextEnemyData("Don't believe? Try it!", "Open comments to post yours ------->"), 
+                new DoubleTextData("Don't believe? Try it!", "Open comments to post yours ------->"), 
                 "Emm?..",
-                "DoubleTextEnemy",
+                "Prefabs/Enemy/DoubleTextEnemy",
                 true));
             deck.Add(new TutorialEncounter(0, "Try to relax now! Keep your stress meter at 0 :)", "Click to continue", "Wow, this indeed felt better! Maybe I need to scroll more to feel better..."));
         }

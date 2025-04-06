@@ -87,6 +87,13 @@ namespace GameEngine
             await Game.ui.changeBatteryLevel(from, powerLevel);
         }
 
+        public static async UniTask restorePower(int amount)
+        {
+            int from = powerLevel;
+            powerLevel += amount;
+            await Game.ui.changeBatteryLevel(from, powerLevel);
+        }
+
         public static async UniTask receiveStressDamage(int dmg)
         {
             var prev = stressLevel;

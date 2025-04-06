@@ -13,12 +13,12 @@ namespace GameEngine
         EncounterExecutable getScript();
         List<Comment> getComments();
 
-        EnemySpecificData getEnemyData();
+        SpecificData getData();
 
         bool isBlocking();
     }
 
-    public interface EnemySpecificData
+    public interface SpecificData
     {
     }
 

@@ -57,6 +57,7 @@ namespace GameEngine.EncounterData
                 } 
             }
 
+            await Player.receiveStressDamage(-currentHp);
             var reward = CommentsBase.rollComments(3);
             var chosenReward = await encounterController.showReward(reward);
             await Player.addToVocabulary(chosenReward);

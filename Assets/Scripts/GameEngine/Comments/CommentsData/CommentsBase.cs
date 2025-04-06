@@ -9,7 +9,7 @@ namespace GameEngine.Comments.CommentsData
         public static List<Comment> getAllComments()
         {
             var allComments = new List<Comment>();
-
+            
             allComments.Add(
                 new Comment("WTF??", "WTF will definitely get 1 like", () => 1, LikeInteractionType.REDUCE_STRESS,
                     0,
@@ -28,7 +28,8 @@ namespace GameEngine.Comments.CommentsData
                 () => 1,
                 LikeInteractionType.REDUCE_STRESS,
                 1,
-                new BatteryCostExecutable(1)
+                new CombinedExecutable(new BatteryCostExecutable(1), new HaExecutable(allComments.Count))
+                
             ));
             allComments.Add(new Comment(
                     "haha",
@@ -38,7 +39,7 @@ namespace GameEngine.Comments.CommentsData
                     1,
                     new CombinedExecutable(
                         new BatteryCostExecutable(2),
-                        new HaExecutable()
+                        new HaExecutable(allComments.Count)
                     )
                 )
             );

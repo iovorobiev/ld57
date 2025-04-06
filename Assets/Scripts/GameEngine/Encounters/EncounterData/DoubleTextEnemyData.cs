@@ -1,11 +1,11 @@
 namespace GameEngine.Encounters.EncounterData
 {
-    public class DoubleTextEnemyData : EnemySpecificData
+    public class DoubleTextData : SpecificData
     {
         public string topText;
         public string botText;
 
-        public DoubleTextEnemyData(string topText, string botText)
+        public DoubleTextData(string topText, string botText)
         {
             this.topText = topText;
             this.botText = botText;

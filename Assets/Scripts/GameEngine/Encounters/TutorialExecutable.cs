@@ -10,12 +10,14 @@ namespace GameEngine.Encounters
         private string mainText;
         private string calltoAction;
         private string hintText;
+        private bool keepComments;
 
-        public TutorialExecutable(string mainText, string calltoAction, string hintText)
+        public TutorialExecutable(string mainText, string calltoAction, string hintText, bool keepComments = true)
         {
             this.mainText = mainText;
             this.calltoAction = calltoAction;
             this.hintText = hintText;
+            this.keepComments = keepComments;
         }
 
         public virtual async UniTask execute()
@@ -25,6 +27,11 @@ namespace GameEngine.Encounters
                 await UniTask.WaitForSeconds(1f);
                 Game.hint.showHintAndLock(hintText);
                 
+            }
+
+            if (!keepComments)
+            {
+                Game.ui.comments.gameObject.SetActive(false);
             }
         }
 

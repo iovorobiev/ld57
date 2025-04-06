@@ -11,14 +11,16 @@ namespace GameEngine.Encounters.EncounterData
         private string callToAction;
         private string hintText;
         private bool blocking;
+        private bool hideComments;
 
-        public TutorialEncounter(int likes, string mainText, string callToAction, string hintText = "", bool blocking = false)
+        public TutorialEncounter(int likes, string mainText, string callToAction, string hintText = "", bool blocking = false, bool hideComments = false)
         {
             this.likes = likes;
             this.mainText = mainText;
             this.callToAction = callToAction;
             this.hintText = hintText;
             this.blocking = blocking;
+            this.hideComments = hideComments;
         }
 
         public string getPrefabAddress()
@@ -38,7 +40,7 @@ namespace GameEngine.Encounters.EncounterData
 
         public EncounterExecutable getScript()
         {
-            return new TutorialExecutable(mainText, callToAction, hintText);
+            return new TutorialExecutable(mainText, callToAction, hintText, hideComments);
         }
 
         public List<Comment> getComments()
@@ -46,7 +48,7 @@ namespace GameEngine.Encounters.EncounterData
             return new();
         }
 
-        public EnemySpecificData getEnemyData()
+        public SpecificData getData()
         {
             return null;
         }

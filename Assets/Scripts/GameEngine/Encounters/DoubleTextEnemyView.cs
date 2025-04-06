@@ -12,8 +12,8 @@ namespace GameEngine.Encounters
 
         public override void setEncounterData(Encounter encounter)
         {
-            var data = encounter.getEnemyData();
-            if (data is not DoubleTextEnemyData enemyData)
+            var data = encounter.getData();
+            if (data is not DoubleTextData enemyData)
             {
                 return;
             }
