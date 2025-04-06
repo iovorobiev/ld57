@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using GameEngine.Comments;
 using UnityEngine;
 
 namespace GameEngine
@@ -16,7 +17,7 @@ namespace GameEngine
 
         public static void prepareVocabulary()
         {
-            vocabulary = Comments.CommentsData.Comments.getInitialVocabulary();
+            vocabulary = Comments.CommentsData.CommentsBase.getInitialVocabulary();
         }
         
         public static void prepareEncounterDeck()
@@ -33,6 +34,11 @@ namespace GameEngine
                 checkedPositions[index] = false;
                 currentEncounterDeck.Enqueue(vocabulary[index]);
             }
+        }
+
+        public static async UniTask addToVocabulary(Comment comment)
+        {
+            vocabulary.Add(comment);
         }
         
         public static async UniTask receivePowerDamage(int dmg)

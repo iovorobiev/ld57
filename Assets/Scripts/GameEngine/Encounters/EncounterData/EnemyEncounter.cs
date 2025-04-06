@@ -9,7 +9,7 @@ namespace GameEngine.EncounterData
     {
         public static string ENEMY_PATH = "Prefabs/Enemy/";
         
-        private int likes = Random.Range(1, 10);
+        private int likes = Random.Range(1, 3);
         
         public string getPrefabAddress()
         {

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using GameEngine.Comments;
+using GameEngine.Comments.CommentsData;
 using GameEngine.Encounters;
 using UnityEngine;
 
@@ -21,6 +22,7 @@ namespace GameEngine.EncounterData
         public async UniTask setEncounterController(EncounterController encounterController)
         {
             this.encounterController = (EnemyEncounterController) encounterController;
+            
             await UniTask.WhenAll(
                 this.encounterController.changeCurrentHp(currentHp),
                 this.encounterController.changeTotalHp(maxHp)
@@ -35,6 +37,7 @@ namespace GameEngine.EncounterData
 
         public async UniTask execute()
         {
+            await encounterController.showEncounter();
             await Player.receiveStressDamage(maxHp - currentHp);
             
             while (currentHp < maxHp && !Player.loseCondition() && !Player.winCondition())
@@ -55,8 +58,10 @@ namespace GameEngine.EncounterData
                     await Player.receiveStressDamage(maxHp - currentHp);
                 }
             }
-            Debug.Log("Encounter completed");
-            await Game.encountersPresenter.encounterCompleted();
+            var reward = CommentsBase.rollComments(3);
+            var chosenReward = await encounterController.showReward(reward);
+            await Player.addToVocabulary(chosenReward);
+            await encounterController.finishEncounter();
         }
     }
 }
