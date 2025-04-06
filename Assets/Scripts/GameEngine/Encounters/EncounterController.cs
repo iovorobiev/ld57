@@ -10,7 +10,7 @@ public class EncounterController : MonoBehaviour
    protected Encounter encounterData;
    protected EncounterExecutable encounterScript;
    
-   public void setEncounterData(Encounter encounter)
+   public virtual void setEncounterData(Encounter encounter)
    {
       encounterData = encounter;
       encounterScript = encounter.getScript();
@@ -20,6 +20,16 @@ public class EncounterController : MonoBehaviour
    public async UniTask runExecutable()
    {
       await encounterScript.execute().AttachExternalCancellation(destroyCancellationToken);
+   }
+
+   public bool isBlocking()
+   {
+      return encounterData.isBlocking();
+   }
+
+   public virtual async UniTask OnKeyboardOpened()
+   {
+      
    }
 
    public void destroy()

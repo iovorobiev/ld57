@@ -8,7 +8,6 @@ public class SwipeListener : MonoBehaviour
 {
     public async void OnMouseDown()
     {
-        Debug.Log("Mouse click");
         if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
         {
             await Game.encountersPresenter.OnSwipe();

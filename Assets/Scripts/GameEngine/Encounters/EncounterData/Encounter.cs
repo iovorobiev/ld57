@@ -12,6 +12,14 @@ namespace GameEngine
 
         EncounterExecutable getScript();
         List<Comment> getComments();
+
+        EnemySpecificData getEnemyData();
+
+        bool isBlocking();
+    }
+
+    public interface EnemySpecificData
+    {
     }
 
     public enum LikeInteractionType

@@ -17,7 +17,9 @@ namespace GameEngine.Encounters
         public GameObject rewardView;
 
         public List<Button> options;
-        
+
+        public Image icon;
+        public GameObject stats;
         public TextMeshProUGUI currentHp;
         public TextMeshProUGUI totalHp;
 
@@ -36,6 +38,21 @@ namespace GameEngine.Encounters
         {
             encounterView.SetActive(true);
             rewardView.SetActive(false);
+            Debug.Log("Loading enemy");
+            var enemy = await Resources.LoadAsync(EnemyEncounter.ENEMY_PATH + ((EnemyEncounter)encounterData).enemyPrefabPath) as GameObject;
+            var enemyObject = Instantiate(enemy, encounterView.transform);
+            Debug.Log("Encounter instantiated!");
+            var encounterController = enemyObject.GetComponent<EncounterController>();
+            if (encounterController != null)
+            {
+                encounterController.setEncounterData(encounterData);
+            }
+        }
+
+        public async override UniTask OnKeyboardOpened()
+        {
+            icon.gameObject.SetActive(true);
+            stats.SetActive(true);
         }
 
         public async UniTask<Comment> showReward(List<Comment> reward)

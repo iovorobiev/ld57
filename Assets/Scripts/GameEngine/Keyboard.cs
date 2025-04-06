@@ -24,7 +24,6 @@ public class Keyboard : MonoBehaviour
     
     public async UniTask OnShow()
     {
-        Debug.Log("On Show");
         var hand = new List<Comment>();
         if (currentHand.Count == 0)
         {
@@ -46,6 +45,8 @@ public class Keyboard : MonoBehaviour
             comment.transform.position = positionsForComments[i].transform.position;
             currentHand.Add(commentItem);
         }
+
+        Game.currentEncounterController.OnKeyboardOpened();
     }
 
     public async UniTask clearHand()

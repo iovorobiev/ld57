@@ -11,20 +11,22 @@ namespace GameEngine.EncounterData
     {
         private int maxHp;
         private int currentHp;
+        private string hint = "";
         private EnemyEncounterController encounterController;
 
-        public EnemyExecutable(int maxHp)
+        public EnemyExecutable(EnemyEncounter encounter)
         {
-            this.maxHp = maxHp;
+            maxHp = encounter.getLikes();
+            hint = encounter.hint;
             currentHp = 0;
         }
 
         public async UniTask setEncounterController(EncounterController encounterController)
         {
-            this.encounterController = (EnemyEncounterController) encounterController;
-            
+            Debug.Log("Setting controller " + encounterController);
+            this.encounterController = encounterController as EnemyEncounterController;
             await UniTask.WhenAll(
-                this.encounterController.changeCurrentHp(currentHp),
+                this.encounterController!.changeCurrentHp(currentHp),
                 this.encounterController.changeTotalHp(maxHp)
             );
         }
@@ -39,29 +41,27 @@ namespace GameEngine.EncounterData
         {
             await encounterController.showEncounter();
             await Player.receiveStressDamage(maxHp - currentHp);
-            
+            if (hint != "")
+            {
+                UniTask.WaitForSeconds(0.2f);
+                Game.hint.showHintAndLock(hint);
+            }
             while (currentHp < maxHp && !Player.loseCondition() && !Player.winCondition())
             {
                 var playersComment = await Game.encountersPresenter.playersComment();
-                Debug.Log("Got comment");
                 await playersComment.script.execute();
-                Debug.Log("Script executed");
 
                 if (playersComment.type == LikeInteractionType.REDUCE_STRESS)
                 {
-                    Debug.Log("Receiving damage");
                     await receiveDamage(playersComment.value);
                 } 
-                if (playersComment.type == LikeInteractionType.SKIP_TURN)
-                {
-                    Debug.Log("Receiving stress");
-                    await Player.receiveStressDamage(maxHp - currentHp);
-                }
             }
+
             var reward = CommentsBase.rollComments(3);
             var chosenReward = await encounterController.showReward(reward);
             await Player.addToVocabulary(chosenReward);
             await encounterController.finishEncounter();
+
         }
     }
 }

@@ -47,6 +47,10 @@ public class VocabularyView : MonoBehaviour
     public async UniTask removeComment(Comment comment)
     {
         var found = instantiated.Find((item) => item.comment == comment);
+        if (found == null)
+        {
+            return;
+        }
         found.Disappear();
         instantiated.Remove(found);
     }

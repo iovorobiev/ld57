@@ -12,7 +12,7 @@ namespace GameEngine
     public class EncountersPresenter : MonoBehaviour
     {
         private static int SWIPE_COST = 1;
-        private EncountersDeck deck = new();
+        private InfiniteEncountersDeck deck = new();
         public GameObject encounterView;
         public GameObject nextEncounterView;
 
@@ -95,7 +95,7 @@ namespace GameEngine
             );
         }
 
-        async UniTask swipeEncounter()
+        async UniTask swipeEncounter(Encounter next)
         {
             await UniTask.WhenAll(
                 encounterView.transform.DOMove(Vector3.up * encounterView.GetComponent<Renderer>().bounds.size.y, 0.5f)
@@ -109,21 +109,22 @@ namespace GameEngine
             Game.commentView = nextEncounterView.gameObject.GetComponentInChildren<CommentView>();
             encounterCancellationToken.Cancel();
             encounterCancellationToken = new CancellationTokenSource();
-            createNextEncounter();
+            createNextEncounter(next);
         }
 
-        void createNextEncounter()
+        void createNextEncounter(Encounter next)
         {
-            Debug.Log("Creating next encounter");
+            Debug.Log("Creating next encounter ");
             (encounterView, nextEncounterView) = (nextEncounterView, encounterView);
             nextEncounterView.transform.position = nextEncounterPosition;
-            nextEncounter = deck.getNextEncounter();
+            nextEncounter = next;
             nextEncounterController = InflateEncounter(nextEncounter, nextEncounterView);
             nextEncounterView.GetComponentInChildren<CommentView>().clearComments();
         }
 
         private EncounterController InflateEncounter(Encounter encounter, GameObject view)
         {
+            Debug.Log("Encounter is " +encounter);
             var prefab = Resources.Load(encounter.getPrefabAddress()) as GameObject;
             var gameObject = Instantiate(prefab, view.transform);
             var encounterController = gameObject.GetComponent<EncounterController>();
@@ -131,39 +132,36 @@ namespace GameEngine
             return encounterController;
         }
 
-        public async UniTask changeEncounter()
+        public async UniTask changeEncounter(Encounter next)
         {
-            await swipeEncounter();
+            await swipeEncounter(next);
+        }
+
+        public async UniTask init(Encounter current, Encounter next)
+        {
+            encounterPosition = encounterView.transform.position;
+            nextEncounterPosition = nextEncounterView.transform.position;
+            Game.currentEncounter = current;
+            nextEncounter = next;
+            Game.currentEncounterController = InflateEncounter(Game.currentEncounter, encounterView);
+            nextEncounterController = InflateEncounter(nextEncounter, nextEncounterView);
+            encounterCancellationToken = new CancellationTokenSource();
+            firstEncounter = false;
         }
 
         public async UniTask presentEcnounter()
         {
-            if (firstEncounter)
+            if (Game.currentEncounter.isBlocking())
             {
-                encounterPosition = encounterView.transform.position;
-                nextEncounterPosition = nextEncounterView.transform.position;
-                Game.currentEncounter = deck.getCurrentEncounter();
-                nextEncounter = deck.getNextEncounter();
-                Game.currentEncounterController = InflateEncounter(Game.currentEncounter, encounterView);
-                nextEncounterController = InflateEncounter(nextEncounter, nextEncounterView);
-                encounterCancellationToken = new CancellationTokenSource();
-                firstEncounter = false;
-            }
-
-            
-            var (leftResult, result) = await UniTask.WhenAny(
-                swipeAwayListener.awaitClick(),
-                Game.currentEncounterController.runExecutable()
-                    .AttachExternalCancellation(encounterCancellationToken.Token));
-            Debug.Log(leftResult + " " + result);
-            if (leftResult)
-            {
-                encounterCancellationToken.Cancel();
+                await Game.currentEncounterController.runExecutable().AttachExternalCancellation(encounterCancellationToken.Token);
             }
             else
             {
-                await swipeAwayListener.awaitClick();
+                Game.currentEncounterController.runExecutable().AttachExternalCancellation(encounterCancellationToken.Token);
             }
+            
+            await swipeAwayListener.awaitClick();
+            encounterCancellationToken.Cancel();
         }
 
         public async UniTask encounterCompleted()
@@ -177,11 +175,7 @@ namespace GameEngine
             Debug.Log("Waiting keyboard " + keyboardOpened);
             if (!keyboardOpened)
             {
-                await UniTask.WaitUntil(() =>
-                {
-                    Debug.Log("Checking keyboard " + keyboardOpened);
-                    return keyboardOpened;
-                }, cancellationToken: encounterCancellationToken.Token);
+                await UniTask.WaitUntil(() => keyboardOpened, cancellationToken: encounterCancellationToken.Token);
             }
             Debug.Log("Keyboard opened, waiting comment");
             return await keyboard.GetComponent<Keyboard>().awaitComment(encounterCancellationToken.Token);

@@ -10,6 +10,7 @@ namespace GameEngine.Comments
             Debug.Log("Executing refresh");
             await Game.keyboard.clearHand();
             await Game.keyboard.OnShow();
+            await Player.receiveStressDamage(1);
             Debug.Log("Finish refresh");
         }
     }

@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using GameEngine.Encounters;
 using UnityEngine;
 
 namespace GameEngine
@@ -19,17 +20,44 @@ namespace GameEngine
 
         public static async UniTask GameLoop()
         {
+            var tutorialDeck = new TutorialEncounterDeck();
+            var deck = new InfiniteEncountersDeck();
+            
+            Player.reset();
+            await encountersPresenter.init(tutorialDeck.getCurrentEncounter(), tutorialDeck.getNextEncounter());
+            while (!tutorialDeck.isEmpty())
+            {
+                Debug.Log("Tutorial loop");
+                tutorialDeck.changePage();
+                Player.prepareEncounterDeck();
+                encountersPresenter.closeKeyboard();
+                keyboard.clearHand();
+                await encountersPresenter.presentEcnounter();
+                if (tutorialDeck.isEmpty())
+                {
+                    Debug.Log("Changing from deck");
+                    await encountersPresenter.changeEncounter(deck.getNextEncounter());
+                }
+                else
+                {
+                    await encountersPresenter.changeEncounter(tutorialDeck.getNextEncounter());
+                }
+            }
+            
             while (!Player.winCondition())
             {
                 Player.reset();
+                // await encountersPresenter.init(deck.getCurrentEncounter(), deck.getNextEncounter());
                 while (!Player.winCondition() && !Player.loseCondition())
                 {
                     currentDepth++;
                     Player.prepareEncounterDeck();
                     encountersPresenter.closeKeyboard();
                     keyboard.clearHand();
+                    Debug.Log("Presenting encounter");
+
                     await encountersPresenter.presentEcnounter();
-                    await encountersPresenter.changeEncounter();
+                    await encountersPresenter.changeEncounter(deck.getNextEncounter());
                 }
 
                 if (Player.loseCondition())
