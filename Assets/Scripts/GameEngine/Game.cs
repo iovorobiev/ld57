@@ -13,6 +13,8 @@ namespace GameEngine
         public static Keyboard keyboard;
         public static CommentView commentView;
         public static TurnOffSequence turnOffSequence;
+        public static VocabularyView vocabularyView;
+        public static Hint hint;
         public static int currentDepth = 0;
 
         public static async UniTask GameLoop()

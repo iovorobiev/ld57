@@ -33,6 +33,16 @@ public class CommentItem : MonoBehaviour
         }
     }
 
+    private void OnMouseEnter()
+    {
+        Game.hint.showHint(comment.description);
+    }
+
+    private void OnMouseExit()
+    {
+        Game.hint.hideHint();
+    }
+
     public async UniTask discard()
     {
         await GetComponent<SpriteRenderer>().DOFade(0f, 0.5f);

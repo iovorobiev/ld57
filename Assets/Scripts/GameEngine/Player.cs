@@ -41,10 +41,12 @@ namespace GameEngine
         public static void prepareVocabulary()
         {
             vocabulary = Comments.CommentsData.CommentsBase.getInitialVocabulary();
+            Game.vocabularyView.resetVocab(vocabulary);
         }
         
         public static void prepareEncounterDeck()
         {
+            Game.vocabularyView.resetVocab(vocabulary);
             var checkedPositions = new bool[vocabulary.Count];
             foreach (var _ in vocabulary)
             {
@@ -62,6 +64,7 @@ namespace GameEngine
         public static async UniTask addToVocabulary(Comment comment)
         {
             vocabulary.Add(comment);
+            await Game.vocabularyView.addComment(comment);
         }
         
         public static async UniTask receivePowerDamage(int dmg)

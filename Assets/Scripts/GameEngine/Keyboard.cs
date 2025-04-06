@@ -30,7 +30,9 @@ public class Keyboard : MonoBehaviour
         {
             for (int i = 0; i < Player.getDrawHandSize() && Player.currentEncounterDeck.Count > 0; i++)
             {
-                hand.Add(Player.currentEncounterDeck.Dequeue());
+                var comment = Player.currentEncounterDeck.Dequeue();
+                hand.Add(comment);
+                Game.vocabularyView.removeComment(comment);
             }
         }
 

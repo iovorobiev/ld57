@@ -46,7 +46,6 @@ namespace GameEngine
             }
             else
             {
-                Debug.Log("Notifying click");
                 swipeAwayListener.notifyClick(true);
             }
         }
@@ -86,6 +85,7 @@ namespace GameEngine
             {
                 return;
             }
+            keyboardOpened = false;
             var newPos = new Vector3(keyboard.transform.position.x,
                 keyboard.transform.position.y - keyboard.GetComponent<Renderer>().bounds.size.y,
                 keyboard.transform.position.z);
@@ -93,7 +93,6 @@ namespace GameEngine
                 keyboard.transform.DOMove(newPos, 0.5f).ToUniTask(),
                 Game.ui.closeKeyboard()
             );
-            keyboardOpened = false;
         }
 
         async UniTask swipeEncounter()
