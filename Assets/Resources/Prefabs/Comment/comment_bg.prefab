@@ -194,8 +194,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 6
-  m_fontSizeBase: 6
+  m_fontSize: 8
+  m_fontSizeBase: 8
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -266,8 +266,8 @@ Transform:
   m_GameObject: {fileID: 6433433885237437026}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3, y: -2.78, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.4237, y: 1.4491, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1555344495558516265}
@@ -342,7 +342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInHand: 0
   canvas: {fileID: 478332628735961268}
-  text: {fileID: 4521932181607365761}
+  text: {fileID: 5010219255625786592}
 --- !u!61 &4394659803581646642
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -379,7 +379,7 @@ BoxCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.125, y: 0.125, z: 0.125, w: 0.125}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1, y: 0.5}
     newSize: {x: 2, y: 1}

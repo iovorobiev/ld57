@@ -53,7 +53,7 @@ namespace GameEngine.EncounterData
 
                 if (playersComment.type == LikeInteractionType.REDUCE_STRESS)
                 {
-                    await receiveDamage(playersComment.value);
+                    await receiveDamage(playersComment.value());
                 } 
             }
 

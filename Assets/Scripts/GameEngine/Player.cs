@@ -18,6 +18,9 @@ namespace GameEngine
         private static int drawHandSize = 3;
         public static int maxHandSize = 6;
 
+        public static int currentHaCount = 0;
+        public static int batteryUnderPost = 0;
+
         public static List<OSUpgrade> upgrades = new();
 
         public static void AddOSUpgrade(OSUpgrade upgrade)
@@ -47,7 +50,9 @@ namespace GameEngine
         public static void prepareEncounterDeck()
         {
             Game.vocabularyView.resetVocab(vocabulary);
+            currentEncounterDeck.Clear();
             var checkedPositions = new bool[vocabulary.Count];
+            Debug.Log("Vocab is " + vocabulary.Count);
             foreach (var _ in vocabulary)
             {
                 int index; 
@@ -61,6 +66,13 @@ namespace GameEngine
             }
         }
 
+        public static void prepareEncounter()
+        {
+            prepareEncounterDeck();
+            currentHaCount = 0;
+            batteryUnderPost = 0;
+        }
+
         public static async UniTask addToVocabulary(Comment comment)
         {
             vocabulary.Add(comment);
@@ -71,6 +83,7 @@ namespace GameEngine
         {
             int from = powerLevel;
             powerLevel -= dmg;
+            batteryUnderPost += dmg;
             await Game.ui.changeBatteryLevel(from, powerLevel);
         }
 

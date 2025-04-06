@@ -15,6 +15,7 @@ public class Keyboard : MonoBehaviour
     private List<UniTask<CommentItem>> clickListeners = new();
     public CommentItem refresh;
     private int lastKnownDepth = -1;
+    private int lastFreePosition = 0;
 
     private void Awake()
     {
@@ -41,14 +42,35 @@ public class Keyboard : MonoBehaviour
             var comment = Instantiate(prefab, transform);
             var commentItem = comment.GetComponent<CommentItem>();
             commentItem.isInHand = true;
-            commentItem.comment = hand[i];
+            commentItem.setComment(hand[i]);
             comment.transform.position = positionsForComments[i].transform.position;
             currentHand.Add(commentItem);
         }
 
+        lastFreePosition = currentHand.Count;
+        
         Game.currentEncounterController.OnKeyboardOpened();
     }
 
+    public async UniTask draw()
+    {
+        if (currentHand.Count > Player.maxHandSize || Player.currentEncounterDeck.Count == 0)
+        {
+            return;
+        }
+
+        var comment = Player.currentEncounterDeck.Dequeue();
+        
+        Game.vocabularyView.removeComment(comment);
+        var prefab = Resources.Load(comment.prefab) as GameObject;
+        var commentObj = Instantiate(prefab, transform);
+        var commentItem = commentObj.GetComponent<CommentItem>();
+        commentItem.isInHand = true;
+        commentItem.setComment(comment);
+        commentObj.transform.position = positionsForComments[lastFreePosition].transform.position;
+        currentHand.Add(commentItem);
+    }
+    
     public async UniTask clearHand()
     {
         Debug.Log("Clear hand");
@@ -78,7 +100,9 @@ public class Keyboard : MonoBehaviour
             Debug.Log("Refresh picked");
             return result.comment;
         }
-        
+
+        var index = currentHand.FindIndex((obj) =>  obj == result);
+        lastFreePosition = index;
         await Game.commentView.claimComment(result);
         currentHand.Remove(result);
 

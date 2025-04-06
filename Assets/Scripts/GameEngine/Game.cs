@@ -29,7 +29,7 @@ namespace GameEngine
             {
                 Debug.Log("Tutorial loop");
                 tutorialDeck.changePage();
-                Player.prepareEncounterDeck();
+                Player.prepareEncounter();
                 encountersPresenter.closeKeyboard();
                 keyboard.clearHand();
                 await encountersPresenter.presentEcnounter();
@@ -51,7 +51,7 @@ namespace GameEngine
                 while (!Player.winCondition() && !Player.loseCondition())
                 {
                     currentDepth++;
-                    Player.prepareEncounterDeck();
+                    Player.prepareEncounter();
                     encountersPresenter.closeKeyboard();
                     keyboard.clearHand();
                     Debug.Log("Presenting encounter");

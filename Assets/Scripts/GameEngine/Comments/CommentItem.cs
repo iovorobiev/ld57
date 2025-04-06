@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using GameEngine;
 using GameEngine.Comments;
+using TMPro;
 using UnityEngine;
 using utils;
 
@@ -13,7 +14,15 @@ public class CommentItem : MonoBehaviour
     public Comment comment;
     public readonly AwaitableClickListener<CommentItem> clickListener = new();
     public Canvas canvas;
-    public GameObject text;
+    public TextMeshProUGUI text;
+
+    private void Start()
+    {
+        if (comment != null)
+        {
+            text.text = comment.text;
+        }
+    }
 
     public void changeSortingLayer(string layer)
     {
@@ -22,6 +31,15 @@ public class CommentItem : MonoBehaviour
         rend.sortingOrder = 3;
         canvas.sortingLayerName = layer;
         canvas.sortingOrder = 4;
+    }
+
+    public void setComment(Comment comment)
+    {
+        this.comment = comment;
+        if (text != null)
+        {
+            text.text = comment.text;
+        }
     }
     
     private void OnMouseDown()
