@@ -8,6 +8,10 @@ namespace GameEngine.Comments
     {
         public async UniTask execute()
         {
+            if (Player.currentEncounterDeck.Count == 0)
+            {
+                return;
+            }
             Debug.Log("Executing refresh");
             await Game.keyboard.clearHand();
             await Game.keyboard.OnShow();
