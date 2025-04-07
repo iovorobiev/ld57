@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
@@ -163,7 +164,7 @@ namespace GameEngine
                 Game.currentEncounterController.runExecutable().AttachExternalCancellation(encounterCancellationToken.Token);
             }
             
-            await swipeAwayListener.awaitClick();
+            await UniTask.WhenAny(swipeAwayListener.awaitClick(), UniTask.WaitUntil(() => Player.loseCondition(), cancellationToken: encounterCancellationToken.Token));
             encounterCancellationToken.Cancel();
         }
 

@@ -50,6 +50,12 @@ namespace GameEngine.EncounterData
             }
             while (currentHp < maxHp && !Player.loseCondition() && !Player.winCondition())
             {
+                if (Game.currentEncounter.isBlocking() && Player.currentEncounterDeck.Count == 0 && Game.keyboard.isEmpty())
+                {
+                    Player.loseFlag = true;
+                    Game.hint.showHintAndLock("Ah, snap, no comments left, and can't scroll this away! Have to reboot!");
+                    break;
+                }
                 var playersComment = await Game.encountersPresenter.playersComment();
                 await playersComment.script.execute();
 
@@ -58,13 +64,16 @@ namespace GameEngine.EncounterData
                     await receiveDamage(playersComment.value() + Player.upgrades.FindAll((up) => up.upgradeID == OSUpgradesBase.INFLUENCER).Count);
                 } 
             }
-            
-            await Player.receiveStressDamage(-currentHp);
-            Game.commentView.clearComments();
-            await Game.encountersPresenter.closeKeyboard();
-            var reward = CommentsBase.rollComments(3);
-            var chosenReward = await encounterController.showReward(reward);
-            await Player.addToVocabulary(chosenReward);
+
+            if (!Player.loseCondition())
+            {
+                await Player.receiveStressDamage(-currentHp);
+                Game.commentView.clearComments();
+                await Game.encountersPresenter.closeKeyboard();
+                var reward = CommentsBase.rollComments(3);
+                var chosenReward = await encounterController.showReward(reward);
+                await Player.addToVocabulary(chosenReward);
+            }
             await encounterController.finishEncounter();
         }
     }

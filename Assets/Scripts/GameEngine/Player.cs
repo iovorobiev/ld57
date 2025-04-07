@@ -23,6 +23,7 @@ namespace GameEngine
         public static int batteryUnderPost = 0;
 
         public static List<OSUpgrade> upgrades = new();
+        public static bool loseFlag;
 
         public static void AddOSUpgrade(OSUpgrade upgrade)
         {
@@ -33,6 +34,7 @@ namespace GameEngine
         {
             stressLevel = initStressLevel - upgrades.FindAll((up) => up.upgradeID == OSUpgradesBase.EASY_START).Count ;
             powerLevel = initPowerLevel + upgrades.FindAll((up) => up.upgradeID == OSUpgradesBase.CHARGE_MORE).Count;
+            loseFlag = false;
             prepareVocabulary();
         }
         
@@ -114,7 +116,17 @@ namespace GameEngine
 
         public static bool loseCondition()
         {
-            return stressLevel >= 100 || powerLevel <= 0;
+            if (powerLevel <= 0)
+            {
+                Game.hint.showHintAndLock("Ah snap! Ran out of battery :( Let me boot it again!");
+            }
+
+            if (stressLevel >= 100)
+            {
+                Game.hint.showHintAndLock("This is unbearable! Maybe if I reboot it will be better...");
+            }
+            
+            return stressLevel >= 100 || powerLevel <= 0 || loseFlag;
         }
     }
 }

@@ -30,7 +30,8 @@ public class CommentView : MonoBehaviour
         }
         comments.Add(commentItem);
         commentItem.changeSortingLayer("Encounter");
-        commentItem.isInHand = false;
+        Debug.Log("Claiming " + commentItem);
+        commentItem.SetIsInHand(false);
         await UniTask.WhenAll(tasksList);
     }
 

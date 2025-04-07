@@ -1,4 +1,3 @@
-using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using GameEngine;
@@ -9,13 +8,14 @@ using utils;
 
 public class CommentItem : MonoBehaviour
 {
-    public bool isInHand = true;
+    private bool isInHand = true;
 
     public Comment comment;
     public readonly AwaitableClickListener<CommentItem> clickListener = new();
     public Canvas canvas;
     public TextMeshProUGUI text;
 
+    
     private void Start()
     {
         if (comment != null)
@@ -24,11 +24,21 @@ public class CommentItem : MonoBehaviour
         }
     }
 
+    public void SetIsInHand(bool value)
+    {
+        isInHand = value;
+        if (!isInHand)
+        {
+            GetComponent<BoxCollider2D>().enabled = false;
+        }
+    }
+
     public void changeSortingLayer(string layer)
     {
         var rend = GetComponent<Renderer>();
         rend.sortingLayerName = layer;
         rend.sortingOrder = 3;
+        
         canvas.sortingLayerName = layer;
         canvas.sortingOrder = 4;
     }

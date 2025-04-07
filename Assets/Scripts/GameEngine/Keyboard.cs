@@ -41,8 +41,8 @@ public class Keyboard : MonoBehaviour
             var prefab = Resources.Load(hand[i].prefab) as GameObject;
             var comment = Instantiate(prefab, transform);
             var commentItem = comment.GetComponent<CommentItem>();
-            commentItem.isInHand = true;
             commentItem.setComment(hand[i]);
+            commentItem.SetIsInHand(true);
             comment.transform.position = positionsForComments[i].transform.position;
             currentHand.Add(commentItem);
         }
@@ -50,6 +50,11 @@ public class Keyboard : MonoBehaviour
         lastFreePosition = currentHand.Count;
         
         Game.currentEncounterController.OnKeyboardOpened();
+    }
+
+    public bool isEmpty()
+    {
+        return currentHand.Count == 0;
     }
 
     public async UniTask draw()
@@ -65,7 +70,7 @@ public class Keyboard : MonoBehaviour
         var prefab = Resources.Load(comment.prefab) as GameObject;
         var commentObj = Instantiate(prefab, transform);
         var commentItem = commentObj.GetComponent<CommentItem>();
-        commentItem.isInHand = true;
+        commentItem.SetIsInHand(true);
         commentItem.setComment(comment);
         commentObj.transform.position = positionsForComments[lastFreePosition].transform.position;
         currentHand.Add(commentItem);

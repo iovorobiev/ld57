@@ -61,7 +61,7 @@ namespace GameEngine
                     await encountersPresenter.changeEncounter(deck.getNextEncounter());
                 }
 
-                if (Player.loseCondition())
+                if (Player.loseCondition() && !Player.winCondition())
                 {
                     await loseSequence();
                     deck.initDeck();
