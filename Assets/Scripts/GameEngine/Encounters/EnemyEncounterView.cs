@@ -4,6 +4,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using GameEngine.Comments;
 using GameEngine.EncounterData;
+using GameEngine.Encounters.EncounterData;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,7 @@ using utils;
 
 namespace GameEngine.Encounters
 {
-    public class EnemyEncounterController : EncounterController
+    public class EnemyEncounterView : EncounterContentView
     {
         public GameObject encounterView;
         public GameObject rewardView;
@@ -39,18 +40,11 @@ namespace GameEngine.Encounters
         {
             encounterView.SetActive(true);
             rewardView.SetActive(false);
-            Debug.Log("Loading enemy");
-            var enemy = await Resources.LoadAsync(((EnemyEncounter)encounterData).enemyPrefabPath) as GameObject;
+            var enemy = await Resources.LoadAsync(((TextPrefabData)data).prefabPath) as GameObject;
             var enemyObject = Instantiate(enemy, encounterView.transform);
-            Debug.Log("Encounter instantiated!");
-            var encounterController = enemyObject.GetComponent<EncounterController>();
-            if (encounterController != null)
-            {
-                encounterController.setEncounterData(encounterData);
-            }
         }
 
-        public async override UniTask OnKeyboardOpened()
+        public async UniTask OnKeyboardOpened()
         {
             icon.gameObject.SetActive(true);
             stats.SetActive(true);

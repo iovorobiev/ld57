@@ -52,7 +52,6 @@ public class TurnOffSequence : MonoBehaviour
         }
         else
         {
-            Game.hint.showHint("I already maxed this out, shoot!");
         }
         // source.Cancel();
     }

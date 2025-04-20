@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace GameEngine.Encounters
 {
-    public class DoubleTextEnemyView : EncounterController
+    public class DoubleTextEncounterView : EncounterContentView
     {
         public TextMeshProUGUI topText;
         public TextMeshProUGUI botText;
 
-        public override void setEncounterData(Encounter encounter)
+        public override void setData(SpecificData data)
         {
-            var data = encounter.getData();
+            base.setData(data);
             if (data is not DoubleTextData enemyData)
             {
                 return;

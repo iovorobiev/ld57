@@ -30,9 +30,20 @@ namespace GameEngine
             upgrades.Add(upgrade);
         }
 
+        public static int getLikesFromComment(Comment comment)
+        {
+            if (comment.type != LikeInteractionType.REDUCE_STRESS)
+            {
+                return 0;
+            }
+
+            return comment.value() + upgrades.FindAll((up) => up.upgradeID == OSUpgradesBase.INFLUENCER).Count;
+        }
+
         public static void reset()
         {
-            stressLevel = initStressLevel - upgrades.FindAll((up) => up.upgradeID == OSUpgradesBase.EASY_START).Count ;
+            stressLevel = initStressLevel - upgrades.FindAll((up) => up.upgradeID == OSUpgradesBase.EASY_START).Count;
+            Game.screenController.stressLevel.progressBar.setProgress(stressLevel / 100f);
             powerLevel = initPowerLevel + upgrades.FindAll((up) => up.upgradeID == OSUpgradesBase.CHARGE_MORE).Count;
             loseFlag = false;
             prepareVocabulary();
@@ -87,14 +98,14 @@ namespace GameEngine
             int from = powerLevel;
             powerLevel -= dmg;
             batteryUnderPost += dmg;
-            await Game.ui.changeBatteryLevel(from, powerLevel);
+            await Game.screenController.changeBatteryLevel(from, powerLevel);
         }
 
         public static async UniTask restorePower(int amount)
         {
             int from = powerLevel;
             powerLevel += amount;
-            await Game.ui.changeBatteryLevel(from, powerLevel);
+            await Game.screenController.changeBatteryLevel(from, powerLevel);
         }
 
         public static async UniTask receiveStressDamage(int dmg)
@@ -106,7 +117,7 @@ namespace GameEngine
                 dmg = Mathf.Max(dmg, 0);
             }
             stressLevel += dmg;
-            await Game.ui.changeStressLevel(prev, stressLevel);
+            await Game.screenController.changeStressLevel(prev, stressLevel);
         }
         
         public static bool winCondition()
@@ -116,16 +127,6 @@ namespace GameEngine
 
         public static bool loseCondition()
         {
-            if (powerLevel <= 0)
-            {
-                Game.hint.showHintAndLock("Ah snap! Ran out of battery :( Let me boot it again!");
-            }
-
-            if (stressLevel >= 100)
-            {
-                Game.hint.showHintAndLock("This is unbearable! Maybe if I reboot it will be better...");
-            }
-            
             return stressLevel >= 100 || powerLevel <= 0 || loseFlag;
         }
     }

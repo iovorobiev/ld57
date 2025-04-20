@@ -108,7 +108,7 @@ namespace GameEngine.Comments.CommentsData
 
             return result;
         }
-
+        
         private static int randomRarity()
         {
             var prob = Random.Range(0f, 1f);

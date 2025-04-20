@@ -51,6 +51,11 @@ public class CommentItem : MonoBehaviour
             text.text = comment.text;
         }
     }
+
+    public int getLikes()
+    {
+        return comment.value();
+    }
     
     private void OnMouseDown()
     {
@@ -60,17 +65,6 @@ public class CommentItem : MonoBehaviour
             clickListener.notifyClick(this);
         }
     }
-
-    private void OnMouseEnter()
-    {
-        Game.hint.showHint(comment.description);
-    }
-
-    private void OnMouseExit()
-    {
-        Game.hint.hideHint();
-    }
-
     public async UniTask discard()
     {
         await GetComponent<SpriteRenderer>().DOFade(0f, 0.5f);

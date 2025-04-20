@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using GameEngine.ui;
 using TMPro;
 using UnityEditor.Experimental;
 using UnityEngine;
@@ -17,19 +18,11 @@ namespace GameEngine
         public TextMeshProUGUI likesCount;
         public Image comments;
 
-        public Image battery;
-        public TextMeshProUGUI batteryLevel;
-
-        public TextMeshProUGUI stressLevel;
-
-        private void Awake()
-        {
-            Game.ui = this;
-        }
+        public Transform openKeyboardPos;
+        public Transform closeKeyboardPos;
 
         private void Start()
         {
-            changeBatteryLevel(Player.powerLevel, Player.powerLevel);
             originalContainerPosition = uiContainer.transform.position;
         }
 
@@ -42,30 +35,18 @@ namespace GameEngine
         {
             if (Game.currentEncounter != null)
             {
-                likesCount.text = Game.currentEncounter.getLikes().ToString();
+                likesCount.text = Game.currentEncounter.likes.ToString();
             }
         }
 
-        public async UniTask changeBatteryLevel(int from, int to)
+        public async UniTask openKeyboard()
         {
-            batteryLevel.text = to + "%";
-        }
-
-        public async UniTask changeStressLevel(int from, int to)
-        {
-            stressLevel.text = to + "%";
-        }
-
-        public async UniTask openKeyboard(float sizeWorld)
-        {
-            await uiContainer.transform.DOMove(new Vector3(uiContainer.transform.position.x,
-                uiContainer.transform.position.y + sizeWorld, uiContainer.transform.position.z), 0.5f);
-            
+            await uiContainer.transform.DOMove(openKeyboardPos.position, 0.5f);
         }
         
         public async UniTask closeKeyboard()
         {
-            await uiContainer.transform.DOMove(originalContainerPosition, 0.5f);
+            await uiContainer.transform.DOMove(closeKeyboardPos.position, 0.5f);
         }
     }
 }

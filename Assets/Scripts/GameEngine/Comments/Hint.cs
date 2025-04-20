@@ -14,11 +14,6 @@ public class Hint : MonoBehaviour
     private CancellationTokenSource source = new();
 
     private bool locked = false;
-    
-    private void Awake()
-    {
-        Game.hint = this;
-    }
 
     public async void showHint(string text)
     {

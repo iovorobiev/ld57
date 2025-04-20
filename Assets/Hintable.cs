@@ -12,7 +12,6 @@ public class Hintable : MonoBehaviour, IPointerEnterHandler
     }
     
     public void OnPointerEnter(PointerEventData eventData)
-    {
-        Game.hint.showHint(hint);   
+    {  
     }
 }

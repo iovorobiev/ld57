@@ -27,11 +27,11 @@ public class CommentVocabItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Game.hint.showHint(comment.description);
+        // Game.hint.showHint(comment.description);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Game.hint.hideHint();
+        // Game.hint.hideHint();
     }
 }

@@ -1443,11 +1443,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7714536069445888818}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05a2404bd44643c0bd11eec8a980f5b0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4175977d0274d52aff4c7fe06885d03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainText: {fileID: 3278498263706669679}
-  callToAction: {fileID: 6067224488564037130}
+  topText: {fileID: 3278498263706669679}
+  botText: {fileID: 6067224488564037130}
 --- !u!1 &7842459015706263392
 GameObject:
   m_ObjectHideFlags: 0

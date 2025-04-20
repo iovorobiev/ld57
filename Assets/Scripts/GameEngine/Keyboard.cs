@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using GameEngine;
 using GameEngine.Comments.CommentsData;
 using UnityEngine;
@@ -17,10 +18,23 @@ public class Keyboard : MonoBehaviour
     private int lastKnownDepth = -1;
     private int lastFreePosition = 0;
 
+    public Transform openPos;
+    public Transform closePos;
+
     private void Awake()
     {
         Game.keyboard = this;
         refresh.comment = CommentsBase.getAllComments()[1];
+    }
+
+    public async UniTask open()
+    {
+        await transform.DOMove(openPos.position, 0.5f).ToUniTask();
+    }
+    
+    public async UniTask close()
+    {
+        await transform.DOMove(closePos.position, 0.5f).ToUniTask();
     }
     
     public async UniTask OnShow()
@@ -108,9 +122,12 @@ public class Keyboard : MonoBehaviour
 
         var index = currentHand.FindIndex((obj) =>  obj == result);
         lastFreePosition = index;
-        await Game.commentView.claimComment(result);
-        currentHand.Remove(result);
+        var comment = result.comment;
+        await Game.currentEncounterController.commentView.claimComment(result);
+        Debug.Log("Removing from hand");
 
-        return result.comment;
+        currentHand.Remove(result);
+        Debug.Log("Removed from hand");
+        return comment;
     }
 }

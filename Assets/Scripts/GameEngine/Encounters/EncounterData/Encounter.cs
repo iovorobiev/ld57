@@ -4,24 +4,36 @@ using GameEngine.Encounters;
 
 namespace GameEngine
 {
-    public interface Encounter
+    public class Encounter
     {
-        string getPrefabAddress();
-        int getLikes();
-        LikeInteractionType getLikeInteractionType();
-
-        EncounterExecutable getScript();
-        List<Comment> getComments();
-
-        SpecificData getData();
-
-        bool isBlocking();
+        public int likes;
+        public List<Tags> tags;
+        public string prefabPath;
+        public SpecificData visData;
+        public EncounterExecutable executable;
+        
+        public Encounter(int likes, List<Tags> tags, string prefabPath, EncounterExecutable executable, SpecificData visData = null)
+        {
+            this.likes = likes;
+            this.tags = tags;
+            this.executable = executable;
+            this.visData = visData;
+            this.prefabPath = prefabPath;
+        }
     }
 
     public interface SpecificData
     {
     }
 
+    public enum Tags
+    {
+        Stressful,
+        Blocking,
+        Meme,
+        Tutorial,
+    }
+    
     public enum LikeInteractionType
     {
         REDUCE_STRESS,

@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GameEngine.Encounters;
+using GameEngine.ui;
 using UnityEngine;
 
 namespace GameEngine
@@ -10,12 +11,10 @@ namespace GameEngine
         public static Encounter currentEncounter;
         public static EncountersPresenter encountersPresenter;
         public static EncounterController currentEncounterController;
-        public static UI ui;
         public static Keyboard keyboard;
-        public static CommentView commentView;
         public static TurnOffSequence turnOffSequence;
         public static VocabularyView vocabularyView;
-        public static Hint hint;
+        public static ScreenController screenController;
         public static int currentDepth = 0;
 
         public static async UniTask GameLoop()
@@ -25,6 +24,7 @@ namespace GameEngine
             deck.initDeck();
             Player.reset();
             await encountersPresenter.init(tutorialDeck.getCurrentEncounter(), tutorialDeck.getNextEncounter());
+            screenController.startListeningButtons();
             while (!tutorialDeck.isEmpty())
             {
                 Debug.Log("Tutorial loop");
@@ -52,7 +52,6 @@ namespace GameEngine
                 {
                     currentDepth++;
                     Player.prepareEncounter();
-                    ui.comments.gameObject.SetActive(true);
                     encountersPresenter.closeKeyboard();
                     keyboard.clearHand();
                     Debug.Log("Presenting encounter");

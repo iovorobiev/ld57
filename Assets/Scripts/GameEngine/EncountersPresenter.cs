@@ -69,12 +69,10 @@ namespace GameEngine
             {
                 return;
             }
-            var keyboardHeight = keyboard.GetComponent<Renderer>().bounds.size.y;
-            var newPos = new Vector3(keyboard.transform.position.x,
-                keyboard.transform.position.y + keyboardHeight, keyboard.transform.position.z);
             await UniTask.WhenAll(
-                keyboard.transform.DOMove(newPos, 0.5f).ToUniTask(),
-                Game.ui.openKeyboard(keyboardHeight)
+                Game.keyboard.open(),
+                Game.currentEncounterController.ui.openKeyboard(),
+                Game.currentEncounterController.commentView.showCommentsView()
             );
             await Game.keyboard.OnShow();
             keyboardOpened = true;
@@ -87,12 +85,10 @@ namespace GameEngine
                 return;
             }
             keyboardOpened = false;
-            var newPos = new Vector3(keyboard.transform.position.x,
-                keyboard.transform.position.y - keyboard.GetComponent<Renderer>().bounds.size.y,
-                keyboard.transform.position.z);
             await UniTask.WhenAll(
-                keyboard.transform.DOMove(newPos, 0.5f).ToUniTask(),
-                Game.ui.closeKeyboard()
+                Game.keyboard.close(),
+                Game.currentEncounterController.ui.closeKeyboard(),
+                Game.currentEncounterController.commentView.hideCommentsView()
             );
         }
 
@@ -103,37 +99,32 @@ namespace GameEngine
                     .ToUniTask(),
                 nextEncounterView.transform
                     .DOMove(encounterPosition, 0.5f).ToUniTask());
+            
             Game.currentEncounter = nextEncounter;
+            
             if (Player.upgrades.Find((up) => up.upgradeID == OSUpgrades.OSUpgradesBase.EFFECTIVE_BATTERY) == null)
             {
                 await Player.receivePowerDamage(SWIPE_COST);
             }
+            
             Game.currentEncounterController.destroy();
             Game.currentEncounterController = nextEncounterController;
-            Game.commentView = nextEncounterView.gameObject.GetComponentInChildren<CommentView>();
+            
             encounterCancellationToken.Cancel();
             encounterCancellationToken = new CancellationTokenSource();
+            
+            (encounterView, nextEncounterView) = (nextEncounterView, encounterView);
+
             createNextEncounter(next);
         }
 
         void createNextEncounter(Encounter next)
         {
-            Debug.Log("Creating next encounter ");
-            (encounterView, nextEncounterView) = (nextEncounterView, encounterView);
             nextEncounterView.transform.position = nextEncounterPosition;
             nextEncounter = next;
-            nextEncounterController = InflateEncounter(nextEncounter, nextEncounterView);
+            nextEncounterController = nextEncounterView.GetComponent<EncounterController>();
+            nextEncounterController.InflateEncounter(nextEncounter);
             nextEncounterView.GetComponentInChildren<CommentView>().clearComments();
-        }
-
-        private EncounterController InflateEncounter(Encounter encounter, GameObject view)
-        {
-            Debug.Log("Encounter is " +encounter);
-            var prefab = Resources.Load(encounter.getPrefabAddress()) as GameObject;
-            var gameObject = Instantiate(prefab, view.transform);
-            var encounterController = gameObject.GetComponent<EncounterController>();
-            encounterController.setEncounterData(encounter);
-            return encounterController;
         }
 
         public async UniTask changeEncounter(Encounter next)
@@ -147,15 +138,18 @@ namespace GameEngine
             nextEncounterPosition = nextEncounterView.transform.position;
             Game.currentEncounter = current;
             nextEncounter = next;
-            Game.currentEncounterController = InflateEncounter(Game.currentEncounter, encounterView);
-            nextEncounterController = InflateEncounter(nextEncounter, nextEncounterView);
+            var currentEncounterController = encounterView.GetComponent<EncounterController>();
+            currentEncounterController.InflateEncounter(Game.currentEncounter);
+            Game.currentEncounterController = currentEncounterController;
+            nextEncounterController = nextEncounterView.GetComponent<EncounterController>();
+            nextEncounterController.InflateEncounter(nextEncounter);
             encounterCancellationToken = new CancellationTokenSource();
             firstEncounter = false;
         }
 
         public async UniTask presentEcnounter()
         {
-            if (Game.currentEncounter.isBlocking())
+            if (Game.currentEncounter.tags.Contains(Tags.Blocking))
             {
                 await Game.currentEncounterController.runExecutable().AttachExternalCancellation(encounterCancellationToken.Token);
             }
