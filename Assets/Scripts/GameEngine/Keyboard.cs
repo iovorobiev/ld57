@@ -112,11 +112,9 @@ public class Keyboard : MonoBehaviour
             clickListeners.Add(commentItem.clickListener.awaitClickWithCancellation(cancellationToken));
         }
         clickListeners.Add(refresh.clickListener.awaitClickWithCancellation(cancellationToken));
-        Debug.Log("Listening for " + clickListeners.Count + " click listeners");
         var (_, result) = await UniTask.WhenAny(clickListeners).AttachExternalCancellation(cancellationToken);
         if (result == refresh)
         {
-            Debug.Log("Refresh picked");
             return result.comment;
         }
 
@@ -124,10 +122,8 @@ public class Keyboard : MonoBehaviour
         lastFreePosition = index;
         var comment = result.comment;
         await Game.currentEncounterController.commentView.claimComment(result);
-        Debug.Log("Removing from hand");
 
         currentHand.Remove(result);
-        Debug.Log("Removed from hand");
         return comment;
     }
 }

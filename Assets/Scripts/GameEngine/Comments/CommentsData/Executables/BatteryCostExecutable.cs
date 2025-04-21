@@ -18,5 +18,10 @@ namespace GameEngine.Comments.CommentsData
         {
             await Player.receivePowerDamage(batteryCost);
         }
+
+        public string getPrice(Executable.Resource r)
+        {
+            return r == Executable.Resource.Battery? "-" + batteryCost + "%" : null;
+        }
     }
 }

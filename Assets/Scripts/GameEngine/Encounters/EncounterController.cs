@@ -8,10 +8,11 @@ using UnityEngine;
 public class EncounterController : MonoBehaviour
 {
    protected Encounter encounterData;
-   protected EncounterExecutable encounterScript;
+   public EncounterExecutable encounterScript;
    private GameObject encounterContent;
    public UI ui;
    public CommentView commentView;
+   public EncounterContentView view;
    
    public virtual void setEncounterData(Encounter encounter)
    {
@@ -38,8 +39,12 @@ public class EncounterController : MonoBehaviour
    public void InflateEncounter(Encounter encounter)
    {
       var prefab = Resources.Load(encounter.prefabPath) as GameObject;
+      if (prefab == null)
+      {
+         Debug.Log(encounter.prefabPath);
+      }
       encounterContent = Instantiate(prefab, transform);
-      var view = encounterContent.GetComponent<EncounterContentView>();
+      view = encounterContent.GetComponent<EncounterContentView>();
       view.setData(encounter.visData);
       setEncounterData(encounter);
    }

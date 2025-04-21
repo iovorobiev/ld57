@@ -1446,6 +1446,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4175977d0274d52aff4c7fe06885d03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  encounterView: {fileID: 8233006191636161860}
+  rewardView: {fileID: 4505599485930464596}
+  options:
+  - {fileID: 7832897230657208418}
+  - {fileID: 1114298686973944503}
+  - {fileID: 5022459928636344830}
+  - {fileID: 7172300038424155120}
   topText: {fileID: 3278498263706669679}
   botText: {fileID: 6067224488564037130}
 --- !u!1 &7842459015706263392

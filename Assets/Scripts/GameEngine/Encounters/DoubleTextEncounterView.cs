@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameEngine.Encounters
 {
-    public class DoubleTextEncounterView : EncounterContentView
+    public class DoubleTextEncounterView : EnemyEncounterView
     {
         public TextMeshProUGUI topText;
         public TextMeshProUGUI botText;

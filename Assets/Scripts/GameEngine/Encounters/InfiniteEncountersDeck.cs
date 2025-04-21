@@ -19,7 +19,7 @@ namespace GameEngine
                 new Encounter(
                     likes,
                     new[] {Tags.Meme}.ToList(),
-                    "\"Prefabs/Memes/\" + \"MemeEncounter\"",
+                    "Prefabs/Memes/MemeEncounter",
                     new MemeEncounterExecutable(likes),
                     new TextPrefabData("Prefabs/Memes/" + "Cat_0", "Cat videos always releave stress") 
                     )
@@ -28,7 +28,7 @@ namespace GameEngine
                 new Encounter(
                     likes,
                     new[] {Tags.Meme}.ToList(),
-                    "\"Prefabs/Memes/\" + \"MemeEncounter\"",
+                    "Prefabs/Memes/MemeEncounter",
                     new MemeEncounterExecutable(likes),
                     new TextPrefabData("Prefabs/Memes/" + "fire_0", "Rest near the fire. Releave some stress")
                 )

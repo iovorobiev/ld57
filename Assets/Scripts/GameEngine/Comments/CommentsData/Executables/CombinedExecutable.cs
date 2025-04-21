@@ -19,5 +19,19 @@ namespace GameEngine.Comments.CommentsData
                 await exec.execute();
             }
         }
+
+        public string getPrice(Executable.Resource r)
+        {
+            foreach (var ex in combination)
+            {
+                var price = ex.getPrice(r);
+                if (price != null)
+                {
+                    return price;
+                }
+            }
+
+            return null;
+        }
     }
 }

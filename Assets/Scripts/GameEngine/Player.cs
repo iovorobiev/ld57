@@ -16,13 +16,19 @@ namespace GameEngine
         public static List<Comment> vocabulary;
         public static Queue<Comment> currentEncounterDeck = new();
         
-        private static int drawHandSize = 3;
+        private static int drawHandSize = 4;
         public static int maxHandSize = 6;
 
         public static int currentHaCount = 0;
-        public static int batteryUnderPost = 0;
+        public static int batteryUnderPostSpent = 0;
+        public static int batteryUnderPostGained = 0;
 
         public static List<OSUpgrade> upgrades = new();
+
+        public static List<TempEffect> nextComment = new();
+        public static List<TempEffect> nextRefresh = new();
+        public static List<TempEffect> nextEncounter = new();
+        
         public static bool loseFlag;
 
         public static void AddOSUpgrade(OSUpgrade upgrade)
@@ -30,14 +36,16 @@ namespace GameEngine
             upgrades.Add(upgrade);
         }
 
-        public static int getLikesFromComment(Comment comment)
+        public static int calculateLikesWithBonuses(int likes, List<Comments.Tags> tags = null)
         {
-            if (comment.type != LikeInteractionType.REDUCE_STRESS)
+            var updatedLikes = likes + upgrades.FindAll((up) => up.upgradeID == OSUpgradesBase.INFLUENCER).Count;
+            if (tags != null && tags.Contains(Comments.Tags.FINISHER))
             {
-                return 0;
+                var finisherMultipler = Mathf.Pow(2,
+                    Player.upgrades.FindAll((up) => OSUpgradesBase.FINISHERS == up.upgradeID).Count);
+                updatedLikes *= (int) finisherMultipler;
             }
-
-            return comment.value() + upgrades.FindAll((up) => up.upgradeID == OSUpgradesBase.INFLUENCER).Count;
+            return updatedLikes;
         }
 
         public static void reset()
@@ -80,11 +88,20 @@ namespace GameEngine
             }
         }
 
+        public static bool hasTempEffect(TempEffect effect)
+        {
+            return nextComment.Contains(effect) || nextRefresh.Contains(effect) || nextEncounter.Contains(effect);
+        }
+
         public static void prepareEncounter()
         {
             prepareEncounterDeck();
             currentHaCount = 0;
-            batteryUnderPost = 0;
+            batteryUnderPostSpent = 0;
+            batteryUnderPostGained = 0;
+            nextEncounter.Clear();
+            nextRefresh.Clear();
+            nextComment.Clear();
         }
 
         public static async UniTask addToVocabulary(Comment comment)
@@ -97,14 +114,14 @@ namespace GameEngine
         {
             int from = powerLevel;
             powerLevel -= dmg;
-            batteryUnderPost += dmg;
-            await Game.screenController.changeBatteryLevel(from, powerLevel);
-        }
-
-        public static async UniTask restorePower(int amount)
-        {
-            int from = powerLevel;
-            powerLevel += amount;
+            if (dmg > 0)
+            {
+                batteryUnderPostSpent += dmg;
+            }
+            else
+            {
+                batteryUnderPostGained -= dmg;
+            }
             await Game.screenController.changeBatteryLevel(from, powerLevel);
         }
 

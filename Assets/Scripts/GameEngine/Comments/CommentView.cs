@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using GameEngine;
@@ -54,9 +55,14 @@ public class CommentView : MonoBehaviour
         comments.Add(postedComment);
         Debug.Log("Setting data");
         var comment = commentItem.comment;
-        postedComment.SetData(comment.text, Player.getLikesFromComment(comment));
+        postedComment.SetData(comment.text, 0);
         Debug.Log("destroying");
         Destroy(commentItem.gameObject);
+    }
+
+    public async UniTask updateLastPostedCommentLikes(int likes)
+    {
+        await comments.Last().UpdateLikes(likes);
     }
 
     public void clearComments()

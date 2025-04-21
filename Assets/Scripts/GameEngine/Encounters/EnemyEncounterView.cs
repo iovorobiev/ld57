@@ -19,38 +19,8 @@ namespace GameEngine.Encounters
 
         public List<Button> options;
 
-        public Image bg;
-        public Image icon;
-        public GameObject stats;
-        public TextMeshProUGUI currentHp;
-        public TextMeshProUGUI totalHp;
-
         private CancellationTokenSource source = new();
-        public async UniTask changeCurrentHp(int to)
-        {
-            currentHp.text = to.ToString();
-        }
         
-        public async UniTask changeTotalHp(int to)
-        {
-            totalHp.text = to.ToString();
-        }
-
-        public async UniTask showEncounter()
-        {
-            encounterView.SetActive(true);
-            rewardView.SetActive(false);
-            var enemy = await Resources.LoadAsync(((TextPrefabData)data).prefabPath) as GameObject;
-            var enemyObject = Instantiate(enemy, encounterView.transform);
-        }
-
-        public async UniTask OnKeyboardOpened()
-        {
-            icon.gameObject.SetActive(true);
-            stats.SetActive(true);
-            bg.gameObject.SetActive(true);
-        }
-
         public async UniTask<Comment> showReward(List<Comment> reward)
         {
             encounterView.SetActive(false);
@@ -63,7 +33,6 @@ namespace GameEngine.Encounters
                 
                 options[i].GetComponentInChildren<TextMeshProUGUI>().text = comment.text;
                 options[i].gameObject.SetActive(true);
-                options[i].GetComponent<Hintable>().SetStringToHint(comment.description);
                 options[i].onClick.AddListener(() =>
                 {
                     listener.notifyClick(comment);

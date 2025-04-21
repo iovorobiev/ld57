@@ -13,7 +13,7 @@ namespace GameEngine
     {
         public GameObject uiContainer;
         private Vector3 originalContainerPosition;
-        
+
         public Image likes;
         public TextMeshProUGUI likesCount;
         public Image comments;
@@ -31,7 +31,12 @@ namespace GameEngine
             setCountersFromEncounter();
         }
 
-        private void setCountersFromEncounter()
+        public void setLikesCount(int likes)
+        {
+            likesCount.text = likes.ToString();
+        }
+
+    private void setCountersFromEncounter()
         {
             if (Game.currentEncounter != null)
             {

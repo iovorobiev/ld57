@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using GameEngine;
@@ -14,7 +15,9 @@ public class CommentItem : MonoBehaviour
     public readonly AwaitableClickListener<CommentItem> clickListener = new();
     public Canvas canvas;
     public TextMeshProUGUI text;
-
+    public TextMeshProUGUI description;
+    public TextMeshProUGUI likes;
+    public TextMeshProUGUI battery;
     
     private void Start()
     {
@@ -22,6 +25,13 @@ public class CommentItem : MonoBehaviour
         {
             text.text = comment.text;
         }
+    }
+
+    private void Update()
+    {
+        if (comment == null) return;
+        likes.text = comment.script.getPrice(Executable.Resource.Likes);
+        battery.text = comment.script.getPrice(Executable.Resource.Battery);
     }
 
     public void SetIsInHand(bool value)
@@ -49,17 +59,12 @@ public class CommentItem : MonoBehaviour
         if (text != null)
         {
             text.text = comment.text;
+            description.text = this.comment.description;
         }
-    }
-
-    public int getLikes()
-    {
-        return comment.value();
     }
     
     private void OnMouseDown()
     {
-        Debug.Log("On mouse down " + isInHand);
         if (isInHand)
         {
             clickListener.notifyClick(this);

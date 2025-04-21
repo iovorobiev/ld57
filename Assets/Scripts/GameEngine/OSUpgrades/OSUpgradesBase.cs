@@ -52,6 +52,10 @@ namespace GameEngine.OSUpgrades
             result.Add(
                 new OSUpgrade(EASY_START, "Start with 10% less stress",3, 0)
             );
+            
+            result.Add(
+                new OSUpgrade(EASY_START, "Start with 10% less stress",3, 0)
+            );
             return result;
         }
 

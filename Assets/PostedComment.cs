@@ -12,6 +12,11 @@ public class PostedComment : MonoBehaviour
     public async UniTask SetData(string text, int likes)
     {
         commentText.text = text;
+        await UpdateLikes(likes);
+    }
+
+    public async UniTask UpdateLikes(int likes)
+    {
         likesImage.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         var scaleSequence = DOTween.Sequence();
         scaleSequence.Append(likesImage.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 0.2f));

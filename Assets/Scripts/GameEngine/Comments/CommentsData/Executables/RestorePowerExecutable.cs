@@ -15,5 +15,10 @@ namespace GameEngine.Comments.CommentsData
         {
             await Player.receivePowerDamage(-restore);
         }
+
+        public string getPrice(Executable.Resource resource)
+        {
+            return resource == Executable.Resource.Battery ? "+" + restore + "%" : null;
+        }
     }
 }

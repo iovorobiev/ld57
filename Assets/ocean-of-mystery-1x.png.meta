@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ocean-of-mystery-1x_0: -3806404062058652635
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

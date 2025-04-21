@@ -18,5 +18,10 @@ namespace GameEngine.Comments.CommentsData
                 await Game.keyboard.draw();
             }
         }
+
+        public string getPrice(Executable.Resource resource)
+        {
+            return null;
+        }
     }
 }

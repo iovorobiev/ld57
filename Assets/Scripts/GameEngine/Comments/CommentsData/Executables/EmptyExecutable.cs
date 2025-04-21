@@ -9,5 +9,10 @@ namespace GameEngine.Comments.CommentsData
         {
             // Do nothing
         }
+
+        public string getPrice(Executable.Resource resource)
+        {
+            return null;
+        }
     }
 }

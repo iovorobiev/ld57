@@ -13,7 +13,7 @@ namespace GameEngine.Encounters.EncounterData
 
         public async UniTask execute()
         {
-            Player.restorePower(batteryRestore);
+            Player.receivePowerDamage(-batteryRestore);
         }
 
         public UniTask setEncounterController(EncounterController controller)
