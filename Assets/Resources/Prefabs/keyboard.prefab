@@ -181,6 +181,8 @@ MonoBehaviour:
   - {fileID: 2639086165219378141}
   - {fileID: 6922136277072242093}
   refresh: {fileID: 798879684303357764}
+  openPos: {fileID: 0}
+  closePos: {fileID: 0}
 --- !u!1 &4573051845726614037
 GameObject:
   m_ObjectHideFlags: 0

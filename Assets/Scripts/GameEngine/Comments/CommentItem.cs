@@ -13,20 +13,11 @@ public class CommentItem : MonoBehaviour
 
     public Comment comment;
     public readonly AwaitableClickListener<CommentItem> clickListener = new();
-    public Canvas canvas;
-    public TextMeshProUGUI text;
-    public TextMeshProUGUI description;
-    public TextMeshProUGUI likes;
-    public TextMeshProUGUI battery;
-    
-    private void Start()
-    {
-        if (comment != null)
-        {
-            text.text = comment.text;
-        }
-    }
-
+    public TextMeshPro title;
+    public TextMeshPro description;
+    public TextMeshPro likes;
+    public TextMeshPro battery;
+    public TextMeshPro stress;
     private void Update()
     {
         if (comment == null) return;
@@ -43,24 +34,17 @@ public class CommentItem : MonoBehaviour
         }
     }
 
-    public void changeSortingLayer(string layer)
-    {
-        var rend = GetComponent<Renderer>();
-        rend.sortingLayerName = layer;
-        rend.sortingOrder = 3;
-        
-        canvas.sortingLayerName = layer;
-        canvas.sortingOrder = 4;
-    }
-
     public void setComment(Comment comment)
     {
         this.comment = comment;
-        if (text != null)
-        {
-            text.text = comment.text;
-            description.text = this.comment.description;
-        }
+        title.text = comment.text;
+        description.text = comment.description;
+        var likesText = comment.script.getPrice(Executable.Resource.Likes);
+        var batteryText = comment.script.getPrice(Executable.Resource.Battery); 
+        var stressText = comment.script.getPrice(Executable.Resource.Stress); 
+        battery.text = batteryText ?? "0";
+        stress.text = stressText ?? "0";
+        likes.text = likesText ?? "0";
     }
     
     private void OnMouseDown()

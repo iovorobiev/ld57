@@ -53,11 +53,8 @@ public class CommentView : MonoBehaviour
         var postedCommentObject = Instantiate(commentsPrefab, content.transform);
         var postedComment = postedCommentObject.GetComponent<PostedComment>();
         comments.Add(postedComment);
-        Debug.Log("Setting data");
         var comment = commentItem.comment;
         postedComment.SetData(comment.text, 0);
-        Debug.Log("destroying");
-        Destroy(commentItem.gameObject);
     }
 
     public async UniTask updateLastPostedCommentLikes(int likes)

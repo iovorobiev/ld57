@@ -52,13 +52,7 @@ public class Keyboard : MonoBehaviour
 
         for (int i = 0; i < hand.Count; i++)
         {
-            var prefab = Resources.Load(hand[i].prefab) as GameObject;
-            var comment = Instantiate(prefab, transform);
-            var commentItem = comment.GetComponent<CommentItem>();
-            commentItem.setComment(hand[i]);
-            commentItem.SetIsInHand(true);
-            comment.transform.position = positionsForComments[i].transform.position;
-            currentHand.Add(commentItem);
+            AddCommentToHand(hand[i], i);
         }
 
         lastFreePosition = currentHand.Count;
@@ -81,15 +75,22 @@ public class Keyboard : MonoBehaviour
         var comment = Player.currentEncounterDeck.Dequeue();
         
         Game.vocabularyView.removeComment(comment);
-        var prefab = Resources.Load(comment.prefab) as GameObject;
-        var commentObj = Instantiate(prefab, transform);
+        AddCommentToHand(comment, currentHand.Count);
+    }
+
+    private void AddCommentToHand(Comment comment, int indexInHand)
+    {
+        var commentObj = positionsForComments[indexInHand];
+        commentObj.SetActive(true);
         var commentItem = commentObj.GetComponent<CommentItem>();
         commentItem.SetIsInHand(true);
         commentItem.setComment(comment);
-        commentObj.transform.position = positionsForComments[lastFreePosition].transform.position;
+        UniTask.WhenAll(commentObj.GetComponent<SpriteRenderer>().DOFade(1f, 0.2f).From(0f).ToUniTask(),
+            commentObj.transform.DOScale(new Vector3(0.75f, 0.75f, 0.75f), 0.2f).From(new Vector3(0.1f, 0.1f, 0.1f))
+                .ToUniTask());
         currentHand.Add(commentItem);
     }
-    
+
     public async UniTask clearHand()
     {
         Debug.Log("Clear hand");
@@ -119,10 +120,18 @@ public class Keyboard : MonoBehaviour
         }
 
         var index = currentHand.FindIndex((obj) =>  obj == result);
-        lastFreePosition = index;
         var comment = result.comment;
-        await Game.currentEncounterController.commentView.claimComment(result);
-
+        var prevPosition = result.transform.position;
+        var tasksList = new List<UniTask>();
+        for (int i = index + 1; i < positionsForComments.Count; i++)
+        {
+            tasksList.Add(positionsForComments[i].transform.DOMove(prevPosition, 0.2f).ToUniTask());
+            prevPosition = positionsForComments[i].transform.position;
+        }
+        tasksList.Add(Game.currentEncounterController.commentView.claimComment(result));
+        await UniTask.WhenAll(tasksList);
+        result.transform.position = prevPosition;
+        result.gameObject.SetActive(false);
         currentHand.Remove(result);
         return comment;
     }
