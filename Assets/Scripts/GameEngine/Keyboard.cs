@@ -20,7 +20,10 @@ public class Keyboard : MonoBehaviour
 
     public Transform openPos;
     public Transform closePos;
+    public Transform closeInCommentsPos;
 
+    public KeyboardState state = KeyboardState.CLOSED;
+    
     private void Awake()
     {
         Game.keyboard = this;
@@ -29,12 +32,20 @@ public class Keyboard : MonoBehaviour
 
     public async UniTask open()
     {
+        state = KeyboardState.SHOWN;
         await transform.DOMove(openPos.position, 0.5f).ToUniTask();
     }
     
     public async UniTask close()
     {
+        state = KeyboardState.CLOSED;
         await transform.DOMove(closePos.position, 0.5f).ToUniTask();
+    }
+
+    public async UniTask closeInComments()
+    {
+        state = KeyboardState.HIDDEN_COMMENTS;
+        await transform.DOMove(closeInCommentsPos.position, 0.5f).ToUniTask();
     }
     
     public async UniTask OnShow()
@@ -133,6 +144,15 @@ public class Keyboard : MonoBehaviour
         result.transform.position = prevPosition;
         result.gameObject.SetActive(false);
         currentHand.Remove(result);
+        positionsForComments.Remove(result.gameObject);
+        positionsForComments.Add(result.gameObject);
         return comment;
+    }
+
+    public enum KeyboardState
+    {
+        SHOWN,
+        HIDDEN_COMMENTS,
+        CLOSED,
     }
 }

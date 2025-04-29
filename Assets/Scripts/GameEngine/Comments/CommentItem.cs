@@ -57,6 +57,6 @@ public class CommentItem : MonoBehaviour
     public async UniTask discard()
     {
         await GetComponent<SpriteRenderer>().DOFade(0f, 0.5f);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }
