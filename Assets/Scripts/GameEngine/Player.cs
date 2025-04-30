@@ -15,6 +15,7 @@ namespace GameEngine
         public static int powerLevel = 20;
         public static List<Comment> vocabulary;
         public static Queue<Comment> currentEncounterDeck = new();
+        public static List<PostedComment> postedComments = new();
         
         private static int drawHandSize = 4;
         public static int maxHandSize = 6;
@@ -51,7 +52,8 @@ namespace GameEngine
         public static void reset()
         {
             stressLevel = initStressLevel - upgrades.FindAll((up) => up.upgradeID == OSUpgradesBase.EASY_START).Count;
-            Game.screenController.stressLevel.progressBar.setProgress(stressLevel / 100f);
+
+            Game.screenController.changeStressLevel(stressLevel, stressLevel);
             powerLevel = initPowerLevel + upgrades.FindAll((up) => up.upgradeID == OSUpgradesBase.CHARGE_MORE).Count;
             loseFlag = false;
             prepareVocabulary();

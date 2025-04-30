@@ -1,18 +1,31 @@
+using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using GameEngine.Comments;
 using TMPro;
 using UnityEngine;
 
-public class PostedComment : MonoBehaviour
+public class PostedCommentView : MonoBehaviour
 {
     public TextMeshProUGUI commentText;
     public TextMeshProUGUI likesCount;
     public GameObject likesImage;
+    private int prevLikes = 0;
+    public PostedComment postedComment;
 
-    public async UniTask SetData(string text, int likes)
+    private void Update()
     {
-        commentText.text = text;
-        await UpdateLikes(likes);
+        if (prevLikes != postedComment.currentLikes)
+        {
+            UpdateLikes(postedComment.currentLikes);
+            prevLikes = postedComment.currentLikes;
+        }
+    }
+
+    public async UniTask SetData(PostedComment postedComment)
+    {
+        commentText.text = postedComment.originalComment.text;
+        this.postedComment = postedComment;
     }
 
     public async UniTask UpdateLikes(int likes)

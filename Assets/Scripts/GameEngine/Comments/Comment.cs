@@ -29,6 +29,22 @@ namespace GameEngine.Comments
         public Executable script;
     }
 
+    public class PostedComment
+    {
+        public Comment originalComment;
+        public int currentLikes;
+        public int currentBattery;
+        public int currentStress;
+
+        public PostedComment(Comment originalComment, int currentLikes = 0, int currentBattery = 0, int currentStress = 0)
+        {
+            this.originalComment = originalComment;
+            this.currentLikes = currentLikes;
+            this.currentBattery = currentBattery;
+            this.currentStress = currentStress;
+        }
+    }
+
     public enum TempEffect
     {
         MAX_RANDOM

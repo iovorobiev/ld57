@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using GameEngine.EncounterData;
 
@@ -21,7 +22,7 @@ namespace GameEngine.Comments.CommentsData
         public async UniTask execute()
         {
             int dmg = Player.calculateLikesWithBonuses(value(), tags);
-            await Game.currentEncounterController.commentView.updateLastPostedCommentLikes(dmg);
+            Player.postedComments.Last().currentLikes = dmg;
             if (Game.currentEncounterController.encounterScript is EnemyExecutable)
             {
                 await ((EnemyExecutable) Game.currentEncounterController.encounterScript).receiveDamage(dmg);

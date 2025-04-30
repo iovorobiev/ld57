@@ -12,7 +12,7 @@ using UnityEngine.Rendering.Universal;
 
 public class CommentView : MonoBehaviour
 {
-    private List<PostedComment> comments = new();
+    private List<PostedCommentView> comments = new();
 
     public GameObject emptyView;
     public GameObject content;
@@ -51,15 +51,11 @@ public class CommentView : MonoBehaviour
 
 
         var postedCommentObject = Instantiate(commentsPrefab, content.transform);
-        var postedComment = postedCommentObject.GetComponent<PostedComment>();
+        var postedComment = postedCommentObject.GetComponent<PostedCommentView>();
+        var postedCommentData = new PostedComment(commentItem.comment);
         comments.Add(postedComment);
-        var comment = commentItem.comment;
-        postedComment.SetData(comment.text, 0);
-    }
-
-    public async UniTask updateLastPostedCommentLikes(int likes)
-    {
-        await comments.Last().UpdateLikes(likes);
+        Player.postedComments.Add(postedCommentData);
+        postedComment.SetData(postedCommentData);
     }
 
     public void clearComments()
@@ -68,7 +64,7 @@ public class CommentView : MonoBehaviour
         {
             Destroy(commentItem.gameObject);
         }
-
+        Player.postedComments.Clear();
         comments.Clear();
     }
 }

@@ -5,9 +5,10 @@ using GameEngine;
 using GameEngine.Comments;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using utils;
 
-public class CommentItem : MonoBehaviour
+public class CommentItem : MonoBehaviour, IPointerClickHandler
 {
     private bool isInHand = true;
 
@@ -47,16 +48,14 @@ public class CommentItem : MonoBehaviour
         likes.text = likesText ?? "0";
     }
     
-    private void OnMouseDown()
-    {
-        if (isInHand)
-        {
-            clickListener.notifyClick(this);
-        }
-    }
     public async UniTask discard()
     {
         await GetComponent<SpriteRenderer>().DOFade(0f, 0.5f);
         gameObject.SetActive(false);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        clickListener.notifyClick(this);
     }
 }

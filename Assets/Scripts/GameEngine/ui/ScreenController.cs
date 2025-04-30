@@ -7,6 +7,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
 namespace GameEngine.ui
@@ -27,7 +28,10 @@ namespace GameEngine.ui
         
         public Image battery;
         public TextMeshProUGUI batteryLevel;
+        public TextMeshProUGUI stressStatus;
 
+        public GameObject subtractionPrefab;
+        
         public Notification stressLevel;
 
         private void Awake()
@@ -76,12 +80,37 @@ namespace GameEngine.ui
         
         public async UniTask changeBatteryLevel(int from, int to)
         {
+            int diff = to - from;
             batteryLevel.text = to + "%";
-        } 
+            if (diff < 0)
+            {
+                animateChangeResource(diff, batteryLevel.gameObject);
+            }
+        }
+
+        private async void animateChangeResource(int diff, GameObject parentObject)
+        {
+            var subtraction = Instantiate(subtractionPrefab, parentObject.transform);
+            subtraction.transform.position = parentObject.transform.position;
+            subtraction.GetComponent<TextMeshProUGUI>().text = diff + "%";
+            await UniTask.WhenAll(
+                subtraction.transform.DOMove(subtraction.transform.position + 1.5f * Vector3.down, 1.5f).ToUniTask(),
+                subtraction.GetComponent<TextMeshProUGUI>().DOFade(0f, 1.5f).ToUniTask()
+            );
+            Destroy(subtraction);
+
+        }
 
         public async UniTask changeStressLevel(int from, int to)
         {
-            stressLevel.updateStress(to);
+            var diff = to - from;
+            if (diff > 0)
+            {
+                animateChangeResource(diff, stressStatus.gameObject);
+            }
+
+            stressStatus.text = to + "%";
+            // stressLevel.updateStress(to);
         }
     }
 }
