@@ -16,11 +16,18 @@ namespace GameEngine.Comments.CommentsData
 
         public async UniTask execute()
         {
-            await Player.receivePowerDamage(batteryCost);
+            if (!Player.hasTempEffect(TempEffect.NEXT_NO_BATTERY))
+            {
+                await Player.receivePowerDamage(batteryCost);    
+            }
         }
 
         public string getPrice(Executable.Resource r)
         {
+            if (Player.hasTempEffect(TempEffect.NEXT_NO_BATTERY))
+            {
+                return "0%";
+            }
             return r == Executable.Resource.Battery? "-" + batteryCost + "%" : null;
         }
     }

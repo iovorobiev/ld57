@@ -47,7 +47,11 @@ namespace GameEngine.Comments
 
     public enum TempEffect
     {
-        MAX_RANDOM
+        MAX_RANDOM,
+        CHEAPER_REFRESH,
+        FREE_REFRESH,
+        COMMENTS_PLUS_1,
+        NEXT_NO_BATTERY
     }
 
     public enum Tags

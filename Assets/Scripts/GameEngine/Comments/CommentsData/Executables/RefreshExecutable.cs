@@ -16,13 +16,21 @@ namespace GameEngine.Comments
             await Game.keyboard.clearHand();
             await Game.keyboard.OnShow();
             await Player.receiveStressDamage(getRefreshDmg());
+            Player.refreshUnderPost++;
             Player.nextRefresh.Clear();
             Debug.Log("Finish refresh");
         }
 
         private static int getRefreshDmg()
         {
-            return Mathf.Max(2 - Player.upgrades.FindAll(up => up.upgradeID == OSUpgradesBase.BETTER_REFRESH).Count, 1);
+            if (Player.hasTempEffect(TempEffect.FREE_REFRESH))
+            {
+                return 0;
+            }
+
+            int modFromUpgs = Player.upgrades.FindAll(up => up.upgradeID == OSUpgradesBase.BETTER_REFRESH).Count;
+            int modFromComms = Player.hasTempEffect(TempEffect.CHEAPER_REFRESH) ? 1 : 0; 
+            return Mathf.Max(2 - modFromUpgs - modFromComms, 1);
         }
 
         public string getPrice(Executable.Resource resource)

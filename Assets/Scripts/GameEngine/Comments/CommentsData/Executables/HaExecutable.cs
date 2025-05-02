@@ -16,9 +16,6 @@ namespace GameEngine.Comments.CommentsData
         public async UniTask execute()
         {
             Player.currentHaCount += haCount;
-            // var ha = CommentsBase.getAllComments()[haIndex];
-            // Player.currentEncounterDeck.Enqueue(ha);
-            // Game.vocabularyView.addComment(ha);
         }
 
         public string getPrice(Executable.Resource resource)

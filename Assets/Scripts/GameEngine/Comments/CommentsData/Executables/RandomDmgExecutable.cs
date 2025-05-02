@@ -21,7 +21,8 @@ namespace GameEngine.Comments.CommentsData
 
         public async UniTask execute()
         {
-            int dmg = Player.calculateLikesWithBonuses(value(), tags);
+            int modFromComms = Player.hasTempEffect(TempEffect.COMMENTS_PLUS_1) ? 1 : 0;
+            int dmg = Player.calculateLikesWithBonuses(value() + modFromComms, tags);
             Player.postedComments.Last().currentLikes = dmg;
             if (Game.currentEncounterController.encounterScript is EnemyExecutable)
             {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GameEngine.Comments.CommentsData.Executables;
 using GameEngine.OSUpgrades;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -46,10 +47,10 @@ namespace GameEngine.Comments.CommentsData
                     new CombinedExecutable(new RandomDmgExecutable(
                             () => CommentsRandom.nextInt(0, 2),
                             null,
-                            () => CommentsRandom.getLikesFor(0,2)
-                            ),
+                            () => CommentsRandom.getLikesFor(0, 2)
+                        ),
                         new BatteryCostExecutable(2))));
-            
+
             // 1
             allComments.Add(new Comment(
                 "Refresh",
@@ -65,11 +66,11 @@ namespace GameEngine.Comments.CommentsData
                 LikeInteractionType.REDUCE_STRESS,
                 1,
                 new CombinedExecutable(
-                    new BatteryCostExecutable(2), 
-                    new HaExecutable(allComments.Count), 
+                    new BatteryCostExecutable(2),
+                    new HaExecutable(allComments.Count),
                     new RandomDmgExecutable(() => 1))
             ));
-            
+
             // 3
             allComments.Add(new Comment(
                 "haha",
@@ -77,11 +78,11 @@ namespace GameEngine.Comments.CommentsData
                 LikeInteractionType.REDUCE_STRESS,
                 1,
                 new CombinedExecutable(
-                    new BatteryCostExecutable(4), 
-                    new HaExecutable(allComments.Count, 2), 
+                    new BatteryCostExecutable(4),
+                    new HaExecutable(allComments.Count, 2),
                     new RandomDmgExecutable(() => 2))
             ));
-            
+
             // 4
             allComments.Add(new Comment(
                 "lol",
@@ -89,27 +90,27 @@ namespace GameEngine.Comments.CommentsData
                 LikeInteractionType.REDUCE_STRESS,
                 1,
                 new CombinedExecutable(new RandomDmgExecutable(
-                        () => Player.currentHaCount,
-                        new [] { Comments.Tags.FINISHER }.ToList()
-                    ), new BatteryCostExecutable(3)))
+                    () => Player.currentHaCount,
+                    new[] { Comments.Tags.FINISHER }.ToList()
+                ), new BatteryCostExecutable(3)))
             );
-            
+
             // 5
             allComments.Add(new Comment(
                 "#58008",
                 "+1 stress",
                 LikeInteractionType.RESTORE_DEVICE_POWER,
                 1,
-                new CombinedExecutable(new AddStressExecutable(1), new RestorePowerExecutable(2)))
+                new CombinedExecutable(new AddStressExecutable(1), new RestorePowerExecutable(2), new RandomDmgExecutable(() => 0)))
             );
-            
+
             // 6
             allComments.Add(new Comment(
                 "#58008_918",
                 "+2 stress",
                 LikeInteractionType.RESTORE_DEVICE_POWER,
                 1,
-                new CombinedExecutable(new AddStressExecutable(2), new RestorePowerExecutable(4)))
+                new CombinedExecutable(new AddStressExecutable(2), new RestorePowerExecutable(4), new RandomDmgExecutable(() => 0)))
             );
 
             // 7
@@ -118,10 +119,10 @@ namespace GameEngine.Comments.CommentsData
                 "1 like for each power charged",
                 LikeInteractionType.REDUCE_STRESS,
                 1,
-                new CombinedExecutable(new RandomDmgExecutable(() => Player.batteryUnderPostGained, new []
-                    {
-                        Tags.FINISHER
-                    }.ToList()), new BatteryCostExecutable(2)))
+                new CombinedExecutable(new RandomDmgExecutable(() => Player.batteryUnderPostGained, new[]
+                {
+                    Tags.FINISHER
+                }.ToList()), new BatteryCostExecutable(2)))
             );
 
             // 8
@@ -132,18 +133,20 @@ namespace GameEngine.Comments.CommentsData
                 1,
                 new CombinedExecutable(
                     new BatteryCostExecutable(2),
-                    new GetCommentExecutable(2)
+                    new GetCommentExecutable(2),
+                    new RandomDmgExecutable(() => 0)
                 )));
-            
+
             // 9
             allComments.Add(
                 new Comment(
-                    "Lame",
-                    "",
+                    "Mic Drop",
+                    "1 for each used comment under this post",
                     LikeInteractionType.REDUCE_STRESS,
                     0,
-                    new CombinedExecutable(new RandomDmgExecutable(() => 1),
-                        new BatteryCostExecutable(2))));
+                    new CombinedExecutable(new RandomDmgExecutable(() => Player.postedComments.Count),
+
+        new BatteryCostExecutable(2))));
             
             // 10
             allComments.Add(new Comment(
@@ -151,7 +154,7 @@ namespace GameEngine.Comments.CommentsData
                 "-1 stress",
                 LikeInteractionType.RESTORE_DEVICE_POWER,
                 1,
-                new CombinedExecutable(new AddStressExecutable(-1), new RestorePowerExecutable(2)))
+                new CombinedExecutable(new AddStressExecutable(-1), new RestorePowerExecutable(2), new RandomDmgExecutable(() => 0)))
             );
             
             // 11
@@ -160,16 +163,16 @@ namespace GameEngine.Comments.CommentsData
                 "-2 stress",
                 LikeInteractionType.RESTORE_DEVICE_POWER,
                 1,
-                new CombinedExecutable(new AddStressExecutable(-2), new RestorePowerExecutable(4)))
+                new CombinedExecutable(new AddStressExecutable(-2), new RestorePowerExecutable(4), new RandomDmgExecutable(() => 0)))
             );
             
             // 12
             allComments.Add(new Comment(
                 "RAGE!!",
-                "1<sprite=0>. 4<sprite=0> if stress > 50%",
+                "1<sprite=0>. +1<sprite=0> for each <sprite=23> received under this post",
                 LikeInteractionType.RESTORE_DEVICE_POWER,
                 1,
-                new CombinedExecutable(new RandomDmgExecutable(() => Player.stressLevel > 50 ? 4 : 1), new RestorePowerExecutable(5)))
+                new CombinedExecutable(new RandomDmgExecutable(() => Player.stressUnderPostGained + 1), new RestorePowerExecutable(5)))
             );
             
             // 13
@@ -203,8 +206,113 @@ namespace GameEngine.Comments.CommentsData
                 "",
                 LikeInteractionType.RESTORE_DEVICE_POWER,
                 1,
-                new CombinedExecutable(new RestorePowerExecutable(1)))
+                new CombinedExecutable(new RestorePowerExecutable(1), new RandomDmgExecutable(() => 0)))
             );
+            
+            // 16
+            allComments.Add(new Comment(
+                "BRB",
+                "Next Refresh costs 1 less <sprite=23>",
+                LikeInteractionType.REDUCE_STRESS,
+                1,
+                new CombinedExecutable(new BatteryCostExecutable(2), new TempEffectExecutable(TempEffectExecutable.Length.REFRESH, TempEffect.CHEAPER_REFRESH), new RandomDmgExecutable(() => 0)))
+            );
+            
+            // 17
+            allComments.Add(new Comment(
+                "I'll be back",
+                "Next Refresh is free",
+                LikeInteractionType.REDUCE_STRESS,
+                1,
+                new CombinedExecutable(new BatteryCostExecutable(4), new TempEffectExecutable(TempEffectExecutable.Length.REFRESH, TempEffect.FREE_REFRESH), new RandomDmgExecutable(() => 0)))
+            );
+            
+            // 18
+            allComments.Add(new Comment(
+                "I am back",
+                "1<sprite=0> for each refresh used",
+                LikeInteractionType.REDUCE_STRESS,
+                1,
+                new CombinedExecutable(new BatteryCostExecutable(3), new RandomDmgExecutable(() => Player.refreshUnderPost)))
+            );
+            
+            // 19
+            allComments.Add(new Comment(
+                "Clickbait",
+                "Next comments get +1<sprite=0> until Refresh",
+                LikeInteractionType.REDUCE_STRESS,
+                1,
+                new CombinedExecutable(new BatteryCostExecutable(5), new TempEffectExecutable(TempEffectExecutable.Length.REFRESH, TempEffect.COMMENTS_PLUS_1), new RandomDmgExecutable(() => 0))
+            ));
+            
+            // 20
+            allComments.Add(new Comment(
+                "1337",
+                "Next comments doesn't use <sprite=3>",
+                LikeInteractionType.REDUCE_STRESS,
+                1,
+                new CombinedExecutable(new BatteryCostExecutable(2), new TempEffectExecutable(TempEffectExecutable.Length.COMMENT, TempEffect.NEXT_NO_BATTERY), new RandomDmgExecutable(() => 0))
+            ));
+            
+            // 20
+            allComments.Add(new Comment(
+                "SEO",
+                "Next comment with random <sprite=0> gets max",
+                LikeInteractionType.REDUCE_STRESS,
+                1,
+                new CombinedExecutable(new BatteryCostExecutable(2), new TempEffectExecutable(TempEffectExecutable.Length.COMMENT, TempEffect.MAX_RANDOM), new RandomDmgExecutable(() => 0))
+            ));
+            
+            // 21
+            allComments.Add(new Comment(
+                "Even",
+                "1<sprite=0> for each comment with even <sprite=0>",
+                LikeInteractionType.REDUCE_STRESS,
+                1,
+                new CombinedExecutable(new BatteryCostExecutable(3), new RandomDmgExecutable(() =>
+                {
+                    return Player.postedComments.FindAll((x) => x.currentLikes % 2 == 0).Count;
+                }))
+            ));
+            
+            // 22
+            allComments.Add(new Comment(
+                "Odd",
+                "+1<sprite=0> for each comment with odd <sprite=0>",
+                LikeInteractionType.REDUCE_STRESS,
+                1,
+                new CombinedExecutable(new BatteryCostExecutable(3), new RandomDmgExecutable(() =>
+                {
+                    return Player.postedComments.FindAll((x) => x.currentLikes % 2 != 0).Count;
+                }))
+            ));
+            
+            // 23
+            allComments.Add(new Comment(
+                "Bump",
+                "Adds 1<sprite=0> to all past comments. Doesn't count towards score.",
+                LikeInteractionType.REDUCE_STRESS,
+                1,
+                new CombinedExecutable(new BatteryCostExecutable(3), new RandomDmgExecutable(() =>0), new BumpExecutable())
+            ));
+            
+            // 24
+            allComments.Add(new Comment(
+                "Steal",
+                "Steals 1<sprite=0> from previous comment. Doesn't add to score.",
+                LikeInteractionType.REDUCE_STRESS,
+                1,
+                new CombinedExecutable(new BatteryCostExecutable(1), new RandomDmgExecutable(() =>0), new StealExecutable())
+            ));
+            
+            // // 25
+            // allComments.Add(new Comment(
+            //     "c0m9i13",
+            //     "Steals 1<sprite=0> from previous comment. Doesn't add to score.",
+            //     LikeInteractionType.REDUCE_STRESS,
+            //     1,
+            //     new CombinedExecutable(new BatteryCostExecutable(1), new RandomDmgExecutable(() =>0), new StealExecutable())
+            // ));
             return allComments;
         }
 
@@ -235,12 +343,15 @@ namespace GameEngine.Comments.CommentsData
             var allComments = getAllComments();
             result.Add(allComments[0]);
             result.Add(allComments[0]);
-            result.Add(allComments[0]);
-            result.Add(allComments[9]);
-            result.Add(allComments[9]);
-            result.Add(allComments[9]);
-            result.Add(allComments[5]);
-            result.Add(allComments[5]);
+            result.Add(allComments[24]);
+            result.Add(allComments[6]);
+            result.Add(allComments[6]);
+            result.Add(allComments[21]);
+            result.Add(allComments[22]);
+            result.Add(allComments[2]);
+            result.Add(allComments[3]);
+            result.Add(allComments[3]);
+            result.Add(allComments[23]);
             return result;
         }
     }

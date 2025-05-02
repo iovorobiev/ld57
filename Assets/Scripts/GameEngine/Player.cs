@@ -10,7 +10,7 @@ namespace GameEngine
     public class Player
     {
         private static int initStressLevel = 50;
-        private static int initPowerLevel = 20;
+        private static int initPowerLevel = 70;
         public static int stressLevel = 50;
         public static int powerLevel = 20;
         public static List<Comment> vocabulary;
@@ -23,6 +23,8 @@ namespace GameEngine
         public static int currentHaCount = 0;
         public static int batteryUnderPostSpent = 0;
         public static int batteryUnderPostGained = 0;
+        public static int stressUnderPostGained = 0;
+        public static int refreshUnderPost = 0;
 
         public static List<OSUpgrade> upgrades = new();
 
@@ -101,6 +103,8 @@ namespace GameEngine
             currentHaCount = 0;
             batteryUnderPostSpent = 0;
             batteryUnderPostGained = 0;
+            stressUnderPostGained = 0;
+            refreshUnderPost = 0;
             nextEncounter.Clear();
             nextRefresh.Clear();
             nextComment.Clear();
@@ -134,6 +138,7 @@ namespace GameEngine
             {
                 dmg -= upgrades.FindAll((up) => OSUpgrades.OSUpgradesBase.ARMOR == up.upgradeID).Count;
                 dmg = Mathf.Max(dmg, 0);
+                stressUnderPostGained += dmg;
             }
             stressLevel += dmg;
             await Game.screenController.changeStressLevel(prev, stressLevel);
