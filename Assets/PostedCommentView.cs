@@ -10,7 +10,7 @@ public class PostedCommentView : MonoBehaviour
     public TextMeshProUGUI commentText;
     public TextMeshProUGUI likesCount;
     public GameObject likesImage;
-    private int prevLikes = 0;
+    private int prevLikes = -1;
     public PostedComment postedComment;
 
     private void Update()

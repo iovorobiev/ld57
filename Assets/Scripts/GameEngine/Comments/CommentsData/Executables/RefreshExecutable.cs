@@ -13,8 +13,7 @@ namespace GameEngine.Comments
                 return;
             }
             Debug.Log("Executing refresh");
-            await Game.keyboard.clearHand();
-            await Game.keyboard.OnShow();
+            await Game.keyboard.fillHand();
             await Player.receiveStressDamage(getRefreshDmg());
             Player.refreshUnderPost++;
             Player.nextRefresh.Clear();

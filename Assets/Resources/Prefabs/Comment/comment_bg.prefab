@@ -1068,6 +1068,7 @@ GameObject:
   - component: {fileID: 4737648473154642568}
   - component: {fileID: -9190662999732774358}
   - component: {fileID: 4394659803581646642}
+  - component: {fileID: 5670468834837676342}
   m_Layer: 8
   m_Name: comment_bg
   m_TagString: Untagged
@@ -1166,6 +1167,7 @@ MonoBehaviour:
   likes: {fileID: 8232977629771594300}
   battery: {fileID: 7975270294021328377}
   stress: {fileID: 1023944577843140169}
+  selectScale: 1.1
 --- !u!61 &4394659803581646642
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1212,6 +1214,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 4.0572157, y: 1.964534}
   m_EdgeRadius: 0
+--- !u!210 &5670468834837676342
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6433433885237437026}
+  m_Enabled: 1
+  m_SortingLayerID: 359395497
+  m_SortingLayer: 2
+  m_SortingOrder: 2
+  m_SortAtRoot: 1
 --- !u!1 &8542542309367320755
 GameObject:
   m_ObjectHideFlags: 0

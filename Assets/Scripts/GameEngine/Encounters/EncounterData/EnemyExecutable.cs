@@ -10,8 +10,8 @@ namespace GameEngine.EncounterData
 {
     public class EnemyExecutable : EncounterExecutable
     {
-        private int maxHp;
-        private int currentHp;
+        public  int maxHp;
+        public int currentHp;
         private EncounterController encounterController;
 
         public EnemyExecutable(int likes)

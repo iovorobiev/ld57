@@ -17,7 +17,7 @@ namespace GameEngine.Encounters
         public GameObject encounterView;
         public GameObject rewardView;
 
-        public List<Button> options;
+        public List<CommentItem> options;
 
         private CancellationTokenSource source = new();
         
@@ -25,23 +25,18 @@ namespace GameEngine.Encounters
         {
             encounterView.SetActive(false);
             rewardView.SetActive(true);
-            var allAwaitables = new List<UniTask<Comment>>();
+            var allAwaitables = new List<UniTask<CommentItem>>();
             for (int i = 0; i < reward.Count; i++)
             {
-                var listener = new AwaitableClickListener<Comment>();
                 var comment = reward[i];
                 
-                options[i].GetComponentInChildren<TextMeshProUGUI>().text = comment.text;
                 options[i].gameObject.SetActive(true);
-                options[i].onClick.AddListener(() =>
-                {
-                    listener.notifyClick(comment);
-                });
-                allAwaitables.Add(listener.awaitClick().AttachExternalCancellation(cancellationToken: source.Token));
+                options[i].setComment(comment);
+                allAwaitables.Add(options[i].clickListener.awaitClick());
             }
 
             var (_, result) = await UniTask.WhenAny(allAwaitables);
-            return result;
+            return result.comment;
         }
 
         public async UniTask finishEncounter()

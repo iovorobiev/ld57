@@ -76,6 +76,14 @@ public class Keyboard : MonoBehaviour
         return currentHand.Count == 0;
     }
 
+    public async UniTask fillHand()
+    {
+        for (int i = currentHand.Count; i < Player.getDrawHandSize(); i++)
+        {
+            await draw();
+        }
+    }
+    
     public async UniTask draw()
     {
         if (currentHand.Count > Player.maxHandSize || Player.currentEncounterDeck.Count == 0)

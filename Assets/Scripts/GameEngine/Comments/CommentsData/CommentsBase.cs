@@ -254,15 +254,6 @@ namespace GameEngine.Comments.CommentsData
                 new CombinedExecutable(new BatteryCostExecutable(2), new TempEffectExecutable(TempEffectExecutable.Length.COMMENT, TempEffect.NEXT_NO_BATTERY), new RandomDmgExecutable(() => 0))
             ));
             
-            // 20
-            allComments.Add(new Comment(
-                "SEO",
-                "Next comment with random <sprite=0> gets max",
-                LikeInteractionType.REDUCE_STRESS,
-                1,
-                new CombinedExecutable(new BatteryCostExecutable(2), new TempEffectExecutable(TempEffectExecutable.Length.COMMENT, TempEffect.MAX_RANDOM), new RandomDmgExecutable(() => 0))
-            ));
-            
             // 21
             allComments.Add(new Comment(
                 "Even",
@@ -303,6 +294,15 @@ namespace GameEngine.Comments.CommentsData
                 LikeInteractionType.REDUCE_STRESS,
                 1,
                 new CombinedExecutable(new BatteryCostExecutable(1), new RandomDmgExecutable(() =>0), new StealExecutable())
+            ));
+            
+            // 25
+            allComments.Add(new Comment(
+                "SEO",
+                "Next comment with random <sprite=0> gets max",
+                LikeInteractionType.REDUCE_STRESS,
+                1,
+                new CombinedExecutable(new BatteryCostExecutable(2), new TempEffectExecutable(TempEffectExecutable.Length.COMMENT, TempEffect.MAX_RANDOM), new RandomDmgExecutable(() => 0))
             ));
             
             // // 25

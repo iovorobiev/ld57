@@ -27,7 +27,6 @@ namespace GameEngine
             screenController.startListeningButtons();
             while (!tutorialDeck.isEmpty())
             {
-                Debug.Log("Tutorial loop");
                 tutorialDeck.changePage();
                 Player.prepareEncounter();
                 encountersPresenter.closeKeyboard();
