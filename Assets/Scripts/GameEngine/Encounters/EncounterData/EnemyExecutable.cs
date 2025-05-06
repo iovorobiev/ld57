@@ -22,7 +22,6 @@ namespace GameEngine.EncounterData
 
         public async UniTask setEncounterController(EncounterController encounterController)
         {
-            Debug.Log("Setting controller " + encounterController);
             this.encounterController = encounterController;
         }
 
@@ -34,8 +33,7 @@ namespace GameEngine.EncounterData
 
         public async UniTask execute()
         {
-            // await encounterController.showEncounter();
-            await Player.receiveStressDamage(maxHp - currentHp);
+            currentHp = 0;
             while (currentHp < maxHp && !Player.loseCondition() && !Player.winCondition())
             {
                 if (Game.currentEncounter.tags.Contains(Tags.Blocking) && Player.currentEncounterDeck.Count == 0 && Game.keyboard.isEmpty())

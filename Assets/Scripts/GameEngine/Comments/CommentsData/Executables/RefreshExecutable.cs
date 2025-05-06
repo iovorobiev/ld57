@@ -24,11 +24,13 @@ namespace GameEngine.Comments
         {
             if (Player.hasTempEffect(TempEffect.FREE_REFRESH))
             {
+                Player.removeFromCommentEffect(TempEffect.FREE_REFRESH);
                 return 0;
-            }
+            } 
 
             int modFromUpgs = Player.upgrades.FindAll(up => up.upgradeID == OSUpgradesBase.BETTER_REFRESH).Count;
             int modFromComms = Player.hasTempEffect(TempEffect.CHEAPER_REFRESH) ? 1 : 0; 
+            Player.removeFromCommentEffect(TempEffect.CHEAPER_REFRESH);
             return Mathf.Max(2 - modFromUpgs - modFromComms, 1);
         }
 

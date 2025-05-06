@@ -20,6 +20,10 @@ namespace GameEngine.Comments.CommentsData
             {
                 await Player.receivePowerDamage(batteryCost);    
             }
+            else
+            {
+                Player.removeFromCommentEffect(TempEffect.NEXT_NO_BATTERY);
+            }
         }
 
         public string getPrice(Executable.Resource r)

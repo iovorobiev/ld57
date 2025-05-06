@@ -97,6 +97,11 @@ namespace GameEngine
             return nextComment.Contains(effect) || nextRefresh.Contains(effect) || nextEncounter.Contains(effect);
         }
 
+        public static void removeFromCommentEffect(TempEffect effect)
+        {
+            nextComment.Remove(effect);
+        }
+
         public static void prepareEncounter()
         {
             prepareEncounterDeck();

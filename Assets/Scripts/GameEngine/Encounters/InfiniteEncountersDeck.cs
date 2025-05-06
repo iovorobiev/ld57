@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using GameEngine.EncounterData;
 using GameEngine.Encounters;
 using GameEngine.Encounters.EncounterData;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace GameEngine
 {
@@ -11,9 +13,18 @@ namespace GameEngine
     {
         private List<Encounter> enemyEncounters = new();
         private List<Encounter> memeEncounters = new();
+
+        private List<Vector2Int> levels;
         
         public void initDeck()
         {
+            levels = new List<Vector2Int>();
+            levels.Add(new Vector2Int(5, 8));
+            levels.Add(new Vector2Int(8, 11));
+            levels.Add(new Vector2Int(11, 16));
+            levels.Add(new Vector2Int(16, 22));
+            levels.Add(new Vector2Int(22, 30));
+            
             var likes = Random.Range(5, 10);
             memeEncounters.Add(
                 new Encounter(
@@ -112,15 +123,34 @@ namespace GameEngine
 
         private Encounter getRandomEncounter()
         {
-            var prob = Random.Range(0f, 1f);
-            if (prob < 0.75)
+            if ((Game.currentDepth + 1) % 2 == 0)
             {
-                return enemyEncounters[Random.Range(0, enemyEncounters.Count)];
+                return createRelaxEncounter();
             }
-            else
-            {
-                return memeEncounters[Random.Range(0, memeEncounters.Count)];
-            }
+
+            var level = levels[Math.Min(Game.currentDepth / 5, levels.Count - 1)];
+            return createRandomEncounter(level.x, level.y, "Prefabs/Enemy/Knight");
+        }
+
+        private Encounter createRandomEncounter(int minLikes, int maxLikes, string prefabPath)
+        {
+            var likes = Random.Range(minLikes, maxLikes + 1);
+            return new Encounter(
+                likes,
+                new[] { Tags.Stressful }.ToList(),
+                "Prefabs/Enemy/EnemyEncounter",
+                new EnemyExecutable(likes),
+                new TextPrefabData(prefabPath, ""));
+        }
+
+        private Encounter createRelaxEncounter()
+        {
+            return new Encounter(
+                0,
+                new List<Tags>(),
+                "Prefabs/Enemy/RewardEncounter",
+                new RelaxExecutable(10, 10),
+                null);
         }
 
         public bool isEmpty()

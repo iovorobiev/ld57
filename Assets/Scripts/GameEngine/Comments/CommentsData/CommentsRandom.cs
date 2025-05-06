@@ -9,6 +9,7 @@ namespace GameEngine.Comments.CommentsData
         {
             if (Player.hasTempEffect(TempEffect.MAX_RANDOM))
             {
+                Player.removeFromCommentEffect(TempEffect.MAX_RANDOM);
                 return maxInclusive;
             }
 

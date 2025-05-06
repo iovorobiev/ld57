@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using GameEngine.Comments;
+using GameEngine.EncounterData;
 using UnityEngine;
 using utils;
 
@@ -149,16 +150,24 @@ namespace GameEngine
 
         public async UniTask presentEcnounter()
         {
+
+            var tasksList = new List<UniTask>();
+            tasksList.Add(swipeAwayListener.awaitClick());
+            tasksList.Add(UniTask.WaitUntil(() => Player.loseCondition(), cancellationToken: encounterCancellationToken.Token));
             if (Game.currentEncounter.tags.Contains(Tags.Blocking))
             {
                 await Game.currentEncounterController.runExecutable().AttachExternalCancellation(encounterCancellationToken.Token);
             }
             else
             {
-                Game.currentEncounterController.runExecutable().AttachExternalCancellation(encounterCancellationToken.Token);
+                tasksList.Add(Game.currentEncounterController.runExecutable().AttachExternalCancellation(encounterCancellationToken.Token));
             }
             
-            await UniTask.WhenAny(swipeAwayListener.awaitClick(), UniTask.WaitUntil(() => Player.loseCondition(), cancellationToken: encounterCancellationToken.Token));
+            await UniTask.WhenAny(tasksList);
+            if (Game.currentEncounter.executable is EnemyExecutable enemyExecutable && enemyExecutable.currentHp < enemyExecutable.maxHp)
+            {
+                await Player.receiveStressDamage(enemyExecutable.maxHp);
+            }
             encounterCancellationToken.Cancel();
         }
 

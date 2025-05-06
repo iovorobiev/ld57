@@ -30,6 +30,8 @@ namespace GameEngine.ui
         public TextMeshProUGUI batteryLevel;
         public TextMeshProUGUI stressStatus;
 
+        public TextMeshProUGUI cardsCounter;
+        
         public GameObject subtractionPrefab;
         
         public Notification stressLevel;
@@ -99,6 +101,11 @@ namespace GameEngine.ui
             );
             Destroy(subtraction);
 
+        }
+
+        private void Update()
+        {
+            cardsCounter.text = Player.currentEncounterDeck.Count + "/" + Player.vocabulary.Count;
         }
 
         public async UniTask changeStressLevel(int from, int to)
