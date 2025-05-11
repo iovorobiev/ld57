@@ -3,12 +3,13 @@ using Cysharp.Threading.Tasks;
 using GameEngine.Comments;
 using GameEngine.Comments.CommentsData;
 using GameEngine.Encounters;
+using GameEngine.Encounters.EncounterData;
 using GameEngine.OSUpgrades;
 using UnityEngine;
 
 namespace GameEngine.EncounterData
 {
-    public class EnemyExecutable : EncounterExecutable
+    public class EnemyExecutable : EncounterExecutable, BattleEncounter
     {
         public  int maxHp;
         public int currentHp;
@@ -23,6 +24,16 @@ namespace GameEngine.EncounterData
         public async UniTask setEncounterController(EncounterController encounterController)
         {
             this.encounterController = encounterController;
+        }
+
+        public int getMaxHp()
+        {
+            return maxHp;
+        }
+
+        public int getCurrentHp()
+        {
+            return currentHp;
         }
 
         public async UniTask receiveDamage(int dmg)

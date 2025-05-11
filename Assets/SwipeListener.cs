@@ -3,13 +3,15 @@ using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.Triggers;
 using GameEngine;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class SwipeListener : MonoBehaviour
+public class SwipeListener : MonoBehaviour, IPointerClickHandler
 {
-    public async void OnMouseDown()
+    public async void OnPointerClick(PointerEventData eventData)
     {
-        if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
+            Debug.Log("Swiping!");
             await Game.encountersPresenter.OnSwipe();
         }
     }

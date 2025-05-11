@@ -35,6 +35,7 @@ namespace GameEngine.ui
         public GameObject subtractionPrefab;
         
         public Notification stressLevel;
+        private bool encounterShown = true;
 
         private void Awake()
         {
@@ -61,14 +62,21 @@ namespace GameEngine.ui
             });
         }
 
+        public async UniTask waitForVocabulary()
+        {
+            await UniTask.WaitUntil(() => !encounterShown);
+        }
+        
         public async UniTask showEncounterScreen()
         {
             await switchScreens(screenPosition.transform.position, rightHidePosition.transform.position);
+            encounterShown = true;
         }
         
         public async UniTask showVocabularyScreen()
         {
             await switchScreens(leftHidePosition.transform.position, screenPosition.transform.position);
+            encounterShown = false;
         }
 
         private async Task switchScreens(Vector3 newEncounterPosition, Vector3 newVocabularyPosition)

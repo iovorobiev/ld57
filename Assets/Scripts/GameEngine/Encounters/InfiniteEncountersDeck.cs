@@ -15,6 +15,9 @@ namespace GameEngine
         private List<Encounter> memeEncounters = new();
 
         private List<Vector2Int> levels;
+        private List<String> enemyPrefabs = new();
+
+        private string prefabsPath = "Prefabs/Enemy/";
         
         public void initDeck()
         {
@@ -24,91 +27,14 @@ namespace GameEngine
             levels.Add(new Vector2Int(11, 16));
             levels.Add(new Vector2Int(16, 22));
             levels.Add(new Vector2Int(22, 30));
-            
-            var likes = Random.Range(5, 10);
-            memeEncounters.Add(
-                new Encounter(
-                    likes,
-                    new[] {Tags.Meme}.ToList(),
-                    "Prefabs/Memes/MemeEncounter",
-                    new MemeEncounterExecutable(likes),
-                    new TextPrefabData("Prefabs/Memes/" + "Cat_0", "Cat videos always releave stress") 
-                    )
-                );
-            memeEncounters.Add(
-                new Encounter(
-                    likes,
-                    new[] {Tags.Meme}.ToList(),
-                    "Prefabs/Memes/MemeEncounter",
-                    new MemeEncounterExecutable(likes),
-                    new TextPrefabData("Prefabs/Memes/" + "fire_0", "Rest near the fire. Releave some stress")
-                )
-            );
-            
-            enemyEncounters.Add(
-                new Encounter(
-                    5,
-                    new[] {Tags.Stressful}.ToList(),
-                    "Prefabs/Enemy/EnemyEncounter",
-                    new EnemyExecutable(5),
-                    new TextPrefabData("Prefabs/Enemy/Clock", "")
-                )
-            );
-            
-            enemyEncounters.Add(
-                new Encounter(
-                    3,
-                    new[] {Tags.Stressful}.ToList(),
-                    "Prefabs/Enemy/EnemyEncounter",
-                    new EnemyExecutable(5),
-                    new TextPrefabData("Prefabs/Enemy/Dress", "")
-                )
-            );
-            enemyEncounters.Add(
-                new Encounter(
-                    5,
-                    new[] { Tags.Stressful }.ToList(),
-                    "Prefabs/Enemy/EnemyEncounter",
-                    new EnemyExecutable(5),
-                    new TextPrefabData("Prefabs/Enemy/Gnome", "")
-                )
-            );
-            enemyEncounters.Add(
-                new Encounter(
-                    5,
-                    new[] { Tags.Stressful }.ToList(),
-                    "Prefabs/Enemy/EnemyEncounter",
-                    new EnemyExecutable(5),
-                    new TextPrefabData("Prefabs/Enemy/Knight", "")
-                )
-            );
-            enemyEncounters.Add(
-                new Encounter(
-                    8,
-                    new[] { Tags.Stressful }.ToList(),
-                    "Prefabs/Enemy/EnemyEncounter",
-                    new EnemyExecutable(5),
-                    new TextPrefabData("Prefabs/Enemy/RIP", "")
-                )
-            );
-            enemyEncounters.Add(
-                    new Encounter(
-                        4,
-                        new[] { Tags.Stressful, Tags.Blocking }.ToList(),
-                        "Prefabs/Enemy/EnemyEncounter",
-                        new EnemyExecutable(5),
-                        new TextPrefabData("Prefabs/Enemy/Troll", "")
-                    )
-            );
-            enemyEncounters.Add(
-                new Encounter(
-                    5,
-                    new[] { Tags.Stressful, Tags.Blocking }.ToList(),
-                    "Prefabs/Enemy/EnemyEncounter",
-                    new EnemyExecutable(5),
-                    new TextPrefabData("Prefabs/Enemy/Screamer", "")
-                )
-            );
+
+            enemyPrefabs = new();
+            enemyPrefabs.Add(prefabsPath +  "Knight");
+            enemyPrefabs.Add(prefabsPath +  "Clock");
+            enemyPrefabs.Add(prefabsPath +  "Dress");
+            enemyPrefabs.Add(prefabsPath +  "Gnome");
+            enemyPrefabs.Add(prefabsPath +  "RIP");
+            enemyPrefabs.Add(prefabsPath +  "troll");
         }
         
         public Encounter getCurrentEncounter()
@@ -123,7 +49,7 @@ namespace GameEngine
 
         private Encounter getRandomEncounter()
         {
-            if ((Game.currentDepth + 1) % 2 == 0)
+            if ((Game.currentDepth + 1) % 5 == 0)
             {
                 return createRelaxEncounter();
             }
@@ -140,14 +66,14 @@ namespace GameEngine
                 new[] { Tags.Stressful }.ToList(),
                 "Prefabs/Enemy/EnemyEncounter",
                 new EnemyExecutable(likes),
-                new TextPrefabData(prefabPath, ""));
+                new TextPrefabData(enemyPrefabs[Random.Range(0, enemyPrefabs.Count)], ""));
         }
 
         private Encounter createRelaxEncounter()
         {
             return new Encounter(
                 0,
-                new List<Tags>(),
+                new [] { Tags.NO_COMMENTS }.ToList(),
                 "Prefabs/Enemy/RewardEncounter",
                 new RelaxExecutable(10, 10),
                 null);

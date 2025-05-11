@@ -17,11 +17,11 @@ public class CommentItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     public Comment comment;
     public readonly AwaitableClickListener<CommentItem> clickListener = new();
     
-    public TextMeshPro title;
-    public TextMeshPro description;
-    public TextMeshPro likes;
-    public TextMeshPro battery;
-    public TextMeshPro stress;
+    public TMP_Text title;
+    public TMP_Text description;
+    public TMP_Text likes;
+    public TMP_Text battery;
+    public TMP_Text stress;
 
     public float selectScale = 1.1f;
     
@@ -82,7 +82,10 @@ public class CommentItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         originalScale = transform.localScale;
         source = new CancellationTokenSource();
         transform.DOScale(new Vector3(selectScale, selectScale, selectScale), 0.1f).ToUniTask(cancellationToken: source.Token);
-        _sortingGroup.sortingOrder = 5;
+        if (_sortingGroup != null)
+        {
+            _sortingGroup.sortingOrder = 5;
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)

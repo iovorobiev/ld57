@@ -1,3 +1,4 @@
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using GameEngine;
 using GameEngine.Comments;
@@ -39,10 +40,6 @@ public class EncounterController : MonoBehaviour
    public void InflateEncounter(Encounter encounter)
    {
       var prefab = Resources.Load(encounter.prefabPath) as GameObject;
-      if (prefab == null)
-      {
-         Debug.Log(encounter.prefabPath);
-      }
       encounterContent = Instantiate(prefab, transform);
       view = encounterContent.GetComponent<EncounterContentView>();
       view.setData(encounter.visData);

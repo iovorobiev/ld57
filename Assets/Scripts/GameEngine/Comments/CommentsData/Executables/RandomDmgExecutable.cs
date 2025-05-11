@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using GameEngine.EncounterData;
+using GameEngine.Encounters.EncounterData;
+using UnityEngine;
 
 namespace GameEngine.Comments.CommentsData
 {
@@ -24,9 +26,10 @@ namespace GameEngine.Comments.CommentsData
             int modFromComms = Player.hasTempEffect(TempEffect.COMMENTS_PLUS_1) ? 1 : 0;
             int dmg = Player.calculateLikesWithBonuses(value() + modFromComms, tags);
             Player.postedComments.Last().currentLikes = dmg;
-            if (Game.currentEncounterController.encounterScript is EnemyExecutable)
+            if (Game.currentEncounterController.encounterScript is BattleEncounter)
             {
-                await ((EnemyExecutable) Game.currentEncounterController.encounterScript).receiveDamage(dmg);
+                Debug.Log("Receive dmg");
+                await ((BattleEncounter) Game.currentEncounterController.encounterScript).receiveDamage(dmg);
             }
         }
 

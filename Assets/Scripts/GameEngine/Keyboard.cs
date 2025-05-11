@@ -47,6 +47,11 @@ public class Keyboard : MonoBehaviour
         state = KeyboardState.HIDDEN_COMMENTS;
         await transform.DOMove(closeInCommentsPos.position, 0.5f).ToUniTask();
     }
+
+    public async UniTask waitForOpen()
+    {
+        await UniTask.WaitUntil(() => state == KeyboardState.SHOWN);
+    }
     
     public async UniTask OnShow()
     {

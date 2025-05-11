@@ -18,9 +18,22 @@ namespace GameEngine.Encounters
         public GameObject rewardView;
 
         public List<CommentItem> options;
+        private GameObject inflatedObject;
 
         private CancellationTokenSource source = new();
-        
+
+        public override void setData(SpecificData data)
+        {
+            base.setData(data);
+            if (data is TextPrefabData textPrefabData)
+            {
+                var prefab = Resources.Load(textPrefabData.prefabPath) as GameObject;
+                Destroy(inflatedObject);
+                inflatedObject = Instantiate(prefab, encounterView.transform);
+                encounterView.SetActive(true);
+            }
+        }
+
         public async UniTask<Comment> showReward(List<Comment> reward)
         {
             encounterView.SetActive(false);

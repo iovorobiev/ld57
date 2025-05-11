@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using GameEngine.Comments;
 using GameEngine.OSUpgrades;
 using Unity.Mathematics.Geometry;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace GameEngine
 {
@@ -73,13 +75,30 @@ namespace GameEngine
             Game.vocabularyView.resetVocab(vocabulary);
         }
         
-        public static void prepareEncounterDeck()
+        public static void prepareEncounterDeck(bool forTutorial = false)
         {
             Game.vocabularyView.resetVocab(vocabulary);
             currentEncounterDeck.Clear();
+            int[] firstHand;
             var checkedPositions = new bool[vocabulary.Count];
-            Debug.Log("Vocab is " + vocabulary.Count);
-            foreach (var _ in vocabulary)
+            if (forTutorial)
+            {
+                firstHand = new[] { 0, 5, 3, 9 };
+                currentEncounterDeck.Enqueue(vocabulary[firstHand[0]]);
+                currentEncounterDeck.Enqueue(vocabulary[firstHand[1]]);
+                currentEncounterDeck.Enqueue(vocabulary[firstHand[2]]);
+                currentEncounterDeck.Enqueue(vocabulary[firstHand[3]]);
+                checkedPositions[firstHand[0]] = true;
+                checkedPositions[firstHand[1]] = true;
+                checkedPositions[firstHand[2]] = true;
+                checkedPositions[firstHand[3]] = true;
+            }
+            else
+            {
+                firstHand = Array.Empty<int>();
+            }
+            
+            for (int i = 0; i < vocabulary.Count - firstHand.Length; i++)
             {
                 int index; 
                 do
@@ -87,7 +106,7 @@ namespace GameEngine
                     index = Random.Range(0, vocabulary.Count);
                 } while (checkedPositions[index]);
 
-                checkedPositions[index] = false;
+                checkedPositions[index] = true;
                 currentEncounterDeck.Enqueue(vocabulary[index]);
             }
         }
@@ -102,9 +121,9 @@ namespace GameEngine
             nextComment.Remove(effect);
         }
 
-        public static void prepareEncounter()
+        public static void prepareEncounter(bool isTutorial = false)
         {
-            prepareEncounterDeck();
+            prepareEncounterDeck(isTutorial);
             currentHaCount = 0;
             batteryUnderPostSpent = 0;
             batteryUnderPostGained = 0;

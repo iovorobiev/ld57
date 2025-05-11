@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using GameEngine.Comments;
 using GameEngine.EncounterData;
+using GameEngine.Encounters.EncounterData;
 using UnityEngine;
 using utils;
 
@@ -13,7 +14,7 @@ namespace GameEngine
 {
     public class EncountersPresenter : MonoBehaviour
     {
-        private static int SWIPE_COST = 1;
+        private static int SWIPE_COST = 0;
         private InfiniteEncountersDeck deck = new();
         public GameObject encounterView;
         public GameObject nextEncounterView;
@@ -152,21 +153,27 @@ namespace GameEngine
         {
 
             var tasksList = new List<UniTask>();
-            tasksList.Add(swipeAwayListener.awaitClick());
             tasksList.Add(UniTask.WaitUntil(() => Player.loseCondition(), cancellationToken: encounterCancellationToken.Token));
             if (Game.currentEncounter.tags.Contains(Tags.Blocking))
             {
+                tasksList.Add(UniTask.CompletedTask);
                 await Game.currentEncounterController.runExecutable().AttachExternalCancellation(encounterCancellationToken.Token);
+                Debug.Log("Blocking encounter finished");
             }
             else
-            {
+            {            
+                tasksList.Add(swipeAwayListener.awaitClick());
                 tasksList.Add(Game.currentEncounterController.runExecutable().AttachExternalCancellation(encounterCancellationToken.Token));
             }
             
             await UniTask.WhenAny(tasksList);
-            if (Game.currentEncounter.executable is EnemyExecutable enemyExecutable && enemyExecutable.currentHp < enemyExecutable.maxHp)
+            if (Game.currentEncounter.tags.Contains(Tags.Stressful))
             {
-                await Player.receiveStressDamage(enemyExecutable.maxHp);
+                if (Game.currentEncounter.executable is not BattleEncounter battleEncounter ||
+                    battleEncounter.getCurrentHp() < battleEncounter.getMaxHp())
+                {
+                    await Player.receiveStressDamage(Game.currentEncounter.likes);
+                }
             }
             encounterCancellationToken.Cancel();
         }

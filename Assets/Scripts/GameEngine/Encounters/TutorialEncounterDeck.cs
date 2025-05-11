@@ -11,66 +11,26 @@ namespace GameEngine.Encounters
         private List<Encounter> deck = new();
         private int currentEncounter;
         
-        public TutorialEncounterDeck()
+        public TutorialEncounterDeck(Tutorial.TutorialSequence tutorial)
         {
             deck.Add(
                 new Encounter(
-                    0,
-                    new[] { Tags.Tutorial }.ToList(),
+                    5,
+                    new[] { Tags.Tutorial, Tags.NO_COMMENTS, Tags.Stressful }.ToList(),
                     TUTORIAL_PREFAB_PATH,
-                    new TutorialExecutable(),
+                    new TutorialExecutable(tutorial),
                     new DoubleTextData("", "click to continue")
                 )
             );
-            // deck.Add(
-            //     new Encounter(
-            //         0,
-            //         new[] { Tags.Tutorial }.ToList(),
-            //         TUTORIAL_PREFAB_PATH,
-            //         new TutorialExecutable(),
-            //         new DoubleTextData("Congrats! You reached the depths of the internet., ", "click to continue")
-            //     )
-            // );
-            // deck.Add(
-            //     new Encounter(
-            //         0,
-            //         new[] { Tags.Tutorial }.ToList(),
-            //         TUTORIAL_PREFAB_PATH,
-            //         new TutorialExecutable(),
-            //         new DoubleTextData(
-            //             "Here you may encounter stressful content. Watch your stress meter, or you will rage quit :)",
-            //             "click to continue"
-            //         ))
-            // );
-            // deck.Add(
-            //     new Encounter(
-            //         0,
-            //         new[] { Tags.Tutorial }.ToList(),
-            //         TUTORIAL_PREFAB_PATH,
-            //         new TutorialExecutable(),
-            //         new DoubleTextData(
-            //             "National Health Association states if your comments get more likes then post, you get your stress relieved!", ""
-            //         ))
-            //     );
-            // deck.Add(
-            //     new Encounter(
-            //         4,
-            //         new[] { Tags.Tutorial, Tags.Stressful, Tags.Blocking }.ToList(),
-            //         TUTORIAL_PREFAB_PATH,
-            //         new EnemyExecutable(4),
-            //         new DoubleTextData(
-            //             "Don't believe? Try it!", "Open comments to post yours ------->"
-            //         ))
-            //     );
-            //
+            
             deck.Add(
                 new Encounter(
-                    0,
-                    new[] { Tags.Tutorial }.ToList(),
+                    5,
+                    new[] { Tags.Tutorial, Tags.Stressful, Tags.Blocking }.ToList(),
                     TUTORIAL_PREFAB_PATH,
-                    new TutorialExecutable(),
+                    new TutorialEncounterExecutable(tutorial, 5),
                     new DoubleTextData(
-                        "To completely relax, and reach 0 stress, you need to comment!", "Click to continue"
+                        "", "Click to continue"
                     )));
         }
         

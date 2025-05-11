@@ -3,10 +3,12 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using GameEngine.EncounterData;
+using GameEngine.Encounters.EncounterData;
 using GameEngine.ui;
 using TMPro;
 using UnityEditor.Experimental;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 namespace GameEngine
@@ -20,6 +22,8 @@ namespace GameEngine
         public Image likesProgress;
         public TextMeshProUGUI likesCount;
         public Image comments;
+        public Image skip;
+        public TMP_Text skipText;
 
         public Transform openKeyboardPos;
         public Transform closeKeyboardPos;
@@ -45,21 +49,49 @@ namespace GameEngine
     private void setCountersFromEncounter()
     {
         if (Game.currentEncounter == null) return;
-        if (Game.currentEncounter.executable is EnemyExecutable executable)
+        if (Game.currentEncounter.tags.Contains(Tags.NO_COMMENTS))
         {
-            var newProgress = (float) (executable.maxHp - executable.currentHp) / executable.maxHp;
+            comments.gameObject.SetActive(false);
+        }
+        else
+        {
+            comments.gameObject.SetActive(true);
+        }
+        if (Game.currentEncounter.tags.Contains(Tags.Stressful))
+        {
+            skipText.text = "+" + Game.currentEncounter.likes + "%";
+            skip.gameObject.SetActive(true);
+            skipText.gameObject.SetActive(true);
+        }
+        else
+        {
+            skipText.text = "+0%";
+        }
+
+        if (Game.currentEncounter.tags.Contains(Tags.Blocking))
+        {
+            skip.gameObject.SetActive(false);
+            skipText.gameObject.SetActive(false);
+        }
+        if (Game.currentEncounter.executable is BattleEncounter executable)
+        {
+            var newProgress = (float) (executable.getMaxHp() - executable.getCurrentHp()) / executable.getMaxHp();
             if (!Mathf.Approximately(newProgress, progress))
             {
                 progressSource.Cancel();
                 progressSource = new CancellationTokenSource();
                 UniTask.WhenAll(
                     DOTween.To(x => likesProgress.fillAmount = x, progress, newProgress, 0.5f).ToUniTask(),
-                    likes.transform.DOShakePosition(0.25f, new Vector3(0.1f, 0.1f)).ToUniTask()
+                    likes.transform.DOShakePosition(0.5f, new Vector3(0.25f, 0.25f)).ToUniTask()
                 ).AttachExternalCancellation(progressSource.Token);
                 
                 progress = newProgress;
             }
-            likesCount.text = (executable.maxHp - executable.currentHp).ToString();
+            likesCount.text = (executable.getMaxHp() - executable.getCurrentHp()).ToString();
+            if (executable.getCurrentHp() >= executable.getMaxHp())
+            {
+                skipText.text = "+0%";
+            }
         }
         else
         {

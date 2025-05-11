@@ -336,7 +336,7 @@ namespace GameEngine.Comments.CommentsData
             var prob = Random.Range(0f, 1f);
             return 1;
         }
-
+        
         public static List<Comment> getInitialVocabulary()
         {
             var result = new List<Comment>();

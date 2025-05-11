@@ -11,7 +11,7 @@ public class VocabularyView : MonoBehaviour
     public GameObject content;
 
     private List<Comment> vocabulary = new();
-    private List<CommentVocabItem> instantiated = new();
+    private List<CommentItem> instantiated = new();
 
     public void Awake()
     {
@@ -37,9 +37,9 @@ public class VocabularyView : MonoBehaviour
 
     private void instantiateComment(Comment comm)
     {
-        var item = Resources.Load(Comment.PATH_TO_COMMENT_PREFAB + "VocabItem") as GameObject;
+        var item = Resources.Load(Comment.PATH_TO_COMMENT_PREFAB + "RealVocabItem") as GameObject;
         var commentObject = Instantiate(item, content.transform);
-        var commentVocabItem = commentObject.GetComponent<CommentVocabItem>();
+        var commentVocabItem = commentObject.GetComponent<CommentItem>();
         commentVocabItem.setComment(comm);
         instantiated.Add(commentVocabItem);
     }
@@ -51,7 +51,7 @@ public class VocabularyView : MonoBehaviour
         {
             return;
         }
-        found.Disappear();
+        Destroy(found.gameObject);
         instantiated.Remove(found);
     }
 

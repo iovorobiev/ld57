@@ -32,6 +32,7 @@ namespace GameEngine
         Blocking,
         Meme,
         Tutorial,
+        NO_COMMENTS,
     }
     
     public enum LikeInteractionType
