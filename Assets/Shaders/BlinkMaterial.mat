@@ -71,12 +71,13 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _Length: 0.2
-    - _Progress: 1.002177
+    - _Length: 0.25
+    - _Progress: 2
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _speed: 0.75
     m_Colors:
-    - _BlinkColor: {r: 2.235447, g: 1.9562142, b: 0.55253494, a: 1}
+    - _BlinkColor: {r: 0.50888145, g: 0.6444799, b: 0.3967553, a: 1}
     - _Color: {r: 0.98490566, g: 0.15423986, b: 0.15423986, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}

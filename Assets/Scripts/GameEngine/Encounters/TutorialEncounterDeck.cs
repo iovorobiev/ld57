@@ -10,18 +10,21 @@ namespace GameEngine.Encounters
         private string TUTORIAL_PREFAB_PATH = "Prefabs/Tutorial/Tutorial";
         private List<Encounter> deck = new();
         private int currentEncounter;
-        
+
         public TutorialEncounterDeck(Tutorial.TutorialSequence tutorial)
         {
             deck.Add(
-                new Encounter(
-                    5,
-                    new[] { Tags.Tutorial, Tags.NO_COMMENTS, Tags.Stressful }.ToList(),
-                    TUTORIAL_PREFAB_PATH,
-                    new TutorialExecutable(tutorial),
-                    new DoubleTextData("", "click to continue")
-                )
+                    new Encounter(0, new[] { Tags.NO_UI }.ToList(), "Prefabs/TitleScreen",
+                        new TitleExecutable())
             );
+
+            deck.Add(new Encounter(
+                5,
+                new[] { Tags.Tutorial, Tags.NO_COMMENTS, Tags.Stressful }.ToList(),
+                TUTORIAL_PREFAB_PATH,
+                new TutorialExecutable(tutorial),
+                new DoubleTextData("", "click to continue")
+            ));
             
             deck.Add(
                 new Encounter(
@@ -33,7 +36,7 @@ namespace GameEngine.Encounters
                         "", "Click to continue"
                     )));
         }
-        
+
         public Encounter getCurrentEncounter()
         {
             return deck[currentEncounter];
@@ -48,7 +51,7 @@ namespace GameEngine.Encounters
         {
             currentEncounter++;
         }
-        
+
         public bool isEmpty()
         {
             return currentEncounter == deck.Count - 1;

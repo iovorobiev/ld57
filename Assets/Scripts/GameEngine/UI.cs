@@ -57,6 +57,8 @@ namespace GameEngine
         {
             comments.gameObject.SetActive(true);
         }
+
+        uiContainer.gameObject.SetActive(!Game.currentEncounter.tags.Contains(Tags.NO_UI));
         if (Game.currentEncounter.tags.Contains(Tags.Stressful))
         {
             skipText.text = "+" + Game.currentEncounter.likes + "%";

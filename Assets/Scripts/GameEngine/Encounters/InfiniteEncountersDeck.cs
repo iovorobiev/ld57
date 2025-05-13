@@ -18,9 +18,13 @@ namespace GameEngine
         private List<String> enemyPrefabs = new();
 
         private string prefabsPath = "Prefabs/Enemy/";
+
+        private TutorialEncounterDeck deck;
         
-        public void initDeck()
+        public void initDeck(TutorialEncounterDeck deck)
         {
+            this.deck = deck;
+            
             levels = new List<Vector2Int>();
             levels.Add(new Vector2Int(5, 8));
             levels.Add(new Vector2Int(8, 11));
@@ -44,6 +48,11 @@ namespace GameEngine
         
         public Encounter getNextEncounter()
         {
+            if (deck?.isEmpty() != true)
+            {
+                deck?.changePage();
+                return deck?.getCurrentEncounter();
+            }
             return getRandomEncounter();
         }
 

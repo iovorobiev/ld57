@@ -21,6 +21,8 @@ namespace GameEngine.ui
         public GameObject leftHidePosition;
         public GameObject rightHidePosition;
 
+        public GameObject bottomBar;
+        public GameObject topBar;
         public Toggle reelsButton;
         public Toggle vocabularyButton;
 
@@ -109,6 +111,17 @@ namespace GameEngine.ui
             );
             Destroy(subtraction);
 
+        }
+
+        public async UniTask showUi()
+        {
+            UniTask.WhenAll(bottomBar.transform.DOMove(new Vector3(bottomBar.transform.position.x,
+                    bottomBar.transform.position.y + 2,
+                    bottomBar.transform.position.z), 0.25f).ToUniTask(),
+                topBar.transform
+                    .DOMove(
+                        new Vector3(topBar.transform.position.x, topBar.transform.position.y - 1,
+                            topBar.transform.position.z), 0.25f).ToUniTask());
         }
 
         private void Update()

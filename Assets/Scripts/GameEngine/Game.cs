@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GameEngine.Encounters;
@@ -25,15 +26,15 @@ namespace GameEngine
             var tutorialExecutable = new TutorialSequence();
             var tutorialDeck = new TutorialEncounterDeck(tutorialExecutable);
             var deck = new InfiniteEncountersDeck();
-            deck.initDeck();
+            deck.initDeck(tutorialDeck);
             Player.reset();
             await encountersPresenter.init(tutorialDeck.getCurrentEncounter(), tutorialDeck.getNextEncounter());
+            tutorialDeck.changePage();
             screenController.startListeningButtons();
-            
+            tutorialView.hide();
             while (!Player.winCondition())
             {
                 Player.reset();
-                // await encountersPresenter.init(deck.getCurrentEncounter(), deck.getNextEncounter());
                 while (!Player.winCondition() && !Player.loseCondition())
                 {
                     currentDepth++;
@@ -48,7 +49,7 @@ namespace GameEngine
                 if (Player.loseCondition() && !Player.winCondition())
                 {
                     await loseSequence();
-                    deck.initDeck();
+                    deck.initDeck(null);
                 }
             }
 
