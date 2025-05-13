@@ -35,6 +35,8 @@ namespace GameEngine.ui
         public TextMeshProUGUI cardsCounter;
         
         public GameObject subtractionPrefab;
+
+        public SpriteRenderer stressOverlay; 
         
         public Notification stressLevel;
         private bool encounterShown = true;
@@ -69,6 +71,11 @@ namespace GameEngine.ui
             await UniTask.WaitUntil(() => !encounterShown);
         }
         
+        public async UniTask waitForEncounter()
+        {
+            await UniTask.WaitUntil(() => encounterShown);
+        }
+        
         public async UniTask showEncounterScreen()
         {
             await switchScreens(screenPosition.transform.position, rightHidePosition.transform.position);
@@ -77,7 +84,12 @@ namespace GameEngine.ui
         
         public async UniTask showVocabularyScreen()
         {
+            
             await switchScreens(leftHidePosition.transform.position, screenPosition.transform.position);
+            if (Game.keyboard.state == Keyboard.KeyboardState.SHOWN)
+            {
+                await Game.keyboard.closeInComments();
+            }
             encounterShown = false;
         }
 
@@ -100,7 +112,7 @@ namespace GameEngine.ui
             }
         }
 
-        private async void animateChangeResource(int diff, GameObject parentObject)
+        private async UniTask animateChangeResource(int diff, GameObject parentObject)
         {
             var subtraction = Instantiate(subtractionPrefab, parentObject.transform);
             subtraction.transform.position = parentObject.transform.position;
@@ -134,7 +146,7 @@ namespace GameEngine.ui
             var diff = to - from;
             if (diff > 0)
             {
-                animateChangeResource(diff, stressStatus.gameObject);
+                UniTask.WhenAll(animateChangeResource(diff, stressStatus.gameObject), stressOverlay.DOFade(1f, 0.5f).SetLoops(2, LoopType.Yoyo).ToUniTask()).Forget();
             }
 
             stressStatus.text = to + "%";

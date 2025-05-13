@@ -50,6 +50,10 @@ namespace GameEngine.Encounters
             
             await Game.screenController.waitForVocabulary();
             Game.tutorialView.hide();
+            await Game.screenController.waitForEncounter();
+            await _tutorialSequence.showNextTip();
+            await Game.keyboard.waitForOpen();
+            Game.tutorialView.hide();
             currentHp = 0;
             while (currentHp < maxHp && !Player.loseCondition() && !Player.winCondition())
             {

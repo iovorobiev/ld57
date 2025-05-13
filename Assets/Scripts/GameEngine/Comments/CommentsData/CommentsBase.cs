@@ -98,7 +98,7 @@ namespace GameEngine.Comments.CommentsData
             // 5
             allComments.Add(new Comment(
                 "#58008",
-                "+1 stress",
+                "",
                 LikeInteractionType.RESTORE_DEVICE_POWER,
                 1,
                 new CombinedExecutable(new AddStressExecutable(1), new RestorePowerExecutable(2), new RandomDmgExecutable(() => 0)))
@@ -107,7 +107,7 @@ namespace GameEngine.Comments.CommentsData
             // 6
             allComments.Add(new Comment(
                 "#58008_918",
-                "+2 stress",
+                "",
                 LikeInteractionType.RESTORE_DEVICE_POWER,
                 1,
                 new CombinedExecutable(new AddStressExecutable(2), new RestorePowerExecutable(4), new RandomDmgExecutable(() => 0)))
@@ -151,19 +151,19 @@ namespace GameEngine.Comments.CommentsData
             // 10
             allComments.Add(new Comment(
                 "#$?!#",
-                "-1 stress",
+                "",
                 LikeInteractionType.RESTORE_DEVICE_POWER,
                 1,
-                new CombinedExecutable(new AddStressExecutable(-1), new RestorePowerExecutable(2), new RandomDmgExecutable(() => 0)))
+                new CombinedExecutable(new AddStressExecutable(-1), new BatteryCostExecutable(2), new RandomDmgExecutable(() => 0)))
             );
             
             // 11
             allComments.Add(new Comment(
                 "#$?!# you",
-                "-2 stress",
+                "",
                 LikeInteractionType.RESTORE_DEVICE_POWER,
                 1,
-                new CombinedExecutable(new AddStressExecutable(-2), new RestorePowerExecutable(4), new RandomDmgExecutable(() => 0)))
+                new CombinedExecutable(new AddStressExecutable(-2), new BatteryCostExecutable(4), new RandomDmgExecutable(() => 0)))
             );
             
             // 12

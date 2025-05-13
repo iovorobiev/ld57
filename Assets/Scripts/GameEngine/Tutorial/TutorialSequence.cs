@@ -90,10 +90,10 @@ namespace GameEngine.Tutorial
             tutorialText.Add("You can only post a few comments under each post. Check which ones you have left by switching to memory tab. Click it.");
             listOfAwaitables.Add(async () => {});
             
-            // tutorialRects.Add(new Rect(new Vector2(-2.5f, -8f), new Vector2(3.5f, 2)));
-            // arrowPosition.Add(ArrowState.ABOVE);
-            // tutorialText.Add("Click Doom Scrolling button in order to get back to posting whenever you are ready");
-            // listOfAwaitables.Add(UniTask.CompletedTask);
+            tutorialRects.Add(new Rect(new Vector2(-3.5f, -6.5f), new Vector2(1.5f, 1f)));
+            arrowPosition.Add(ArrowState.ABOVE);
+            tutorialText.Add("You can reopen your keyboard by clicking this button. After that you can hide your keyboard using the same button. Handy to view posted comments");
+            listOfAwaitables.Add(async () => {});
             
             tutorialRects.Add(new Rect(new Vector2(0f, 0f), new Vector2(10f, 18)));
             arrowPosition.Add(ArrowState.HIDDEN);

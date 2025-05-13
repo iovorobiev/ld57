@@ -165,6 +165,7 @@ namespace GameEngine
                 stressUnderPostGained += dmg;
             }
             stressLevel += dmg;
+            
             await Game.screenController.changeStressLevel(prev, stressLevel);
         }
         
