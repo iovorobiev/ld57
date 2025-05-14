@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.Linq;
@@ -141,12 +142,22 @@ namespace GameEngine.ui
             cardsCounter.text = Player.currentEncounterDeck.Count + "/" + Player.vocabulary.Count;
         }
 
+        private UniTask stressTask = UniTask.CompletedTask;
+        
         public async UniTask changeStressLevel(int from, int to)
         {
             var diff = to - from;
             if (diff > 0)
             {
-                UniTask.WhenAll(animateChangeResource(diff, stressStatus.gameObject), stressOverlay.DOFade(1f, 0.5f).SetLoops(2, LoopType.Yoyo).ToUniTask()).Forget();
+                if (!stressTask.Status.IsCompleted())
+                {
+                    animateChangeResource(diff, stressStatus.gameObject).Forget();
+                }
+                else
+                {
+                    stressTask = stressOverlay.DOFade(0.7f, 0.5f).SetLoops(2, LoopType.Yoyo).ToUniTask().Preserve();
+                    UniTask.WhenAll(animateChangeResource(diff, stressStatus.gameObject), stressTask).Forget();    
+                }
             }
 
             stressStatus.text = to + "%";

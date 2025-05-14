@@ -23,7 +23,7 @@ namespace GameEngine.Encounters
                 new[] { Tags.Tutorial, Tags.NO_COMMENTS, Tags.Stressful }.ToList(),
                 TUTORIAL_PREFAB_PATH,
                 new TutorialExecutable(tutorial),
-                new DoubleTextData("", "click to continue")
+                new DoubleTextData("", "")
             ));
             
             deck.Add(
@@ -33,7 +33,7 @@ namespace GameEngine.Encounters
                     TUTORIAL_PREFAB_PATH,
                     new TutorialEncounterExecutable(tutorial, 5),
                     new DoubleTextData(
-                        "", "Click to continue"
+                        "", ""
                     )));
         }
 

@@ -28,7 +28,7 @@ namespace GameEngine.Tutorial
             
             tutorialRects.Add(new Rect(new Vector2(-1.5f, -5.5f), new Vector2(5.5f, 3)));
             arrowPosition.Add(ArrowState.ABOVE);
-            tutorialText.Add("Stressful content will increase your stress by the amount of likes if you just swipe away");
+            tutorialText.Add("Stressful content will increase your stress. More likes - more stress.");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
@@ -57,7 +57,7 @@ namespace GameEngine.Tutorial
             
             tutorialRects.Add(new Rect(new Vector2(0f, 6.5f), new Vector2(2f, 2f)));
             arrowPosition.Add(ArrowState.BELOW);
-            tutorialText.Add("This is how many likes you need to get. Bring it to 0 (or lower)");
+            tutorialText.Add("This is how many likes you need to get. Bring it to 0");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
@@ -66,7 +66,7 @@ namespace GameEngine.Tutorial
             
             tutorialRects.Add(new Rect(new Vector2(0f, -1f), new Vector2(10f, 4f)));
             arrowPosition.Add(ArrowState.ABOVE);
-            tutorialText.Add("These are all the comments available to you. Choose and post a couple.");
+            tutorialText.Add("Your keyboard suggests you comments to use. No need to type anything. Click on the comment to post it.");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
@@ -74,7 +74,7 @@ namespace GameEngine.Tutorial
             
             tutorialRects.Add(new Rect(new Vector2(3.5f, 8.5f), new Vector2(2.5f, 1)));
             arrowPosition.Add(ArrowState.BELOW);
-            tutorialText.Add("Posting the comment reduced your battery. If your phone is discharged you lose. But you can start again.");
+            tutorialText.Add("Posting the comment reduced your battery. You lose if you run out of power, before you finished doomscrolling.");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
@@ -87,7 +87,7 @@ namespace GameEngine.Tutorial
             
             tutorialRects.Add(new Rect(new Vector2(3.1f, -8f), new Vector2(3.5f, 2)));
             arrowPosition.Add(ArrowState.ABOVE);
-            tutorialText.Add("You can only post a few comments under each post. Check which ones you have left by switching to memory tab. Click it.");
+            tutorialText.Add("You can only post as many comments as your keyboard allows. Switch to keyboard memory tab to see which comments you have left.");
             listOfAwaitables.Add(async () => {});
             
             tutorialRects.Add(new Rect(new Vector2(-3.5f, -6.5f), new Vector2(1.5f, 1f)));
@@ -97,7 +97,7 @@ namespace GameEngine.Tutorial
             
             tutorialRects.Add(new Rect(new Vector2(0f, 0f), new Vector2(10f, 18)));
             arrowPosition.Add(ArrowState.HIDDEN);
-            tutorialText.Add("Once you get enough likes, you reduce you stress by the amount of likes your comments got. You then can learn more comments to post.");
+            tutorialText.Add("Great job on getting many likes. Your stress will be reduced by the amount of likes you got. You also get a reward.");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));

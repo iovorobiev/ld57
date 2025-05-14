@@ -57,7 +57,7 @@ namespace GameEngine.EncounterData
             }
 
             var enemyView = (EnemyEncounterView)encounterController.view;
-            if (!Player.loseCondition())
+            if (!Player.loseCondition() && !Player.winCondition())
             {
                 await Player.receiveStressDamage(-currentHp);
                 Game.currentEncounterController.clearComments();
@@ -65,8 +65,8 @@ namespace GameEngine.EncounterData
                 var reward = CommentsBase.rollComments(3);
                 var chosenReward = await enemyView.showReward(reward);
                 await Player.addToVocabulary(chosenReward);
+                await enemyView.finishEncounter();
             }
-            await enemyView.finishEncounter();
         }
     }
 }

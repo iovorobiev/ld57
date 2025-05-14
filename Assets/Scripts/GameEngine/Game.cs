@@ -5,6 +5,7 @@ using GameEngine.Encounters;
 using GameEngine.Tutorial;
 using GameEngine.ui;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace GameEngine
 {
@@ -28,39 +29,46 @@ namespace GameEngine
             var deck = new InfiniteEncountersDeck();
             deck.initDeck(tutorialDeck);
             Player.reset();
+            turnOffSequence.resetValues();
             await encountersPresenter.init(tutorialDeck.getCurrentEncounter(), tutorialDeck.getNextEncounter());
             tutorialDeck.changePage();
             screenController.startListeningButtons();
             tutorialView.hide();
-            while (!Player.winCondition())
+            
+            while (!Player.winCondition()  && !Player.loseCondition())
             {
-                Player.reset();
-                while (!Player.winCondition() && !Player.loseCondition())
-                {
-                    currentDepth++;
-                    Player.prepareEncounter(tutorialView.shown);
-                    encountersPresenter.closeKeyboard();
-                    keyboard.clearHand();
+                currentDepth++;
+                Player.prepareEncounter(tutorialView.shown);
+                encountersPresenter.closeKeyboard();
+                keyboard.clearHand();
 
-                    await encountersPresenter.presentEcnounter();
-                    await encountersPresenter.changeEncounter(deck.getNextEncounter());
-                }
-
-                if (Player.loseCondition() && !Player.winCondition())
-                {
-                    await loseSequence();
-                    deck.initDeck(null);
-                }
+                await encountersPresenter.presentEcnounter();
+                await encountersPresenter.changeEncounter(deck.getNextEncounter());
             }
 
-            await winSequence();
+            if (Player.winCondition())
+            {
+                await winSequence();
+            }
+            else
+            {
+                await loseSequence();
+            }
+
+            await SceneManager.LoadSceneAsync(0).ToUniTask();
         }
 
         private static async UniTask loseSequence()
         {
             turnOffSequence.gameObject.SetActive(true);
-            await turnOffSequence.doTurnOffSequence();
-            turnOffSequence.gameObject.SetActive(false);
+            if (Player.powerLevel <= 0)
+            {
+                await turnOffSequence.doBatteryTurnOffSequence();
+            } else if (Player.stressLevel >= 100)
+            {
+                await turnOffSequence.doStressTurnOff();
+            }
+            
         }
 
         private static async UniTask winSequence()

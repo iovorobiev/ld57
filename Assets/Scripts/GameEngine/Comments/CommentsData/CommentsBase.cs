@@ -319,13 +319,18 @@ namespace GameEngine.Comments.CommentsData
         public static List<Comment> rollComments(int number)
         {
             var result = new List<Comment>();
+            var allCommentsThisRarity = getAllComments();
+
+            var checkedIndexes = new bool[allCommentsThisRarity.Count];
             for (int i = 0; i < number; i++)
             {
-                int maxRarity = 1;
-                var rarity = randomRarity();
-                var allCommentsThisRarity = getAllComments().FindAll((comment) => rarity == comment.rarity);
-                var index = Random.Range(0, allCommentsThisRarity.Count);
+                int index;
+                do
+                {
+                    index = Random.Range(0, allCommentsThisRarity.Count);
+                } while (checkedIndexes[index]);
                 result.Add(allCommentsThisRarity[index]);
+                checkedIndexes[index] = true;
             }
 
             return result;

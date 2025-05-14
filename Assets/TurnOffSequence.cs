@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using GameEngine;
 using GameEngine.OSUpgrades;
 using TMPro;
@@ -11,58 +12,68 @@ using utils;
 
 public class TurnOffSequence : MonoBehaviour
 {
-    public List<Button> options = new();
-    public TextMeshProUGUI text;
-    private CancellationTokenSource source = new();
+    public GameObject blackOutScreen;
+    public GameObject battery;
+    public TMP_Text text;
+    public GameObject stress;
+    
+    public RestartButtonClickListener restartButtonClickListener;
+    private Material material;
+    private SpriteRenderer _spriteRenderer;
+    private string _progressField = "_progress";
 
     private void Awake()
     {
         Game.turnOffSequence = this;
         gameObject.SetActive(false);
+        var spriteRenderer = blackOutScreen.GetComponent<SpriteRenderer>();
+        _spriteRenderer = spriteRenderer;
+        material = new Material(_spriteRenderer.material);
+        _spriteRenderer.material = material;
     }
 
-    public async UniTask doTurnOffSequence()
+    public void resetValues()
     {
-        var upgrades = OSUpgradesBase.getRandomOsUpgrades(options.Count);
-        var allAwaitables = new List<UniTask<OSUpgrade>>();
-        for (int i = 0; i < upgrades.Count; i++)
-        {
-            var listener = new AwaitableClickListener<OSUpgrade>();
-            var upgrade = upgrades[i];
-            options[i].GetComponentInChildren<TextMeshProUGUI>().text = upgrade.text;
-            options[i].gameObject.SetActive(true);
-                
-            options[i].onClick.AddListener(() =>
-            {
-                listener.notifyClick(upgrade);
-            });
-            allAwaitables.Add(listener.awaitClick().AttachExternalCancellation(cancellationToken: source.Token));
-        }
-        var (_, result) = await UniTask.WhenAny(allAwaitables);
-        var alreadyHas = 0;
-        if (result.maxRepeats != -1)
-        {
-            var alreadyHasList = Player.upgrades.FindAll((up) => result.upgradeID == up.upgradeID);
-            alreadyHas = alreadyHasList.Count;
-        }
+        battery.SetActive(false);
+        text.gameObject.SetActive(false);
+        stress.gameObject.SetActive(false);
+        material.SetFloat(_progressField, 1f);
+        material.SetFloat("_delta", 0f);
+        gameObject.SetActive(false);
+        restartButtonClickListener.gameObject.GetComponent<SpriteRenderer>().color = new Color(Color.white.r, Color.white.g, Color.white.b, 0f);
+        ;
+    }
 
-        if (alreadyHas < result.maxRepeats)
-        {
-            Player.AddOSUpgrade(result);
-        }
-        else
-        {
-        }
-        // source.Cancel();
+    public async UniTask doBatteryTurnOffSequence()
+    {
+        await DOTween.To((x) => _spriteRenderer.material.SetFloat(_progressField, x), 1f, 0f,  0.25f).ToUniTask();
+        battery.SetActive(true);
+        await battery.GetComponent<SpriteRenderer>().DOFade(0f, 1f).SetLoops(3, LoopType.Yoyo).ToUniTask();
+        text.text = "<fade uniformity=0>Do you wish to charge and start again?</>";
+        text.gameObject.SetActive(true);
+        battery.SetActive(false);
+        await restartButtonClickListener.gameObject.GetComponent<SpriteRenderer>().DOFade(1f, 0.5f).ToUniTask();
+        restartButtonClickListener.observable.awaitClick();
+    }
+    
+    public async UniTask doStressTurnOff()
+    {
+        await DOTween.To((x) => material.SetFloat(_progressField, x), 1f, 0f,  0.25f).ToUniTask();
+        stress.SetActive(true);
+        await stress.GetComponent<SpriteRenderer>().DOFade(0f, 1f).SetLoops(3, LoopType.Yoyo).ToUniTask();
+        text.text = "<fade uniformity=0>Too much for today... Or maybe... One more?</>";
+        text.gameObject.SetActive(true);
+        stress.SetActive(false);
+        await restartButtonClickListener.gameObject.GetComponent<SpriteRenderer>().DOFade(1f, 0.5f).ToUniTask();
+        await restartButtonClickListener.observable.awaitClick();
     }
 
     public async UniTask doWinSequence()
     {
+        await DOTween.To((x) => material.SetFloat(_progressField, x), 1f, 0f,  0.25f).ToUniTask();
         gameObject.SetActive(true);
+        text.gameObject.SetActive(true);
         text.text = "Finally, you reached tranquility. Now go, spend some time outside.";
-        foreach (var option in options)
-        {
-            option.gameObject.SetActive(false);
-        }
+        await restartButtonClickListener.observable.awaitClick();
     }
 }
