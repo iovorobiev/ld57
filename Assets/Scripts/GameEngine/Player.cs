@@ -83,7 +83,7 @@ namespace GameEngine
             var checkedPositions = new bool[vocabulary.Count];
             if (forTutorial)
             {
-                firstHand = new[] { 0, 5, 3, 9 };
+                firstHand = new[] { 0, 5, 10, 7 };
                 currentEncounterDeck.Enqueue(vocabulary[firstHand[0]]);
                 currentEncounterDeck.Enqueue(vocabulary[firstHand[1]]);
                 currentEncounterDeck.Enqueue(vocabulary[firstHand[2]]);

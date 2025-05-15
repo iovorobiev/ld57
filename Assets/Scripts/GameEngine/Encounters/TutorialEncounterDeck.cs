@@ -26,15 +26,15 @@ namespace GameEngine.Encounters
                 new DoubleTextData("", "")
             ));
             
-            // deck.Add(
-            //     new Encounter(
-            //         5,
-            //         new[] { Tags.Tutorial, Tags.Stressful, Tags.Blocking }.ToList(),
-            //         TUTORIAL_PREFAB_PATH,
-            //         new TutorialEncounterExecutable(tutorial, 5),
-            //         new DoubleTextData(
-            //             "", ""
-            //         )));
+            deck.Add(
+                new Encounter(
+                    5,
+                    new[] { Tags.Tutorial, Tags.Stressful, Tags.Blocking }.ToList(),
+                    TUTORIAL_PREFAB_PATH,
+                    new TutorialEncounterExecutable(tutorial, 5),
+                    new DoubleTextData(
+                        "", ""
+                    )));
         }
 
         public Encounter getCurrentEncounter()

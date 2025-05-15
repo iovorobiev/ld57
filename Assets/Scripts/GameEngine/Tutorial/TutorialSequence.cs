@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using GameEngine.Comments;
 using Unity.VisualScripting;
@@ -114,6 +115,11 @@ namespace GameEngine.Tutorial
             Game.tutorialView.showAt(tutorialRects[currentTip], arrowPosition[currentTip], tutorialText[currentTip]);
             await listOfAwaitables[currentTip]();
             currentTip++;
+        }
+
+        public bool isInProgress()
+        {
+            return currentTip < tutorialRects.Count;
         }
 
         public enum ArrowState

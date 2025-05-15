@@ -27,7 +27,7 @@ public class Keyboard : MonoBehaviour
     private void Awake()
     {
         Game.keyboard = this;
-        refresh.comment = CommentsBase.getAllComments()[1];
+        refresh.comment = CommentsBase.getRefresh();
     }
 
     public async UniTask open()

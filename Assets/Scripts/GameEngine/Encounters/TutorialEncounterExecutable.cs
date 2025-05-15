@@ -20,7 +20,7 @@ namespace GameEngine.Encounters
         
         public async UniTask execute()
         {
-            Debug.Log("Awaiting battle!");
+            currentHp = 0;
             // Tell about comment button
             await _tutorialSequence.showNextTip();
             // Ask to press
@@ -54,7 +54,6 @@ namespace GameEngine.Encounters
             await _tutorialSequence.showNextTip();
             await Game.keyboard.waitForOpen();
             Game.tutorialView.hide();
-            currentHp = 0;
             while (currentHp < maxHp && !Player.loseCondition() && !Player.winCondition())
             {
                 if (Game.currentEncounter.tags.Contains(Tags.Blocking) && Player.currentEncounterDeck.Count == 0 && Game.keyboard.isEmpty())

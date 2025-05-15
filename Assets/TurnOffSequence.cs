@@ -41,7 +41,6 @@ public class TurnOffSequence : MonoBehaviour
         material.SetFloat("_delta", 0f);
         gameObject.SetActive(false);
         restartButtonClickListener.gameObject.GetComponent<SpriteRenderer>().color = new Color(Color.white.r, Color.white.g, Color.white.b, 0f);
-        ;
     }
 
     public async UniTask doBatteryTurnOffSequence()
@@ -53,7 +52,7 @@ public class TurnOffSequence : MonoBehaviour
         text.gameObject.SetActive(true);
         battery.SetActive(false);
         await restartButtonClickListener.gameObject.GetComponent<SpriteRenderer>().DOFade(1f, 0.5f).ToUniTask();
-        restartButtonClickListener.observable.awaitClick();
+        await restartButtonClickListener.observable.awaitClick();
     }
     
     public async UniTask doStressTurnOff()

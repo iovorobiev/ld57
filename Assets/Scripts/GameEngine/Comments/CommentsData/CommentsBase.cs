@@ -33,6 +33,16 @@ namespace GameEngine.Comments.CommentsData
             }
         }
 
+        public static Comment getRefresh()
+        {
+            return new Comment(
+                "Refresh",
+                "",
+                LikeInteractionType.SKIP_TURN,
+                -1,
+                new RefreshExecutable());
+        } 
+
         public static List<Comment> getAllComments()
         {
             var allComments = new List<Comment>();
@@ -50,14 +60,20 @@ namespace GameEngine.Comments.CommentsData
                             () => CommentsRandom.getLikesFor(0, 2)
                         ),
                         new BatteryCostExecutable(2))));
-
+            
             // 1
-            allComments.Add(new Comment(
-                "Refresh",
-                "",
-                LikeInteractionType.SKIP_TURN,
-                -1,
-                new RefreshExecutable()));
+            allComments.Add(
+                new Comment(
+                    "Rage Quit",
+                    "1 <sprite=0> per posted comment with 0 likes",
+                    LikeInteractionType.REDUCE_STRESS,
+                    1,
+                        new CombinedExecutable(new RandomDmgExecutable(() =>
+                        {
+                            return Player.postedComments.FindAll((x) => x.currentLikes == 0).Count;
+                        } ))
+                    )
+                );
 
             // 2
             allComments.Add(new Comment(
@@ -86,7 +102,7 @@ namespace GameEngine.Comments.CommentsData
             // 4
             allComments.Add(new Comment(
                 "lol",
-                "1 like per ha commented",
+                "1<sprite=0> per ha commented",
                 LikeInteractionType.REDUCE_STRESS,
                 1,
                 new CombinedExecutable(new RandomDmgExecutable(
@@ -116,7 +132,7 @@ namespace GameEngine.Comments.CommentsData
             // 7
             allComments.Add(new Comment(
                 "0xdeadbeef",
-                "1 like for each power charged",
+                "1 <sprite=0> for each power charged",
                 LikeInteractionType.REDUCE_STRESS,
                 1,
                 new CombinedExecutable(new RandomDmgExecutable(() => Player.batteryUnderPostGained, new[]
@@ -335,28 +351,22 @@ namespace GameEngine.Comments.CommentsData
 
             return result;
         }
-
-        private static int randomRarity()
-        {
-            var prob = Random.Range(0f, 1f);
-            return 1;
-        }
         
         public static List<Comment> getInitialVocabulary()
         {
             var result = new List<Comment>();
             var allComments = getAllComments();
-            result.Add(allComments[0]);
-            result.Add(allComments[0]);
-            result.Add(allComments[24]);
-            result.Add(allComments[6]);
-            result.Add(allComments[6]);
-            result.Add(allComments[21]);
-            result.Add(allComments[22]);
-            result.Add(allComments[2]);
-            result.Add(allComments[3]);
-            result.Add(allComments[3]);
-            result.Add(allComments[23]);
+            result.Add(allComments[0]); // WTF
+            result.Add(allComments[0]); // WTF
+            result.Add(allComments[24]); // STEAL
+            result.Add(allComments[6]); // 58008_918
+            result.Add(allComments[6]); // 58008_918
+            result.Add(allComments[21]); // EVEN
+            result.Add(allComments[22]); //ODD
+            result.Add(allComments[2]); // ha
+            result.Add(allComments[3]); // haha
+            result.Add(allComments[3]); // haha
+            result.Add(allComments[23]); // Bump
             return result;
         }
     }

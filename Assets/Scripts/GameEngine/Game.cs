@@ -38,7 +38,7 @@ namespace GameEngine
             while (!Player.winCondition()  && !Player.loseCondition())
             {
                 currentDepth++;
-                Player.prepareEncounter(tutorialView.shown);
+                Player.prepareEncounter(tutorialExecutable.isInProgress());
                 encountersPresenter.closeKeyboard();
                 keyboard.clearHand();
 
