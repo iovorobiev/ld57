@@ -9,10 +9,6 @@ public class SwipeListener : MonoBehaviour, IPointerClickHandler
 {
     public async void OnPointerClick(PointerEventData eventData)
     {
-        if (!EventSystem.current.IsPointerOverGameObject())
-        {
-            Debug.Log("Swiping!");
-            await Game.encountersPresenter.OnSwipe();
-        }
+        await Game.encountersPresenter.OnSwipe();
     }
 }

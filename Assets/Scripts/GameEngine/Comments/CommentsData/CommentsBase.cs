@@ -172,7 +172,7 @@ namespace GameEngine.Comments.CommentsData
                 "1<sprite=0>. +1<sprite=0> for each <sprite=23> received under this post",
                 LikeInteractionType.RESTORE_DEVICE_POWER,
                 1,
-                new CombinedExecutable(new RandomDmgExecutable(() => Player.stressUnderPostGained + 1), new RestorePowerExecutable(5)))
+                new CombinedExecutable(new RandomDmgExecutable(() => Player.stressUnderPostGained + 1), new BatteryCostExecutable(5)))
             );
             
             // 13

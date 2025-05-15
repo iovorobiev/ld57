@@ -158,7 +158,6 @@ namespace GameEngine
             {
                 tasksList.Add(UniTask.CompletedTask);
                 await Game.currentEncounterController.runExecutable().AttachExternalCancellation(encounterCancellationToken.Token);
-                Debug.Log("Blocking encounter finished");
             }
             else
             {            
