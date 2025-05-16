@@ -32,7 +32,15 @@ namespace GameEngine.Tutorial
 
             _rectTransform.gameObject.SetActive(true);
             arrow.SetActive(true);
-            text.text = hintText;
+            if (hintText == "")
+            {
+                text.gameObject.SetActive(false);
+            }
+            else
+            {
+                text.gameObject.SetActive(true);
+                text.text = hintText;
+            }
 
             if (arrowState == TutorialSequence.ArrowState.ABOVE)
             {

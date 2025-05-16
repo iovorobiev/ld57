@@ -35,7 +35,7 @@ namespace GameEngine.Tutorial
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
             });
             
-            tutorialRects.Add(new Rect(new Vector2(0f, 0f), new Vector2(10f, 18)));
+            tutorialRects.Add(new Rect(new Vector2(0f, 2.5f), new Vector2(10f, 14f)));
             arrowPosition.Add(ArrowState.HIDDEN);
             tutorialText.Add("Click anywhere to swipe and try");
             listOfAwaitables.Add(async () =>
@@ -70,7 +70,15 @@ namespace GameEngine.Tutorial
             tutorialText.Add("Your keyboard suggests you comments to use. No need to type anything. Click on the comment to post it.");
             listOfAwaitables.Add(async () =>
             {
-                await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
+                // await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
+            });
+            
+            tutorialRects.Add(new Rect(new Vector2(0f, 2.5f), new Vector2(10f, 14f)));
+            arrowPosition.Add(ArrowState.HIDDEN);
+            tutorialText.Add("");
+            listOfAwaitables.Add(async () =>
+            {
+               
             });
             
             tutorialRects.Add(new Rect(new Vector2(3.5f, 8.5f), new Vector2(2.5f, 1)));
@@ -79,6 +87,14 @@ namespace GameEngine.Tutorial
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
+            });
+            
+            tutorialRects.Add(new Rect(new Vector2(0f, 2.5f), new Vector2(10f, 14f)));
+            arrowPosition.Add(ArrowState.HIDDEN);
+            tutorialText.Add("");
+            listOfAwaitables.Add(async () =>
+            {
+               
             });
             
             tutorialRects.Add(new Rect(new Vector2(1.45f, -5.2f), new Vector2(3.5f, 2)));

@@ -71,7 +71,7 @@ namespace GameEngine.Comments.CommentsData
                         new CombinedExecutable(new RandomDmgExecutable(() =>
                         {
                             return Player.postedComments.FindAll((x) => x.currentLikes == 0).Count;
-                        } ))
+                        } ), new BatteryCostExecutable(4))
                     )
                 );
 

@@ -8,7 +8,7 @@ namespace GameEngine.Comments
     {
         public async UniTask execute()
         {
-            if (Player.currentEncounterDeck.Count == 0)
+            if (Player.currentEncounterDeck.Count == 0 || !Game.keyboard.canDrawMore())
             {
                 return;
             }

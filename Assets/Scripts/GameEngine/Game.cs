@@ -24,6 +24,7 @@ namespace GameEngine
 
         public static async UniTask GameLoop()
         {
+            currentDepth = 0;
             var tutorialExecutable = new TutorialSequence();
             var tutorialDeck = new TutorialEncounterDeck(tutorialExecutable);
             var deck = new InfiniteEncountersDeck();

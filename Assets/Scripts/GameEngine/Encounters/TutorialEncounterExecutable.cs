@@ -30,13 +30,13 @@ namespace GameEngine.Encounters
             await _tutorialSequence.showNextTip();
             // Tell about comments
             await _tutorialSequence.showNextTip();
-            Game.tutorialView.hide();
             var chosenComment = await Game.encountersPresenter.playersComment();
             await chosenComment.script.execute();
+            await _tutorialSequence.showNextTip();
             await UniTask.WaitForSeconds(0.5f);
             // Tell about battery cost
             await _tutorialSequence.showNextTip();
-            Game.tutorialView.hide();
+            await _tutorialSequence.showNextTip();
             chosenComment = await Game.encountersPresenter.playersComment();
             await chosenComment.script.execute();
             // Tell about refresh

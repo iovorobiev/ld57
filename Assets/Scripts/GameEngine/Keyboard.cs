@@ -52,6 +52,11 @@ public class Keyboard : MonoBehaviour
     {
         await UniTask.WaitUntil(() => state == KeyboardState.SHOWN);
     }
+
+    public bool canDrawMore()
+    {
+        return currentHand.Count < Player.maxHandSize;
+    }
     
     public async UniTask OnShow()
     {

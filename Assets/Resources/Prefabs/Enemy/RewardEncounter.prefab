@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6176039266303212189}
   - component: {fileID: 3981069389454720719}
   - component: {fileID: 1800114374338630380}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: AddComment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 1922862198706422624}
   - component: {fileID: 6299658021691923477}
   - component: {fileID: 2065485346239329356}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 1809230135373449239}
   - component: {fileID: 1511903491095180352}
   - component: {fileID: 4418229394524098292}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: RestoreStress
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -565,7 +565,7 @@ GameObject:
   - component: {fileID: 8871761393790764600}
   - component: {fileID: 2573181586672796590}
   - component: {fileID: 2105937881052644161}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -701,7 +701,7 @@ GameObject:
   - component: {fileID: 1002907545543387258}
   - component: {fileID: 353016160039584280}
   - component: {fileID: 1641468222044876796}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -906,7 +906,7 @@ GameObject:
   - component: {fileID: 7998987699267629945}
   - component: {fileID: 750144862761530348}
   - component: {fileID: 5000892455926859231}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1065,7 +1065,7 @@ GameObject:
   - component: {fileID: 493508678855167558}
   - component: {fileID: 8029487066239607757}
   - component: {fileID: 1947753787996318936}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1202,7 +1202,7 @@ GameObject:
   - component: {fileID: 7983462290358888475}
   - component: {fileID: 6019451675726871852}
   - component: {fileID: 2558850588594841814}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: RestoreBattery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
