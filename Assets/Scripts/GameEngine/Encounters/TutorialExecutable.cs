@@ -21,11 +21,13 @@ namespace GameEngine.Encounters
 
         public virtual async UniTask execute()
         {
+            Game.encountersPresenter.blockSwipe = true;
             // Describe the goal
             await _tutorialSequence.showNextTip();
             // Describe the stress on swipe
             await _tutorialSequence.showNextTip();
             // Ask to swipe
+            Game.encountersPresenter.blockSwipe = false;
             await _tutorialSequence.showNextTip();
             Game.tutorialView.hide();
         }

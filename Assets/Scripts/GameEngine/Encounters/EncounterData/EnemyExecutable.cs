@@ -59,11 +59,12 @@ namespace GameEngine.EncounterData
             var enemyView = (EnemyEncounterView)encounterController.view;
             if (!Player.loseCondition() && !Player.winCondition())
             {
+                var preStress = Player.stressLevel;
                 await Player.receiveStressDamage(-currentHp);
                 Game.currentEncounterController.clearComments();
                 await Game.encountersPresenter.closeKeyboard();
                 var reward = CommentsBase.rollComments(3);
-                var chosenReward = await enemyView.showReward(reward);
+                var chosenReward = await enemyView.showReward(reward, preStress, Player.stressLevel);
                 await Player.addToVocabulary(chosenReward);
                 await enemyView.finishEncounter();
             }

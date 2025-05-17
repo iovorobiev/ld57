@@ -21,6 +21,7 @@ public class TurnOffSequence : MonoBehaviour
     private Material material;
     private SpriteRenderer _spriteRenderer;
     private string _progressField = "_progress";
+    public AudioSource audioSource;
 
     private void Awake()
     {
@@ -30,6 +31,7 @@ public class TurnOffSequence : MonoBehaviour
         _spriteRenderer = spriteRenderer;
         material = new Material(_spriteRenderer.material);
         _spriteRenderer.material = material;
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void resetValues()
@@ -69,10 +71,17 @@ public class TurnOffSequence : MonoBehaviour
 
     public async UniTask doWinSequence()
     {
-        await DOTween.To((x) => material.SetFloat(_progressField, x), 1f, 0f,  0.25f).ToUniTask();
         gameObject.SetActive(true);
+        audioSource.Play();
+        await DOTween.To((x) => material.SetFloat(_progressField, x), 1f, 0f,  0.25f).ToUniTask();
+        Color bgColor;
+        ColorUtility.TryParseHtmlString("#DAEDFE", out bgColor);
+        Color textColor;
+        ColorUtility.TryParseHtmlString("#141a0d", out textColor);
+        await _spriteRenderer.DOColor(bgColor, 2.5f).ToUniTask();
         text.gameObject.SetActive(true);
-        text.text = "Finally, you reached tranquility. Now go, spend some time outside.";
+        text.color = textColor;
+        text.text = "Finally, you reached <wave>tranquility</>.<br> Now go, spend some time <wave>outside</wave>.";
         await restartButtonClickListener.observable.awaitClick();
     }
 }

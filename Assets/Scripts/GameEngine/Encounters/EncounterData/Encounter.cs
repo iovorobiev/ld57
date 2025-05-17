@@ -11,14 +11,16 @@ namespace GameEngine
         public string prefabPath;
         public SpecificData visData;
         public EncounterExecutable executable;
+        public string audioPath;
         
-        public Encounter(int likes, List<Tags> tags, string prefabPath, EncounterExecutable executable, SpecificData visData = null)
+        public Encounter(int likes, List<Tags> tags, string prefabPath, string audioPath, EncounterExecutable executable, SpecificData visData = null)
         {
             this.likes = likes;
             this.tags = tags;
             this.executable = executable;
             this.visData = visData;
             this.prefabPath = prefabPath;
+            this.audioPath = audioPath;
         }
     }
 

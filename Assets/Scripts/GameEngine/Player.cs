@@ -14,7 +14,7 @@ namespace GameEngine
         private static int initStressLevel = 50;
         private static int initPowerLevel = 70;
         public static int stressLevel = 50;
-        public static int powerLevel = 20;
+        public static int powerLevel = 70;
         public static List<Comment> vocabulary;
         public static Queue<Comment> currentEncounterDeck = new();
         public static List<PostedComment> postedComments = new();

@@ -42,10 +42,13 @@ namespace GameEngine.ui
         public Notification stressLevel;
         private bool encounterShown = true;
 
+        public AudioSource source;
+
         private void Awake()
         {
             Game.screenController = this;
             changeBatteryLevel(Player.powerLevel, Player.powerLevel);
+            source = GetComponent<AudioSource>();
         }
 
         public void startListeningButtons()
@@ -149,6 +152,7 @@ namespace GameEngine.ui
             var diff = to - from;
             if (diff > 0)
             {
+                source.Play();
                 if (!stressTask.Status.IsCompleted())
                 {
                     animateChangeResource(diff, stressStatus.gameObject).Forget();

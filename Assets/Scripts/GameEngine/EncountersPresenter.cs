@@ -33,6 +33,7 @@ namespace GameEngine
         private AwaitableClickListener<bool> swipeAwayListener = new();
 
         private CancellationTokenSource encounterCancellationToken;
+        public bool blockSwipe;
 
         private bool firstEncounter = true;
 
@@ -47,7 +48,7 @@ namespace GameEngine
             {
                 await closeKeyboard();
             }
-            else
+            else if (!blockSwipe)
             {
                 swipeAwayListener.notifyClick(true);
             }

@@ -273,12 +273,12 @@ namespace GameEngine.Comments.CommentsData
             // 21
             allComments.Add(new Comment(
                 "Even",
-                "1<sprite=0> for each comment with even <sprite=0>",
+                "1<sprite=0> for each comment with even <sprite=0>, but not 0",
                 LikeInteractionType.REDUCE_STRESS,
                 1,
                 new CombinedExecutable(new BatteryCostExecutable(3), new RandomDmgExecutable(() =>
                 {
-                    return Player.postedComments.FindAll((x) => x.currentLikes % 2 == 0).Count;
+                    return Player.postedComments.FindAll((x) => x.currentLikes % 2 == 0 && x.currentLikes != 0).Count;
                 }))
             ));
             

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using GameEngine.Comments;
 using GameEngine.EncounterData;
 using GameEngine.Encounters.EncounterData;
@@ -16,9 +18,13 @@ namespace GameEngine.Encounters
     {
         public GameObject encounterView;
         public GameObject rewardView;
-
+        public GameObject stressView;
+        
         public List<CommentItem> options;
         private GameObject inflatedObject;
+
+        public TMP_Text stressValue;
+        public GameObject stressObject;
 
         private CancellationTokenSource source = new();
 
@@ -34,10 +40,29 @@ namespace GameEngine.Encounters
             }
         }
 
-        public async UniTask<Comment> showReward(List<Comment> reward)
+        public async UniTask<Comment> showReward(List<Comment> reward, int prevStress, int newStress)
         {
             encounterView.SetActive(false);
+            if (prevStress != newStress)
+            {
+                Game.encountersPresenter.blockSwipe = true;
+                stressView.SetActive(true);
+
+                await UniTask.WhenAll(
+                    stressObject.transform.DOScale(new Vector3(stressObject.transform.localScale.x + 1f, stressObject.transform.localScale.y + 1f, stressObject.transform.localScale.z + 1f), 0.5f).SetLoops(3, LoopType.Yoyo).ToUniTask(),
+                    DOTween.To((x) => stressValue.text = (int)x + "%", prevStress, newStress, 1.5f).ToUniTask()
+                );    
+                Game.encountersPresenter.blockSwipe = false;
+            }
+            
+            return await showCommentsChoice(reward);
+        }
+
+        private async Task<Comment> showCommentsChoice(List<Comment> reward)
+        {
             rewardView.SetActive(true);
+            stressView.SetActive(false);
+            Comment resultComment;
             var allAwaitables = new List<UniTask<CommentItem>>();
             for (int i = 0; i < reward.Count; i++)
             {
@@ -49,6 +74,7 @@ namespace GameEngine.Encounters
             }
 
             var (_, result) = await UniTask.WhenAny(allAwaitables);
+            resultComment = result.comment;
             return result.comment;
         }
 

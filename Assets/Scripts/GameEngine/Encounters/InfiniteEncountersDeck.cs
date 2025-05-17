@@ -16,8 +16,10 @@ namespace GameEngine
 
         private List<Vector2Int> levels;
         private List<String> enemyPrefabs = new();
+        private List<String> enemyAudio = new();
 
         private string prefabsPath = "Prefabs/Enemy/";
+        private string audioPath = "Audio/";
 
         private TutorialEncounterDeck deck;
         
@@ -39,6 +41,14 @@ namespace GameEngine
             enemyPrefabs.Add(prefabsPath +  "Gnome");
             enemyPrefabs.Add(prefabsPath +  "RIP");
             enemyPrefabs.Add(prefabsPath +  "troll");
+
+            enemyAudio = new();
+            enemyAudio.Add(audioPath + "Knight");
+            enemyAudio.Add(audioPath + "Clock");
+            enemyAudio.Add(null);
+            enemyAudio.Add(audioPath + "Knight");
+            enemyAudio.Add(audioPath + "RIP");
+            enemyAudio.Add(audioPath + "Troll");
         }
         
         public Encounter getCurrentEncounter()
@@ -70,12 +80,14 @@ namespace GameEngine
         private Encounter createRandomEncounter(int minLikes, int maxLikes, string prefabPath)
         {
             var likes = Random.Range(minLikes, maxLikes + 1);
+            var enemyData = Random.Range(0, enemyPrefabs.Count);
             return new Encounter(
                 likes,
                 new[] { Tags.Stressful }.ToList(),
                 "Prefabs/Enemy/EnemyEncounter",
+                enemyAudio[enemyData],
                 new EnemyExecutable(likes),
-                new TextPrefabData(enemyPrefabs[Random.Range(0, enemyPrefabs.Count)], ""));
+                new TextPrefabData(enemyPrefabs[enemyData], ""));
         }
 
         private Encounter createRelaxEncounter()
@@ -84,6 +96,7 @@ namespace GameEngine
                 0,
                 new [] { Tags.NO_COMMENTS }.ToList(),
                 "Prefabs/Enemy/RewardEncounter",
+                null,
                 new RelaxExecutable(10, 10),
                 null);
         }

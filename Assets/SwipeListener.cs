@@ -13,6 +13,13 @@ public class SwipeListener : MonoBehaviour, IPointerClickHandler
 
     public async void OnPointerClick(PointerEventData eventData)
     {
-        await Game.encountersPresenter.OnSwipe();
+        // _hits.Clear();
+        // EventSystem.current.RaycastAll(eventData, _hits);
+        // Debug.Log("Swipe " + _hits.Count);
+        // bool shouldSwipe = _hits.FindAll((x) => x.gameObject.CompareTag("NoClick")).Count == 0;
+        // if (shouldSwipe)
+        // {
+            await Game.encountersPresenter.OnSwipe();
+        // }
     }
 }

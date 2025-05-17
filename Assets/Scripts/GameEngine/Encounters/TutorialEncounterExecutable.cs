@@ -68,13 +68,14 @@ namespace GameEngine.Encounters
             var enemyView = (DoubleTextEncounterView) encounterController.view;
             if (!Player.loseCondition())
             {
+                var prev = Player.stressLevel;
                 await Player.receiveStressDamage(-currentHp);
                 Game.currentEncounterController.clearComments();
                 await Game.encountersPresenter.closeKeyboard();
                 await _tutorialSequence.showNextTip();
                 Game.tutorialView.hide();
                 var reward = CommentsBase.rollComments(3);
-                var chosenReward = await enemyView.showReward(reward);
+                var chosenReward = await enemyView.showReward(reward, prev, Player.stressLevel);
                 await Player.addToVocabulary(chosenReward);
             }
             await enemyView.finishEncounter();

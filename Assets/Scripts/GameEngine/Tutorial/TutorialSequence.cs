@@ -21,7 +21,7 @@ namespace GameEngine.Tutorial
         {
             tutorialRects.Add(new Rect(new Vector2(0.25f, 8.3f), new Vector2(2.7f, 1)));
             arrowPosition.Add(ArrowState.BELOW);
-            tutorialText.Add("To finish Doom Scrolling reach stress level 0%");
+            tutorialText.Add("To finish <wave><palette colors=#C1D6AC;#679E85>Doom Scrolling</></> reach stress level 0%");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
@@ -29,7 +29,7 @@ namespace GameEngine.Tutorial
             
             tutorialRects.Add(new Rect(new Vector2(-1.5f, -5.5f), new Vector2(5.5f, 3)));
             arrowPosition.Add(ArrowState.ABOVE);
-            tutorialText.Add("Stressful content will increase your stress. More likes - more stress.");
+            tutorialText.Add("<shake>Stressful</> content will increase your stress <sprite=23>. More <sprite=0> - more <sprite=23>.");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
@@ -37,7 +37,7 @@ namespace GameEngine.Tutorial
             
             tutorialRects.Add(new Rect(new Vector2(0f, 2.5f), new Vector2(10f, 14f)));
             arrowPosition.Add(ArrowState.HIDDEN);
-            tutorialText.Add("Click anywhere to swipe and try");
+            tutorialText.Add("<wave>Click</> anywhere to swipe and try");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
@@ -45,7 +45,7 @@ namespace GameEngine.Tutorial
             
             tutorialRects.Add(new Rect(new Vector2(0f, 2.5f), new Vector2(10f, 14f)));
             arrowPosition.Add(ArrowState.HIDDEN);
-            tutorialText.Add("You won't get stress if your comments get more likes than the post.");
+            tutorialText.Add("You won't get <sprite=23> if your comments get more <sprite=0> than the <wave>post</>.");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
@@ -53,12 +53,12 @@ namespace GameEngine.Tutorial
             
             tutorialRects.Add(new Rect(new Vector2(3f, -5.5f), new Vector2(2.5f, 3)));
             arrowPosition.Add(ArrowState.ABOVE);
-            tutorialText.Add("Click to open comments section.");
+            tutorialText.Add("<wave>Click</> to open comments section.");
             listOfAwaitables.Add(async () => { });
             
             tutorialRects.Add(new Rect(new Vector2(0f, 6.5f), new Vector2(2f, 2f)));
             arrowPosition.Add(ArrowState.BELOW);
-            tutorialText.Add("This is how many likes you need to get. Bring it to 0");
+            tutorialText.Add("This is how many <sprite=0> left to earn for you.<br> <wave>Bring it to 0.</>");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
@@ -67,7 +67,7 @@ namespace GameEngine.Tutorial
             
             tutorialRects.Add(new Rect(new Vector2(0f, -1f), new Vector2(10f, 4f)));
             arrowPosition.Add(ArrowState.ABOVE);
-            tutorialText.Add("Your keyboard suggests you comments to use. No need to type anything. Click on the comment to post it.");
+            tutorialText.Add("Your keyboard suggests you <wave>comments</> to use. No need to type anything.<br> <wave>Click</> on the comment to post it.");
             listOfAwaitables.Add(async () =>
             {
                 // await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
@@ -83,7 +83,7 @@ namespace GameEngine.Tutorial
             
             tutorialRects.Add(new Rect(new Vector2(3.5f, 8.5f), new Vector2(2.5f, 1)));
             arrowPosition.Add(ArrowState.BELOW);
-            tutorialText.Add("Posting the comment reduced your battery. You lose if you run out of power, before you finished doomscrolling.");
+            tutorialText.Add("Posting the comment reduced your <sprite=3>.<br> You <wave><palette colors=#82679e;#679E85>LOSE</></> if you run out of <sprite=3> before you finished <wave><palette colors=#C1D6AC;#679E85>Doom Scrolling.</>");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
@@ -99,22 +99,22 @@ namespace GameEngine.Tutorial
             
             tutorialRects.Add(new Rect(new Vector2(1.45f, -5.2f), new Vector2(3.5f, 2)));
             arrowPosition.Add(ArrowState.ABOVE);
-            tutorialText.Add("Refresh button will fetch comments until you have 4 to choose from. It will add 2% of stress. Click it.");
+            tutorialText.Add("<wave>Refresh</> button will fetch comments until you have 4 to choose from.<br> It will add 2% of <sprite=23>. <br> <wave>Click</> it.");
             listOfAwaitables.Add(async () => {});
             
             tutorialRects.Add(new Rect(new Vector2(3.1f, -8f), new Vector2(3.5f, 2)));
             arrowPosition.Add(ArrowState.ABOVE);
-            tutorialText.Add("You can only post as many comments as your keyboard allows. Switch to keyboard memory tab to see which comments you have left.");
+            tutorialText.Add("You can only post as many comments as your keyboard allows.<br> Switch to <wave>keyboard memory</> tab to see which comments you have left.");
             listOfAwaitables.Add(async () => {});
             
             tutorialRects.Add(new Rect(new Vector2(-3.5f, -6.5f), new Vector2(1.5f, 1f)));
             arrowPosition.Add(ArrowState.ABOVE);
-            tutorialText.Add("You can reopen your keyboard by clicking this button. After that you can hide your keyboard using the same button. Handy to view posted comments");
+            tutorialText.Add("You can <wave>reopen</> your keyboard by clicking this button.<br> After that you can hide your keyboard using the same button.<br> Handy to view <wave>posted comments</>");
             listOfAwaitables.Add(async () => {});
             
             tutorialRects.Add(new Rect(new Vector2(0f, 0f), new Vector2(10f, 18)));
             arrowPosition.Add(ArrowState.HIDDEN);
-            tutorialText.Add("Great job on getting many likes. Your stress will be reduced by the amount of likes you got. You also get a reward.");
+            tutorialText.Add("Great job on getting <wave>many</> <sprite=0>. Your <sprite=23> will be reduced by the amount of <sprite=0> you got.<br> You also get a <wave><palette colors=#C1D6AC;#679E85>reward</></>.");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));

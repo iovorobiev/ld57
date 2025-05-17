@@ -14,7 +14,7 @@ namespace GameEngine.Encounters
         public TutorialEncounterDeck(Tutorial.TutorialSequence tutorial)
         {
             deck.Add(
-                    new Encounter(0, new[] { Tags.NO_UI }.ToList(), "Prefabs/TitleScreen",
+                    new Encounter(0, new[] { Tags.NO_UI }.ToList(), "Prefabs/TitleScreen", null,
                         new TitleExecutable())
             );
 
@@ -22,6 +22,7 @@ namespace GameEngine.Encounters
                 5,
                 new[] { Tags.Tutorial, Tags.NO_COMMENTS, Tags.Stressful }.ToList(),
                 TUTORIAL_PREFAB_PATH,
+                null,
                 new TutorialExecutable(tutorial),
                 new DoubleTextData("", "")
             ));
@@ -31,6 +32,7 @@ namespace GameEngine.Encounters
                     5,
                     new[] { Tags.Tutorial, Tags.Stressful, Tags.Blocking }.ToList(),
                     TUTORIAL_PREFAB_PATH,
+                    null,
                     new TutorialEncounterExecutable(tutorial, 5),
                     new DoubleTextData(
                         "", ""

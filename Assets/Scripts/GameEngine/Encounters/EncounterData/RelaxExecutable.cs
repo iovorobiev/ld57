@@ -39,7 +39,7 @@ namespace GameEngine.Encounters.EncounterData
                     break;
                 case 2:
                     var reward = CommentsBase.rollComments(3);
-                    var choosenReward = await encounterView.showReward(reward);
+                    var choosenReward = await encounterView.showReward(reward, 0, 0);
                     await Player.addToVocabulary(choosenReward);
                     break;
             }

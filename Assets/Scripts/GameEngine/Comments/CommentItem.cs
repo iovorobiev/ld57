@@ -27,11 +27,14 @@ public class CommentItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     
     private Vector3 originalScale;
     private SortingGroup _sortingGroup;
+
+    public AudioSource audioSource;
     
     private void Start()
     {
         originalScale = transform.localScale;
         _sortingGroup = GetComponent<SortingGroup>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -71,6 +74,7 @@ public class CommentItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        audioSource.Play();
         clickListener.notifyClick(this);
     }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using GameEngine;
@@ -14,16 +15,30 @@ public class EncounterController : MonoBehaviour
    public UI ui;
    public CommentView commentView;
    public EncounterContentView view;
-   
+   public AudioSource source;
+   private AudioClip clip;
+
+   private void Start()
+   {
+      source = GetComponent<AudioSource>();
+   }
+
    public virtual void setEncounterData(Encounter encounter)
    {
+    
       encounterData = encounter;
       encounterScript = encounter.executable;
       encounterScript.setEncounterController(this);
+      source.Stop();
    }
 
    public async UniTask runExecutable()
    {
+      if (encounterData.audioPath != null)
+      {
+         clip = await Resources.LoadAsync(encounterData.audioPath).ToUniTask() as AudioClip;
+         source.PlayOneShot(clip);
+      }
       await encounterScript.execute().AttachExternalCancellation(destroyCancellationToken);
    }
 

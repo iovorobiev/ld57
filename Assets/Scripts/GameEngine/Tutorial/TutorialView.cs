@@ -22,16 +22,13 @@ namespace GameEngine.Tutorial
         {
             shown = true;
             tutorialParent.SetActive(true);
-            if (hintText != "")
-            {
-                text.gameObject.SetActive(true);
-            }
             
             _rectTransform.position = rect.position;
             _rectTransform.sizeDelta = rect.size;
 
             _rectTransform.gameObject.SetActive(true);
             arrow.SetActive(true);
+            
             if (hintText == "")
             {
                 text.gameObject.SetActive(false);

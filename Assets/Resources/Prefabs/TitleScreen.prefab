@@ -314,7 +314,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <fade uniformity=0 uppd=1 dnpd=0.25 tw=0.75 cw=0.75>click to begin</>
+  m_text: <fade uniformity=0 uppd=1 dnpd=0.25 tw=0.75 cw=0.75><palette colors=#C1D6AC;#679E85>click
+    to begin</>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7ef1c73a070ab594daaf5c5e69cc57a4, type: 2}
   m_sharedMaterial: {fileID: -4128089776675261082, guid: 7ef1c73a070ab594daaf5c5e69cc57a4, type: 2}
