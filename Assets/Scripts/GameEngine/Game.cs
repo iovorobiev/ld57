@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using GameAnalyticsSDK;
 using GameEngine.Encounters;
 using GameEngine.Tutorial;
 using GameEngine.ui;
@@ -39,6 +40,7 @@ namespace GameEngine
             while (!Player.winCondition()  && !Player.loseCondition())
             {
                 currentDepth++;
+                GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentDepth.ToString());
                 Player.prepareEncounter(tutorialExecutable.isInProgress());
                 encountersPresenter.closeKeyboard();
                 keyboard.clearHand();

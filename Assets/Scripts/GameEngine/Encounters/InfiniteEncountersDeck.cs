@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GameAnalyticsSDK;
 using GameEngine.EncounterData;
 using GameEngine.Encounters;
 using GameEngine.Encounters.EncounterData;
@@ -22,6 +23,7 @@ namespace GameEngine
         private string audioPath = "Audio/";
 
         private TutorialEncounterDeck deck;
+        private bool tutorialPassed;
         
         public void initDeck(TutorialEncounterDeck deck)
         {
@@ -62,6 +64,12 @@ namespace GameEngine
             {
                 deck?.changePage();
                 return deck?.getCurrentEncounter();
+            }
+
+            if (!tutorialPassed)
+            {
+                GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "tutorial");
+                tutorialPassed = true;
             }
             return getRandomEncounter();
         }

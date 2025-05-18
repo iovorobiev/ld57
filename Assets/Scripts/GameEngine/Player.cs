@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using GameAnalyticsSDK;
 using GameEngine.Comments;
 using GameEngine.OSUpgrades;
 using Unity.Mathematics.Geometry;
@@ -136,6 +137,7 @@ namespace GameEngine
 
         public static async UniTask addToVocabulary(Comment comment)
         {
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Added " + comment.text);
             vocabulary.Add(comment);
             await Game.vocabularyView.addComment(comment);
         }
