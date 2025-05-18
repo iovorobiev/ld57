@@ -12,12 +12,10 @@ namespace GameEngine.Comments
             {
                 return;
             }
-            Debug.Log("Executing refresh");
             await Game.keyboard.fillHand();
             await Player.receiveStressDamage(getRefreshDmg());
             Player.refreshUnderPost++;
             Player.nextRefresh.Clear();
-            Debug.Log("Finish refresh");
         }
 
         private static int getRefreshDmg()

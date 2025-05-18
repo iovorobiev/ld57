@@ -55,7 +55,7 @@ public class Keyboard : MonoBehaviour
 
     public bool canDrawMore()
     {
-        return currentHand.Count < Player.maxHandSize;
+        return currentHand.Count < Player.getDrawHandSize();
     }
     
     public async UniTask OnShow()
