@@ -1,8 +1,6 @@
 using System;
 using GameAnalyticsSDK;
 using GameEngine;
-using UnityEditor;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
