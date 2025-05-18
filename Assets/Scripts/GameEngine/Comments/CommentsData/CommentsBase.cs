@@ -321,14 +321,14 @@ namespace GameEngine.Comments.CommentsData
                 new CombinedExecutable(new BatteryCostExecutable(2), new TempEffectExecutable(TempEffectExecutable.Length.COMMENT, TempEffect.MAX_RANDOM), new RandomDmgExecutable(() => 0))
             ));
             
-            // // 25
-            // allComments.Add(new Comment(
-            //     "c0m9i13",
-            //     "Steals 1<sprite=0> from previous comment. Doesn't add to score.",
-            //     LikeInteractionType.REDUCE_STRESS,
-            //     1,
-            //     new CombinedExecutable(new BatteryCostExecutable(1), new RandomDmgExecutable(() =>0), new StealExecutable())
-            // ));
+            // 25
+            allComments.Add(new Comment(
+                "cHArger",
+                "Costs 1 <sprite=3> less for each ha posted",
+                LikeInteractionType.REDUCE_STRESS,
+                1,
+                new CombinedExecutable(new BatteryCostExecutable(() => 8 - Player.currentHaCount), new RandomDmgExecutable(() => 4), new HaExecutable(0, 1))
+            ));
             return allComments;
         }
 
