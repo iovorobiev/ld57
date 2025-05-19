@@ -35,6 +35,18 @@ public class Keyboard : MonoBehaviour
         state = KeyboardState.SHOWN;
         await transform.DOMove(openPos.position, 0.5f).ToUniTask();
     }
+
+    public void hideRefresh()
+    {
+        refresh.gameObject.SetActive(false);
+    }
+
+    public async UniTask showRefresh()
+    {
+       refresh.gameObject.SetActive(true);
+       var localScale = refresh.transform.localScale;
+       await refresh.transform.DOScale(localScale, 0.25f).From(Vector3.zero).ToUniTask();
+    }
     
     public async UniTask close()
     {

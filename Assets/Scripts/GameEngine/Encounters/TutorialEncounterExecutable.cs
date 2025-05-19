@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using GameAnalyticsSDK;
 using GameEngine.Comments.CommentsData;
 using GameEngine.Encounters.EncounterData;
 using UnityEngine;
@@ -21,17 +22,21 @@ namespace GameEngine.Encounters
         public async UniTask execute()
         {
             currentHp = 0;
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Tutorial Encounter");
+            Game.keyboard.hideRefresh();
             // Tell about comment button
             await _tutorialSequence.showNextTip();
             // Ask to press
             await _tutorialSequence.showNextTip();
             await Game.keyboard.waitForOpen();
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Undefined, "Tutorial Encounter", "keyboard opened");
             // Tell about goal of fight
             await _tutorialSequence.showNextTip();
             // Tell about comments
             await _tutorialSequence.showNextTip();
             var chosenComment = await Game.encountersPresenter.playersComment();
             await chosenComment.script.execute();
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Undefined, "Tutorial Encounter", "first comment");
             await _tutorialSequence.showNextTip();
             await UniTask.WaitForSeconds(0.5f);
             // Tell about battery cost
@@ -39,8 +44,10 @@ namespace GameEngine.Encounters
             await _tutorialSequence.showNextTip();
             chosenComment = await Game.encountersPresenter.playersComment();
             await chosenComment.script.execute();
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Undefined, "Tutorial Encounter", "Second comment");
             // Tell about refresh
             await _tutorialSequence.showNextTip();
+            await Game.keyboard.showRefresh();
             chosenComment = await Game.encountersPresenter.playersComment();
             Game.tutorialView.hide();
             await chosenComment.script.execute();
@@ -53,6 +60,7 @@ namespace GameEngine.Encounters
             await Game.screenController.waitForEncounter();
             await _tutorialSequence.showNextTip();
             await Game.keyboard.waitForOpen();
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Undefined, "Tutorial Encounter", "Open battle");
             Game.tutorialView.hide();
             while (currentHp < maxHp && !Player.loseCondition() && !Player.winCondition())
             {
@@ -78,6 +86,7 @@ namespace GameEngine.Encounters
                 var chosenReward = await enemyView.showReward(reward, prev, Player.stressLevel);
                 await Player.addToVocabulary(chosenReward);
             }
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Tutorial Encounter");
             await enemyView.finishEncounter();
         }
 

@@ -23,16 +23,27 @@ namespace GameEngine
         public static TutorialView tutorialView;
         public static int currentDepth = 0;
 
+        public static int currentRun;
+
         public static async UniTask GameLoop()
         {
             currentDepth = 0;
             var tutorialExecutable = new TutorialSequence();
             var tutorialDeck = new TutorialEncounterDeck(tutorialExecutable);
             var deck = new InfiniteEncountersDeck();
-            deck.initDeck(tutorialDeck);
             Player.reset();
             turnOffSequence.resetValues();
-            await encountersPresenter.init(tutorialDeck.getCurrentEncounter(), tutorialDeck.getNextEncounter());
+            if (currentRun == 0)
+            {
+                deck.initDeck(tutorialDeck);
+                await encountersPresenter.init(tutorialDeck.getCurrentEncounter(), tutorialDeck.getNextEncounter());   
+            }
+            else
+            {
+                deck.initDeck(null);
+                await encountersPresenter.init(tutorialDeck.getCurrentEncounter(), deck.getNextEncounter());
+            }
+            
             tutorialDeck.changePage();
             screenController.startListeningButtons();
             tutorialView.hide();
@@ -58,6 +69,7 @@ namespace GameEngine
                 await loseSequence();
             }
 
+            currentRun++;
             await SceneManager.LoadSceneAsync(0).ToUniTask();
         }
 
@@ -66,9 +78,11 @@ namespace GameEngine
             turnOffSequence.gameObject.SetActive(true);
             if (Player.powerLevel <= 0)
             {
+                GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "loss_power", currentDepth);
                 await turnOffSequence.doBatteryTurnOffSequence();
             } else if (Player.stressLevel >= 100)
             {
+                GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "loss_stress", currentDepth);
                 await turnOffSequence.doStressTurnOff();
             }
             
@@ -76,6 +90,8 @@ namespace GameEngine
 
         private static async UniTask winSequence()
         {
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "win", currentRun);
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "win_depth", currentDepth);
             await turnOffSequence.doWinSequence();
         }
     }

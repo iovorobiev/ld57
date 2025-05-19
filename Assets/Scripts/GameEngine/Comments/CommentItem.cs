@@ -74,7 +74,10 @@ public class CommentItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        audioSource.Play();
+        if (audioSource != null)
+        {
+            audioSource.Play();
+        }
         clickListener.notifyClick(this);
     }
 

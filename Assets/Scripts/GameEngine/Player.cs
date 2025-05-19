@@ -19,6 +19,8 @@ namespace GameEngine
         public static List<Comment> vocabulary;
         public static Queue<Comment> currentEncounterDeck = new();
         public static List<PostedComment> postedComments = new();
+
+        public static string id = Guid.NewGuid().ToString();
         
         private static int drawHandSize = 4;
         public static int maxHandSize = 6;

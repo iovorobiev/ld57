@@ -60,13 +60,13 @@ namespace GameEngine
         
         public Encounter getNextEncounter()
         {
-            if (deck?.isEmpty() != true)
+            if (deck != null && deck?.isEmpty() != true)
             {
                 deck?.changePage();
                 return deck?.getCurrentEncounter();
             }
 
-            if (!tutorialPassed)
+            if (!tutorialPassed || Game.currentRun == 0)
             {
                 GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "tutorial");
                 tutorialPassed = true;

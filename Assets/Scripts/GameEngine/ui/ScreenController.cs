@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks.Linq;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
@@ -84,15 +85,19 @@ namespace GameEngine.ui
         {
             await switchScreens(screenPosition.transform.position, rightHidePosition.transform.position);
             encounterShown = true;
+            if (Game.keyboard.state == Keyboard.KeyboardState.CLOSED)
+            {
+                await Game.keyboard.closeInComments();
+            }
         }
         
         public async UniTask showVocabularyScreen()
         {
             
             await switchScreens(leftHidePosition.transform.position, screenPosition.transform.position);
-            if (Game.keyboard.state == Keyboard.KeyboardState.SHOWN)
+            if (Game.keyboard.state != Keyboard.KeyboardState.CLOSED)
             {
-                await Game.keyboard.closeInComments();
+                await Game.keyboard.close();
             }
             encounterShown = false;
         }

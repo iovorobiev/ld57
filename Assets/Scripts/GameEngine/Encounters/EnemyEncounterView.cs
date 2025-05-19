@@ -46,7 +46,10 @@ namespace GameEngine.Encounters
             if (prevStress != newStress)
             {
                 Game.encountersPresenter.blockSwipe = true;
-                stressView.SetActive(true);
+                if (stressView != null)
+                {
+                    stressView.SetActive(true);
+                }
 
                 await UniTask.WhenAll(
                     stressObject.transform.DOScale(new Vector3(stressObject.transform.localScale.x + 1f, stressObject.transform.localScale.y + 1f, stressObject.transform.localScale.z + 1f), 0.5f).SetLoops(3, LoopType.Yoyo).ToUniTask(),
@@ -61,7 +64,10 @@ namespace GameEngine.Encounters
         private async Task<Comment> showCommentsChoice(List<Comment> reward)
         {
             rewardView.SetActive(true);
-            stressView.SetActive(false);
+            if (stressView != null)
+            {
+                stressView.SetActive(false);
+            }
             Comment resultComment;
             var allAwaitables = new List<UniTask<CommentItem>>();
             for (int i = 0; i < reward.Count; i++)

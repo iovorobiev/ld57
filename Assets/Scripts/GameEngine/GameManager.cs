@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     async void Start()
     {;
         GameAnalytics.Initialize();
-        GameAnalytics.SetCustomId(Guid.NewGuid().ToString());
+        GameAnalytics.SetCustomId(Player.id);
         await Game.GameLoop();
     }
 }

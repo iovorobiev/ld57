@@ -73,7 +73,7 @@ namespace GameEngine.Tutorial
                 // await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
             });
             
-            tutorialRects.Add(new Rect(new Vector2(0f, 2.5f), new Vector2(10f, 14f)));
+            tutorialRects.Add(new Rect(new Vector2(0f, 2.5f), new Vector2(10f, 18f)));
             arrowPosition.Add(ArrowState.HIDDEN);
             tutorialText.Add("");
             listOfAwaitables.Add(async () =>
@@ -89,7 +89,7 @@ namespace GameEngine.Tutorial
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
             });
             
-            tutorialRects.Add(new Rect(new Vector2(0f, 2.5f), new Vector2(10f, 14f)));
+            tutorialRects.Add(new Rect(new Vector2(0f, 2.5f), new Vector2(10f, 18f)));
             arrowPosition.Add(ArrowState.HIDDEN);
             tutorialText.Add("");
             listOfAwaitables.Add(async () =>
@@ -104,7 +104,7 @@ namespace GameEngine.Tutorial
             
             tutorialRects.Add(new Rect(new Vector2(3.1f, -8f), new Vector2(3.5f, 2)));
             arrowPosition.Add(ArrowState.ABOVE);
-            tutorialText.Add("You can only post as many comments as your keyboard allows.<br> Switch to <wave>keyboard memory</> tab to see which comments you have left.");
+            tutorialText.Add("You can only post as many comments as your deck has.<br> Switch to <wave>comments deck</> tab to see which comments you have left.");
             listOfAwaitables.Add(async () => {});
             
             tutorialRects.Add(new Rect(new Vector2(-3.5f, -6.5f), new Vector2(1.5f, 1f)));
