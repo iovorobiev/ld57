@@ -102,7 +102,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Choose 1 comment for your keyboard memory
+  m_text: Choose 1 comment for your comments deck
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bdbe36d3110a33c4f98be6a62f58d0fb, type: 2}
   m_sharedMaterial: {fileID: 4869729693494688762, guid: bdbe36d3110a33c4f98be6a62f58d0fb, type: 2}

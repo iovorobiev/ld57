@@ -480,7 +480,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Choose 1 comment for your keyboard memory
+  m_text: Choose 1 comment for your comments deck
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bdbe36d3110a33c4f98be6a62f58d0fb, type: 2}
   m_sharedMaterial: {fileID: 4869729693494688762, guid: bdbe36d3110a33c4f98be6a62f58d0fb, type: 2}
@@ -1047,10 +1047,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   encounterView: {fileID: 5759118225964207857}
   rewardView: {fileID: 4505599485930464596}
+  stressView: {fileID: 0}
   options:
   - {fileID: 6999282705492173174}
   - {fileID: 7561400168426268296}
   - {fileID: 6519717555141028748}
+  stressValue: {fileID: 0}
+  stressObject: {fileID: 0}
   stressButton: {fileID: 4418229394524098292}
   batteryButton: {fileID: 2558850588594841814}
   commentButton: {fileID: 1800114374338630380}
