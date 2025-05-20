@@ -54,9 +54,8 @@ namespace GameEngine.Encounters
             await UniTask.WaitForSeconds(0.5f);
             // Tell about inventory
             await _tutorialSequence.showNextTip();
-            
             await Game.screenController.waitForVocabulary();
-            Game.tutorialView.hide();
+            await _tutorialSequence.showNextTip();
             await Game.screenController.waitForEncounter();
             await _tutorialSequence.showNextTip();
             await Game.keyboard.waitForOpen();

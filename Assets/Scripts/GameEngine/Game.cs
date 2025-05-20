@@ -79,10 +79,12 @@ namespace GameEngine
             if (Player.powerLevel <= 0)
             {
                 GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "loss_power", currentDepth);
+                GameAnalytics.NewProgressionEvent(GAProgressionStatus.Fail, "Run",currentRun.ToString(), "stress");
                 await turnOffSequence.doBatteryTurnOffSequence();
             } else if (Player.stressLevel >= 100)
             {
                 GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "loss_stress", currentDepth);
+                GameAnalytics.NewProgressionEvent(GAProgressionStatus.Fail, "Run",currentRun.ToString(), "battery");
                 await turnOffSequence.doStressTurnOff();
             }
             
@@ -92,6 +94,7 @@ namespace GameEngine
         {
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "win", currentRun);
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "win_depth", currentDepth);
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Run",currentRun.ToString());
             await turnOffSequence.doWinSequence();
         }
     }

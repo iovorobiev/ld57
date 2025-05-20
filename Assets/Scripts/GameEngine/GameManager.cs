@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     {;
         GameAnalytics.Initialize();
         GameAnalytics.SetCustomId(Player.id);
+        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Run", Game.currentRun.ToString());
         await Game.GameLoop();
     }
 }

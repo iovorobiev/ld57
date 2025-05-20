@@ -107,6 +107,11 @@ namespace GameEngine.Tutorial
             tutorialText.Add("You can only post as many comments as your deck has.<br> Switch to <wave>comments deck</> tab to see which comments you have left.");
             listOfAwaitables.Add(async () => {});
             
+            tutorialRects.Add(new Rect(new Vector2(-3f, -8f), new Vector2(3.5f, 2)));
+            arrowPosition.Add(ArrowState.JUST_ARROW);
+            tutorialText.Add("");
+            listOfAwaitables.Add(async () => {});
+            
             tutorialRects.Add(new Rect(new Vector2(-3.5f, -6.5f), new Vector2(1.5f, 1f)));
             arrowPosition.Add(ArrowState.ABOVE);
             tutorialText.Add("You can <wave>reopen</> your keyboard by clicking this button.<br> After that you can hide your keyboard using the same button.<br> Handy to view <wave>posted comments</>");
@@ -142,6 +147,7 @@ namespace GameEngine.Tutorial
         {
             ABOVE,
             BELOW,
+            JUST_ARROW,
             HIDDEN,
         }
     }

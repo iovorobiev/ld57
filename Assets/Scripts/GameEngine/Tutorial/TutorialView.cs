@@ -25,7 +25,7 @@ namespace GameEngine.Tutorial
             
             _rectTransform.position = rect.position;
             _rectTransform.sizeDelta = rect.size;
-
+            
             _rectTransform.gameObject.SetActive(true);
             arrow.SetActive(true);
             
@@ -52,6 +52,12 @@ namespace GameEngine.Tutorial
                     -Mathf.Abs(arrow.transform.localScale.y), arrow.transform.localScale.z);
                 arrow.transform.position = new Vector2(rect.position.x, rect.position.y - rect.size.y / 2f);
                 text.transform.position = new Vector2(text.transform.position.x, arrow.transform.position.y - 3f);
+            } else if (arrowState == TutorialSequence.ArrowState.JUST_ARROW)
+            {
+                arrow.transform.localScale = new Vector3(arrow.transform.localScale.x,
+                    Mathf.Abs(arrow.transform.localScale.y), arrow.transform.localScale.z);
+                arrow.transform.position = new Vector2(rect.position.x, rect.position.y + rect.size.y / 2f);
+                tutorialParent.SetActive(false);
             }
             else
             {
