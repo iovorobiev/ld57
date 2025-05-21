@@ -24,7 +24,7 @@ namespace GameEngine.Encounters
                 TUTORIAL_PREFAB_PATH,
                 null,
                 new TutorialExecutable(tutorial),
-                new DoubleTextData("", "")
+                new TextPrefabData("Prefabs/Tutorial/door_open", "")
             ));
             
             deck.Add(
@@ -34,8 +34,8 @@ namespace GameEngine.Encounters
                     TUTORIAL_PREFAB_PATH,
                     null,
                     new TutorialEncounterExecutable(tutorial, 5),
-                    new DoubleTextData(
-                        "", ""
+                    new TextPrefabData(
+                        "Prefabs/Tutorial/door2", ""
                     )));
         }
 

@@ -14,6 +14,7 @@ public class CommentButtonClickListener : MonoBehaviour, IPointerClickHandler, I
     private void Start()
     {
         initScale = transform.localScale;
+        transform.DOLocalMoveY(transform.localPosition.y + 0.1f, 1f).SetLoops(-1, LoopType.Yoyo);
     }
 
     public async void OnPointerClick(PointerEventData eventData)

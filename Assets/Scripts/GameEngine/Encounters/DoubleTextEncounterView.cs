@@ -7,8 +7,9 @@ namespace GameEngine.Encounters
 {
     public class DoubleTextEncounterView : EnemyEncounterView
     {
-        public TextMeshProUGUI topText;
         public TextMeshProUGUI botText;
+
+        public GameObject sprite; 
 
         public override void setData(SpecificData data)
         {
@@ -17,8 +18,8 @@ namespace GameEngine.Encounters
             {
                 return;
             }
-
-            topText.text = enemyData.topText;
+            
+            // topText.text = enemyData.topText;
             botText.text = enemyData.botText;
         }
     }

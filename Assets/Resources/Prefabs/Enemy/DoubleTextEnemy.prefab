@@ -222,7 +222,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &544079224950965511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,8 +258,8 @@ MonoBehaviour:
   options: []
   stressValue: {fileID: 0}
   stressObject: {fileID: 0}
-  topText: {fileID: 7341428065833825572}
   botText: {fileID: 6958764160867555414}
+  sprite: {fileID: 0}
 --- !u!1 &7535202779727126693
 GameObject:
   m_ObjectHideFlags: 0

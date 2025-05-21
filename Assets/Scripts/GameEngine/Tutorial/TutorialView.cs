@@ -18,7 +18,7 @@ namespace GameEngine.Tutorial
             Game.tutorialView = this;
         }
 
-        public void showAt(Rect rect, TutorialSequence.ArrowState arrowState, string hintText)
+        public void showAt(Rect rect, TutorialSequence.ArrowState arrowState, string hintText, Vector3? textPosition = null)
         {
             shown = true;
             tutorialParent.SetActive(true);
@@ -61,7 +61,14 @@ namespace GameEngine.Tutorial
             }
             else
             {
-                text.transform.position = new Vector3(0f, 0f, text.transform.position.z);
+                if (textPosition != null)
+                {
+                    text.transform.position = (Vector3) textPosition;
+                }
+                else
+                {
+                    text.transform.position = new Vector3(0f, rect.position.y + rect.size.y / 2f, text.transform.position.z);
+                }
                 arrow.SetActive(false);
             }
         }

@@ -72,7 +72,7 @@ namespace GameEngine.Encounters
                 await playersComment.script.execute();
             }
             
-            var enemyView = (DoubleTextEncounterView) encounterController.view;
+            var enemyView = (EnemyEncounterView) encounterController.view;
             if (!Player.loseCondition())
             {
                 var prev = Player.stressLevel;

@@ -25,6 +25,8 @@ namespace GameEngine
         public Image skip;
         public TMP_Text skipText;
 
+        public TMP_Text tag;
+
         public Transform openKeyboardPos;
         public Transform closeKeyboardPos;
 
@@ -45,6 +47,7 @@ namespace GameEngine
             likesCount.text = likes.ToString();
         }
 
+
         private CancellationTokenSource progressSource = new();
     private void setCountersFromEncounter()
     {
@@ -58,6 +61,14 @@ namespace GameEngine
             comments.gameObject.SetActive(true);
         }
 
+        if (Game.currentEncounter.tags.Contains(Tags.Blocking))
+        {
+            tag.text = "<color=#82679E>#blocking</color>: blocks scrolling if <sprite=0> above 0";
+        } else if (Game.currentEncounter.tags.Contains(Tags.Stressful))
+        {
+            tag.text = "<color=#82679E>#stressful</color>: +" + Game.currentEncounter.likes + "% <sprite=23> if scrolled when <sprite=0> above 0";
+        }
+        
         uiContainer.gameObject.SetActive(!Game.currentEncounter.tags.Contains(Tags.NO_UI));
         if (Game.currentEncounter.tags.Contains(Tags.Stressful))
         {

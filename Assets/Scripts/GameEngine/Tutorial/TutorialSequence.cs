@@ -14,6 +14,7 @@ namespace GameEngine.Tutorial
         private List<ArrowState> arrowPosition = new();
         private List<string> tutorialText = new();
         private List<Func<UniTask>> listOfAwaitables = new();
+        private List<Vector3?> listOfTextPositions = new();
         
         private int currentTip = 0;
 
@@ -26,14 +27,16 @@ namespace GameEngine.Tutorial
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
             });
+            listOfTextPositions.Add(null);
             
             tutorialRects.Add(new Rect(new Vector2(-1.5f, -5.5f), new Vector2(5.5f, 3)));
             arrowPosition.Add(ArrowState.ABOVE);
-            tutorialText.Add("<shake>Stressful</> content will increase your stress <sprite=23>. More <sprite=0> - more <sprite=23>.");
+            tutorialText.Add("<shake>Stressful</> content increases your stress <sprite=23> when scrolled.<br> More <sprite=0> - more <sprite=23>.");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
             });
+            listOfTextPositions.Add(null);
             
             tutorialRects.Add(new Rect(new Vector2(0f, 2.5f), new Vector2(10f, 14f)));
             arrowPosition.Add(ArrowState.HIDDEN);
@@ -42,36 +45,41 @@ namespace GameEngine.Tutorial
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
             });
+            listOfTextPositions.Add(new Vector3(0f, 5f, 0f));
             
             tutorialRects.Add(new Rect(new Vector2(0f, 2.5f), new Vector2(10f, 14f)));
             arrowPosition.Add(ArrowState.HIDDEN);
-            tutorialText.Add("You won't get <sprite=23> if your comments get more <sprite=0> than the <wave>post</>.");
+            tutorialText.Add("You can reduce <sprite=0> by getting likes for your <wave>comments</>.");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
             });
+            listOfTextPositions.Add(new Vector3(0f, 5f, 0f));
             
             tutorialRects.Add(new Rect(new Vector2(3f, -5.5f), new Vector2(2.5f, 3)));
             arrowPosition.Add(ArrowState.ABOVE);
             tutorialText.Add("<wave>Click</> to open comments section.");
             listOfAwaitables.Add(async () => { });
+            listOfTextPositions.Add(null);
             
-            tutorialRects.Add(new Rect(new Vector2(0f, 6.5f), new Vector2(2f, 2f)));
+            tutorialRects.Add(new Rect(new Vector2(0f, 6f), new Vector2(2f, 2f)));
             arrowPosition.Add(ArrowState.BELOW);
-            tutorialText.Add("This is how many <sprite=0> left to earn for you.<br> <wave>Bring it to 0.</>");
+            tutorialText.Add("This is how many <sprite=0> you need to get.<br> <wave>Bring it to 0.</>");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
             });
+            listOfTextPositions.Add(null);
 
             
             tutorialRects.Add(new Rect(new Vector2(0f, -1f), new Vector2(10f, 4f)));
             arrowPosition.Add(ArrowState.ABOVE);
-            tutorialText.Add("Your keyboard suggests you <wave>comments</> to use. No need to type anything.<br> <wave>Click</> on the comment to post it.");
+            tutorialText.Add("This is your keyboard with <wave>comments</>.<br>Comments will get <sprite=0> for <sprite=3> or <sprite=23>.<br> <wave>Click</> on the comment to post it.");
             listOfAwaitables.Add(async () =>
             {
                 // await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
             });
+            listOfTextPositions.Add(null);
             
             tutorialRects.Add(new Rect(new Vector2(0f, 2.5f), new Vector2(10f, 18f)));
             arrowPosition.Add(ArrowState.HIDDEN);
@@ -80,14 +88,18 @@ namespace GameEngine.Tutorial
             {
                
             });
+            listOfTextPositions.Add(new Vector3(0f, 5f, 0f));
+            
             
             tutorialRects.Add(new Rect(new Vector2(3.5f, 8.5f), new Vector2(2.5f, 1)));
             arrowPosition.Add(ArrowState.BELOW);
-            tutorialText.Add("Posting the comment reduced your <sprite=3>.<br> You <wave><palette colors=#82679e;#679E85>LOSE</></> if you run out of <sprite=3> before you finished <wave><palette colors=#C1D6AC;#679E85>Doom Scrolling.</>");
+            tutorialText.Add("Posting the comment reduced your <sprite=3>.<br> You <wave><palette colors=#82679e;#679E85>LOSE</></> if you run out of <sprite=3> before you finished<br> <wave><palette colors=#C1D6AC;#679E85>Doom Scrolling.</>");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
             });
+            listOfTextPositions.Add(null);
+
             
             tutorialRects.Add(new Rect(new Vector2(0f, 2.5f), new Vector2(10f, 18f)));
             arrowPosition.Add(ArrowState.HIDDEN);
@@ -96,26 +108,36 @@ namespace GameEngine.Tutorial
             {
                
             });
+            listOfTextPositions.Add(new Vector3(0f, 5f, 0f));
+
             
             tutorialRects.Add(new Rect(new Vector2(1.45f, -5.2f), new Vector2(3.5f, 2)));
             arrowPosition.Add(ArrowState.ABOVE);
-            tutorialText.Add("<wave>Refresh</> button will fetch comments until you have 4 to choose from.<br> It will add 2% of <sprite=23>. <br> <wave>Click</> it.");
+            tutorialText.Add("<wave>Refresh</> button will fetch comments until you have 4.<br> It will add 2% <sprite=23>. <br> <wave>Click</> it.");
             listOfAwaitables.Add(async () => {});
+            listOfTextPositions.Add(null);
+
             
             tutorialRects.Add(new Rect(new Vector2(3.1f, -8f), new Vector2(3.5f, 2)));
             arrowPosition.Add(ArrowState.ABOVE);
             tutorialText.Add("You can only post as many comments as your deck has.<br> Switch to <wave>comments deck</> tab to see which comments you have left.");
             listOfAwaitables.Add(async () => {});
+            listOfTextPositions.Add(null);
+
             
             tutorialRects.Add(new Rect(new Vector2(-3f, -8f), new Vector2(3.5f, 2)));
             arrowPosition.Add(ArrowState.JUST_ARROW);
             tutorialText.Add("");
             listOfAwaitables.Add(async () => {});
+            listOfTextPositions.Add(null);
+
             
             tutorialRects.Add(new Rect(new Vector2(-3.5f, -6.5f), new Vector2(1.5f, 1f)));
             arrowPosition.Add(ArrowState.ABOVE);
-            tutorialText.Add("You can <wave>reopen</> your keyboard by clicking this button.<br> After that you can hide your keyboard using the same button.<br> Handy to view <wave>posted comments</>");
+            tutorialText.Add("You can <wave>reopen</> your keyboard by clicking this button.<br> After that you can hide it using the same button.");
             listOfAwaitables.Add(async () => {});
+            listOfTextPositions.Add(null);
+
             
             tutorialRects.Add(new Rect(new Vector2(0f, 0f), new Vector2(10f, 18)));
             arrowPosition.Add(ArrowState.HIDDEN);
@@ -124,6 +146,8 @@ namespace GameEngine.Tutorial
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
             });
+            listOfTextPositions.Add(new Vector3(0f, 5f, 0f));
+
         }
         
         public async UniTask showNextTip()
@@ -133,7 +157,7 @@ namespace GameEngine.Tutorial
                 Game.tutorialView.hide();
                 return;
             }
-            Game.tutorialView.showAt(tutorialRects[currentTip], arrowPosition[currentTip], tutorialText[currentTip]);
+            Game.tutorialView.showAt(tutorialRects[currentTip], arrowPosition[currentTip], tutorialText[currentTip], listOfTextPositions[currentTip]);
             await listOfAwaitables[currentTip]();
             currentTip++;
         }
