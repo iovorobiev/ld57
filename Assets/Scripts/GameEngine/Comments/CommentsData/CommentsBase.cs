@@ -65,7 +65,7 @@ namespace GameEngine.Comments.CommentsData
             allComments.Add(
                 new Comment(
                     "Rage Quit",
-                    "1 <sprite=0> per posted comment with 0 likes",
+                    "1 <sprite=1> per posted comment with 0 likes",
                     LikeInteractionType.REDUCE_STRESS,
                     1,
                         new CombinedExecutable(new RandomDmgExecutable(() =>
@@ -102,7 +102,7 @@ namespace GameEngine.Comments.CommentsData
             // 4
             allComments.Add(new Comment(
                 "lol",
-                "1<sprite=0> per ha commented",
+                "1<sprite=1> per ha commented",
                 LikeInteractionType.REDUCE_STRESS,
                 1,
                 new CombinedExecutable(new RandomDmgExecutable(
@@ -132,7 +132,7 @@ namespace GameEngine.Comments.CommentsData
             // 7
             allComments.Add(new Comment(
                 "0xdeadbeef",
-                "1 <sprite=0> for each power charged",
+                "1 <sprite=1> for each power charged",
                 LikeInteractionType.REDUCE_STRESS,
                 1,
                 new CombinedExecutable(new RandomDmgExecutable(() => Player.batteryUnderPostGained, new[]
@@ -185,7 +185,7 @@ namespace GameEngine.Comments.CommentsData
             // 12
             allComments.Add(new Comment(
                 "RAGE!!",
-                "1<sprite=0>. +1<sprite=0> for each <sprite=23> received under this post",
+                "1<sprite=1>. +1<sprite=1> for each <sprite=23> received under this post",
                 LikeInteractionType.RESTORE_DEVICE_POWER,
                 1,
                 new CombinedExecutable(new RandomDmgExecutable(() => Player.stressUnderPostGained + 1), new BatteryCostExecutable(5)))
@@ -246,7 +246,7 @@ namespace GameEngine.Comments.CommentsData
             // 18
             allComments.Add(new Comment(
                 "I am back",
-                "1<sprite=0> for each refresh used",
+                "1<sprite=1> for each refresh used",
                 LikeInteractionType.REDUCE_STRESS,
                 1,
                 new CombinedExecutable(new BatteryCostExecutable(3), new RandomDmgExecutable(() => Player.refreshUnderPost)))
@@ -255,7 +255,7 @@ namespace GameEngine.Comments.CommentsData
             // 19
             allComments.Add(new Comment(
                 "Clickbait",
-                "Next comments get +1<sprite=0> until Refresh",
+                "Next comments get +1<sprite=1> until Refresh",
                 LikeInteractionType.REDUCE_STRESS,
                 1,
                 new CombinedExecutable(new BatteryCostExecutable(5), new TempEffectExecutable(TempEffectExecutable.Length.REFRESH, TempEffect.COMMENTS_PLUS_1), new RandomDmgExecutable(() => 0))
@@ -273,7 +273,7 @@ namespace GameEngine.Comments.CommentsData
             // 21
             allComments.Add(new Comment(
                 "Even",
-                "1<sprite=0> for each comment with even <sprite=0>, but not 0",
+                "1<sprite=1> for each comment with even <sprite=1>, but not 0",
                 LikeInteractionType.REDUCE_STRESS,
                 1,
                 new CombinedExecutable(new BatteryCostExecutable(3), new RandomDmgExecutable(() =>
@@ -285,7 +285,7 @@ namespace GameEngine.Comments.CommentsData
             // 22
             allComments.Add(new Comment(
                 "Odd",
-                "+1<sprite=0> for each comment with odd <sprite=0>",
+                "+1<sprite=1> for each comment with odd <sprite=1>",
                 LikeInteractionType.REDUCE_STRESS,
                 1,
                 new CombinedExecutable(new BatteryCostExecutable(3), new RandomDmgExecutable(() =>
@@ -297,7 +297,7 @@ namespace GameEngine.Comments.CommentsData
             // 23
             allComments.Add(new Comment(
                 "Bump",
-                "Adds 1<sprite=0> to all past comments. Doesn't count towards score.",
+                "Adds 1<sprite=1> to all past comments. Doesn't count towards score.",
                 LikeInteractionType.REDUCE_STRESS,
                 1,
                 new CombinedExecutable(new BatteryCostExecutable(3), new RandomDmgExecutable(() =>0), new BumpExecutable())
@@ -306,7 +306,7 @@ namespace GameEngine.Comments.CommentsData
             // 24
             allComments.Add(new Comment(
                 "Steal",
-                "Steals 1<sprite=0> from previous comment. Doesn't add to score.",
+                "Steals 1<sprite=1> from previous comment. Doesn't add to score.",
                 LikeInteractionType.REDUCE_STRESS,
                 1,
                 new CombinedExecutable(new BatteryCostExecutable(1), new RandomDmgExecutable(() =>0), new StealExecutable())
@@ -315,7 +315,7 @@ namespace GameEngine.Comments.CommentsData
             // 25
             allComments.Add(new Comment(
                 "SEO",
-                "Next comment with random <sprite=0> gets max",
+                "Next comment with random <sprite=1> gets max",
                 LikeInteractionType.REDUCE_STRESS,
                 1,
                 new CombinedExecutable(new BatteryCostExecutable(2), new TempEffectExecutable(TempEffectExecutable.Length.COMMENT, TempEffect.MAX_RANDOM), new RandomDmgExecutable(() => 0))

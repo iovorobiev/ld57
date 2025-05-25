@@ -29,12 +29,14 @@ namespace GameEngine.Encounters
             // Ask to press
             await _tutorialSequence.showNextTip();
             await Game.keyboard.waitForOpen();
+            await ((EnemyEncounterView)Game.currentEncounterController.view).showDescription();
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Tutorial Encounter", "keyboard opened");
             // Tell about goal of fight
             await _tutorialSequence.showNextTip();
             // Tell about comments
             await _tutorialSequence.showNextTip();
             var chosenComment = await Game.encountersPresenter.playersComment();
+            Game.tutorialView.hide();
             await chosenComment.script.execute();
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Tutorial Encounter", "first comment");
             await _tutorialSequence.showNextTip();
@@ -43,8 +45,10 @@ namespace GameEngine.Encounters
             await _tutorialSequence.showNextTip();
             await _tutorialSequence.showNextTip();
             chosenComment = await Game.encountersPresenter.playersComment();
+            Game.tutorialView.hide();
             await chosenComment.script.execute();
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Tutorial Encounter", "Second comment");
+            await UniTask.WaitForSeconds(0.25f);
             // Tell about refresh
             await _tutorialSequence.showNextTip();
             await Game.keyboard.showRefresh();
@@ -71,7 +75,8 @@ namespace GameEngine.Encounters
                 var playersComment = await Game.encountersPresenter.playersComment();
                 await playersComment.script.execute();
             }
-            
+            await ((EnemyEncounterView)Game.currentEncounterController.view).hideDescription();
+
             var enemyView = (EnemyEncounterView) encounterController.view;
             if (!Player.loseCondition())
             {

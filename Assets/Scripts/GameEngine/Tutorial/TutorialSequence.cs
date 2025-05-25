@@ -29,9 +29,9 @@ namespace GameEngine.Tutorial
             });
             listOfTextPositions.Add(null);
             
-            tutorialRects.Add(new Rect(new Vector2(-1.5f, -5.5f), new Vector2(5.5f, 3)));
+            tutorialRects.Add(new Rect(new Vector2(0f, -5f), new Vector2(8f, 3.5f)));
             arrowPosition.Add(ArrowState.ABOVE);
-            tutorialText.Add("<shake>Stressful</> content increases your stress <sprite=23> when scrolled.<br> More <sprite=0> - more <sprite=23>.");
+            tutorialText.Add("<shake>Stressful</> content increases your stress <sprite=23> when scrolled.");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
@@ -49,7 +49,7 @@ namespace GameEngine.Tutorial
             
             tutorialRects.Add(new Rect(new Vector2(0f, 2.5f), new Vector2(10f, 14f)));
             arrowPosition.Add(ArrowState.HIDDEN);
-            tutorialText.Add("You can reduce <sprite=0> by getting likes for your <wave>comments</>.");
+            tutorialText.Add("You can damage <sprite=1> on post by getting <sprite=26> on your <wave>comments</>.");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
@@ -64,7 +64,7 @@ namespace GameEngine.Tutorial
             
             tutorialRects.Add(new Rect(new Vector2(0f, 6f), new Vector2(2f, 2f)));
             arrowPosition.Add(ArrowState.BELOW);
-            tutorialText.Add("This is how many <sprite=0> you need to get.<br> <wave>Bring it to 0.</>");
+            tutorialText.Add("This is how many <sprite=26> you need to get.<br> <wave>Bring it to 0 to continue.</>");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
@@ -74,7 +74,7 @@ namespace GameEngine.Tutorial
             
             tutorialRects.Add(new Rect(new Vector2(0f, -1f), new Vector2(10f, 4f)));
             arrowPosition.Add(ArrowState.ABOVE);
-            tutorialText.Add("This is your keyboard with <wave>comments</>.<br>Comments will get <sprite=0> for <sprite=3> or <sprite=23>.<br> <wave>Click</> on the comment to post it.");
+            tutorialText.Add("This is your keyboard with <wave>comments</>.<br>Comments will get <sprite=26> for <sprite=3> or <sprite=23>.<br> <wave>Click</> on the comment to post it.");
             listOfAwaitables.Add(async () =>
             {
                 // await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
@@ -141,7 +141,7 @@ namespace GameEngine.Tutorial
             
             tutorialRects.Add(new Rect(new Vector2(0f, 0f), new Vector2(10f, 18)));
             arrowPosition.Add(ArrowState.HIDDEN);
-            tutorialText.Add("Great job on getting <wave>many</> <sprite=0>. Your <sprite=23> will be reduced by the amount of <sprite=0> you got.<br> You also get a <wave><palette colors=#C1D6AC;#679E85>reward</></>.");
+            tutorialText.Add("Great job on getting <wave>many</> <sprite=1>. Your <sprite=23> will be reduced by the amount of <sprite=1> you got.<br> You also get a <wave><palette colors=#C1D6AC;#679E85>reward</></>.");
             listOfAwaitables.Add(async () =>
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));

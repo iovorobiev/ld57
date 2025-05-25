@@ -37,7 +37,7 @@ namespace GameEngine
             originalContainerPosition = uiContainer.transform.position;
         }
 
-        private void Update()
+        private async void Update()
         {
             setCountersFromEncounter();
         }
@@ -63,10 +63,14 @@ namespace GameEngine
 
         if (Game.currentEncounter.tags.Contains(Tags.Blocking))
         {
-            tag.text = "<color=#82679E>#blocking</color>: blocks scrolling if <sprite=0> above 0";
+            tag.text = "<color=#82679E>#blocking</color>: blocks scrolling if <sprite=1> above 0";
         } else if (Game.currentEncounter.tags.Contains(Tags.Stressful))
         {
-            tag.text = "<color=#82679E>#stressful</color>: +" + Game.currentEncounter.likes + "% <sprite=23> if scrolled when <sprite=0> above 0";
+            tag.text = "<color=#82679E>#stressful</color>: +" + Game.currentEncounter.likes + "% <sprite=23> if scrolled when <sprite=1> above 0";
+        }
+        else
+        {
+            tag.text = "";
         }
         
         uiContainer.gameObject.SetActive(!Game.currentEncounter.tags.Contains(Tags.NO_UI));
@@ -93,6 +97,7 @@ namespace GameEngine
             {
                 progressSource.Cancel();
                 progressSource = new CancellationTokenSource();
+                
                 UniTask.WhenAll(
                     DOTween.To(x => likesProgress.fillAmount = x, progress, newProgress, 0.5f).ToUniTask(),
                     likes.transform.DOShakePosition(0.5f, new Vector3(0.25f, 0.25f)).ToUniTask()

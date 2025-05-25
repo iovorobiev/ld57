@@ -58,6 +58,11 @@ public class CommentView : MonoBehaviour
         postedComment.SetData(postedCommentData);
     }
 
+    public async UniTask animateAttack()
+    {
+        await comments.Last().animateAttack();
+    }
+
     public void clearComments()
     {
         foreach (var commentItem in comments)

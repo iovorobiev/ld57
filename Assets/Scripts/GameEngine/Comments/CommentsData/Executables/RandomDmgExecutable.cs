@@ -29,6 +29,10 @@ namespace GameEngine.Comments.CommentsData
             if (Game.currentEncounterController.encounterScript is BattleEncounter)
             {
                 Debug.Log("Receive dmg");
+                if (dmg > 0)
+                {
+                    await Game.currentEncounterController.commentView.animateAttack();
+                }
                 await ((BattleEncounter) Game.currentEncounterController.encounterScript).receiveDamage(dmg);
             }
         }

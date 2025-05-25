@@ -26,6 +26,8 @@ namespace GameEngine.Encounters
         public TMP_Text stressValue;
         public GameObject stressObject;
 
+        public TMP_Text description;
+
         private CancellationTokenSource source = new();
 
         public override void setData(SpecificData data)
@@ -61,6 +63,22 @@ namespace GameEngine.Encounters
             return await showCommentsChoice(reward);
         }
 
+        public async UniTask showDescription()
+        {
+            if (description != null)
+            {
+                description.gameObject.SetActive(true);
+            }
+        }
+
+        public async UniTask hideDescription()
+        {
+            if (description != null)
+            {
+                description.gameObject.SetActive(false);
+            }
+        }
+        
         private async Task<Comment> showCommentsChoice(List<Comment> reward)
         {
             rewardView.SetActive(true);

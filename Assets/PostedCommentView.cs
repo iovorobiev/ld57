@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using GameEngine;
 using GameEngine.Comments;
 using TMPro;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class PostedCommentView : MonoBehaviour
     public GameObject likesImage;
     private int prevLikes = -1;
     public PostedComment postedComment;
+    public GameObject projectile;
 
     private void Update()
     {
@@ -26,6 +28,14 @@ public class PostedCommentView : MonoBehaviour
     {
         commentText.text = postedComment.originalComment.text;
         this.postedComment = postedComment;
+    }
+
+    public async UniTask animateAttack()
+    {
+        projectile.SetActive(true);
+        await projectile.transform.DOMove(Game.currentEncounterController.ui.likes.transform.position, 0.5f).ToUniTask();
+        projectile.SetActive(false);
+        projectile.transform.position = likesImage.transform.position;
     }
 
     public async UniTask UpdateLikes(int likes)

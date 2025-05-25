@@ -35,7 +35,7 @@ namespace GameEngine.Encounters
                     null,
                     new TutorialEncounterExecutable(tutorial, 5),
                     new TextPrefabData(
-                        "Prefabs/Tutorial/door2", ""
+                        "Prefabs/Tutorial/door2", "Your comments should get 5 <sprite=26> to <wave>unlock scrolling</>"
                     )));
         }
 
