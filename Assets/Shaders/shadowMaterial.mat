@@ -55,7 +55,7 @@ Material:
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _shadowColor: {r: 0.014902061, g: 0.17002432, b: 0.3433962, a: 1}
-    - _shadowThickness: {r: 0, g: 0.02, b: 0, a: 0}
+    - _shadowColor: {r: 1.0789593, g: 1.3733709, b: 0.8144806, a: 1}
+    - _shadowThickness: {r: 0, g: 0.01, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

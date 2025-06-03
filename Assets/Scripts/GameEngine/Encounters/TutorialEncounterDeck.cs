@@ -19,12 +19,12 @@ namespace GameEngine.Encounters
             );
 
             deck.Add(new Encounter(
-                5,
-                new[] { Tags.Tutorial, Tags.NO_COMMENTS, Tags.Stressful }.ToList(),
+                0,
+                new[] { Tags.Tutorial, Tags.NO_COMMENTS }.ToList(),
                 TUTORIAL_PREFAB_PATH,
                 null,
                 new TutorialExecutable(tutorial),
-                new TextPrefabData("Prefabs/Tutorial/door_open", "")
+                new TextPrefabData("Prefabs/Tutorial/door_open", "Enter the dungeon")
             ));
             
             deck.Add(

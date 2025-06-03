@@ -21,7 +21,7 @@ namespace GameEngine
         public GameObject likes;
         public Image likesProgress;
         public TextMeshProUGUI likesCount;
-        public Image comments;
+        public GameObject comments;
         public Image skip;
         public TMP_Text skipText;
 

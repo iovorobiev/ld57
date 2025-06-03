@@ -29,6 +29,15 @@ namespace GameEngine.Tutorial
             });
             listOfTextPositions.Add(null);
             
+            tutorialRects.Add(new Rect(new Vector2(0f, 2.5f), new Vector2(10f, 14f)));
+            arrowPosition.Add(ArrowState.HIDDEN);
+            tutorialText.Add("<wave>Click</> anywhere to scroll down");
+            listOfAwaitables.Add(async () =>
+            {
+                await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
+            });
+            listOfTextPositions.Add(new Vector3(0f, 5f, 0f));
+            
             tutorialRects.Add(new Rect(new Vector2(0f, -5f), new Vector2(8f, 3.5f)));
             arrowPosition.Add(ArrowState.ABOVE);
             tutorialText.Add("<shake>Stressful</> content increases your stress <sprite=23> when scrolled.");
@@ -37,15 +46,6 @@ namespace GameEngine.Tutorial
                 await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
             });
             listOfTextPositions.Add(null);
-            
-            tutorialRects.Add(new Rect(new Vector2(0f, 2.5f), new Vector2(10f, 14f)));
-            arrowPosition.Add(ArrowState.HIDDEN);
-            tutorialText.Add("<wave>Click</> anywhere to swipe and try");
-            listOfAwaitables.Add(async () =>
-            {
-                await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
-            });
-            listOfTextPositions.Add(new Vector3(0f, 5f, 0f));
             
             tutorialRects.Add(new Rect(new Vector2(0f, 2.5f), new Vector2(10f, 14f)));
             arrowPosition.Add(ArrowState.HIDDEN);
