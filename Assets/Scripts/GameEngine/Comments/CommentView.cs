@@ -24,18 +24,22 @@ public class CommentView : MonoBehaviour
     public GameObject viewObject;
 
     public GameObject commentsPrefab;
+
+    public bool shown = false;
     private float _duration = 0.5f;
 
     public async UniTask showCommentsView()
     {
         viewObject.SetActive(true);
         await viewObject.transform.DOMove(shownPosition.position, _duration).ToUniTask();
+        shown = true;
     }
 
     public async UniTask hideCommentsView()
     {
         await viewObject.transform.DOMove(hidePosition.position, _duration).ToUniTask();
         viewObject.SetActive(false);
+        shown = false;
     }
     
     public async UniTask claimComment(CommentItem commentItem)

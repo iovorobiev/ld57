@@ -85,7 +85,7 @@ namespace GameEngine.ui
         {
             await switchScreens(screenPosition.transform.position, rightHidePosition.transform.position);
             encounterShown = true;
-            if (Game.keyboard.state == Keyboard.KeyboardState.CLOSED)
+            if (Game.keyboard.state == Keyboard.KeyboardState.CLOSED && Game.currentEncounterController.commentView.shown)
             {
                 await Game.keyboard.closeInComments();
             }
