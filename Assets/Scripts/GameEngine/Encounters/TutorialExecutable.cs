@@ -22,14 +22,14 @@ namespace GameEngine.Encounters
         public virtual async UniTask execute()
         {
             Game.encountersPresenter.blockSwipe = true;
-            // Describe the goal
+            // // Describe the goal
+            // await _tutorialSequence.showNextTip();
+            // // Describe the stress on swipe
             await _tutorialSequence.showNextTip();
-            // Describe the stress on swipe
+            // // Ask to swipe  
+            // await UniTask.WaitForSeconds(0.5f);
             await _tutorialSequence.showNextTip();
-            // Ask to swipe
-            await UniTask.WaitForSeconds(0.5f);
             Game.encountersPresenter.blockSwipe = false;
-            await _tutorialSequence.showNextTip();
             Game.tutorialView.hide();
         }
 

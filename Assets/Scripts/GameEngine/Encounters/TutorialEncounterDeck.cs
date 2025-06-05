@@ -27,6 +27,24 @@ namespace GameEngine.Encounters
                 new TextPrefabData("Prefabs/Tutorial/door_open", "Enter the dungeon")
             ));
             
+            deck.Add(new Encounter(
+                0,
+                new[] { Tags.Tutorial, Tags.NO_COMMENTS }.ToList(),
+                TUTORIAL_PREFAB_PATH,
+                null,
+                new TutorialEmptyExecutable(),
+                new TextPrefabData("Prefabs/Tutorial/door_open 1", "Enter the dungeon")
+            ));
+            
+            deck.Add(new Encounter(
+                0,
+                new[] { Tags.Tutorial, Tags.NO_COMMENTS }.ToList(),
+                TUTORIAL_PREFAB_PATH,
+                null,
+                new TutorialEmptyExecutable(),
+                new TextPrefabData("Prefabs/Tutorial/door_open 2", "Enter the dungeon")
+            ));
+            
             deck.Add(
                 new Encounter(
                     5,
@@ -35,7 +53,7 @@ namespace GameEngine.Encounters
                     null,
                     new TutorialEncounterExecutable(tutorial, 5),
                     new TextPrefabData(
-                        "Prefabs/Tutorial/door2", "Your comments should get 5 <sprite=26> to <wave>unlock scrolling</>"
+                        "Prefabs/Tutorial/door2", ""
                     )));
         }
 

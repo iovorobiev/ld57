@@ -47,6 +47,15 @@ namespace GameEngine
             likesCount.text = likes.ToString();
         }
 
+        public void hideComments()
+        {
+            comments.gameObject.SetActive(false);
+        }
+
+        public void showComments()
+        {
+            comments.gameObject.SetActive(true);
+        }
 
         private CancellationTokenSource progressSource = new();
     private void setCountersFromEncounter()
@@ -67,6 +76,9 @@ namespace GameEngine
         } else if (Game.currentEncounter.tags.Contains(Tags.Stressful))
         {
             tag.text = "<color=#82679E>#stressful</color>: +" + Game.currentEncounter.likes + "% <sprite=23> if scrolled when <sprite=1> above 0";
+        } else if (Game.currentEncounter.tags.Contains(Tags.Meme))
+        {
+            tag.text = "<color=#679e85>#meme</color>: Reduces stress by it's <sprite=1> when shown";
         }
         else
         {
@@ -117,6 +129,16 @@ namespace GameEngine
         }
     }
 
+    public async UniTask animateTag()
+    {
+        if (DOTween.IsTweening(tag.gameObject.transform))
+        {
+            return;
+        }
+        await tag.gameObject.transform.DOScale(tag.gameObject.transform.localScale + 0.2f * Vector3.one, 0.25f)
+            .SetLoops(2, LoopType.Yoyo).ToUniTask();
+    }
+    
     public async UniTask openKeyboard()
     {
         await uiContainer.transform.DOMove(openKeyboardPos.position, 0.5f);

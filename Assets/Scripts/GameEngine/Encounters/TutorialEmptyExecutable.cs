@@ -1,20 +1,12 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace GameEngine.Encounters.EncounterData
+namespace GameEngine.Encounters
 {
-    public class MemeEncounterExecutable : EncounterExecutable
+    public class TutorialEmptyExecutable : EncounterExecutable
     {
-        private int healAmount;
-
-        public MemeEncounterExecutable(int healAmount)
-        {
-            this.healAmount = healAmount;
-        }
-
         public async UniTask execute()
         {
-            await Player.receiveStressDamage(-healAmount);
             await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
         }
 

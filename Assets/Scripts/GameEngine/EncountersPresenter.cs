@@ -50,6 +50,10 @@ namespace GameEngine
             }
             else if (!blockSwipe)
             {
+                if (Game.currentEncounter.tags.Contains(Tags.Blocking))
+                {
+                    Game.currentEncounterController.ui.animateTag().Forget();
+                }
                 swipeAwayListener.notifyClick(true);
             }
         }
@@ -172,6 +176,7 @@ namespace GameEngine
                 if (Game.currentEncounter.executable is not BattleEncounter battleEncounter ||
                     battleEncounter.getCurrentHp() < battleEncounter.getMaxHp())
                 {
+                    await Game.currentEncounterController.ui.animateTag();
                     await Player.receiveStressDamage(Game.currentEncounter.likes);
                 }
             }

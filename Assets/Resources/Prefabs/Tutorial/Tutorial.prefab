@@ -103,8 +103,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Reduce <sprite=1> to 0 by posting comments. <br>  This will <wave amp=3>unlock
-    scrolling </>
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7ef1c73a070ab594daaf5c5e69cc57a4, type: 2}
   m_sharedMaterial: {fileID: -4128089776675261082, guid: 7ef1c73a070ab594daaf5c5e69cc57a4, type: 2}

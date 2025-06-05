@@ -1,5 +1,7 @@
 using System;
+using Cysharp.Threading.Tasks;
 using NUnit.Framework.Internal;
+using TMPEffects.Components;
 using TMPro;
 using UnityEngine;
 
@@ -12,13 +14,16 @@ namespace GameEngine.Tutorial
         public GameObject arrow;
         public TMP_Text text;
 
+        private TMPWriter writer;
+        
         public bool shown;
         public void Start()
         {
             Game.tutorialView = this;
+            writer = text.gameObject.GetComponent<TMPWriter>();
         }
 
-        public void showAt(Rect rect, TutorialSequence.ArrowState arrowState, string hintText, Vector3? textPosition = null)
+        public async UniTask showAt(Rect rect, TutorialSequence.ArrowState arrowState, string hintText, Vector3? textPosition = null)
         {
             shown = true;
             tutorialParent.SetActive(true);
@@ -71,6 +76,10 @@ namespace GameEngine.Tutorial
                 }
                 arrow.SetActive(false);
             }
+
+            await UniTask.WhenAny(UniTask.WaitUntil(() => !writer.IsWriting), UniTask.WaitUntil(() => Input.GetMouseButtonDown(0)));
+            writer.SkipWriter();
+            await UniTask.WaitForSeconds(0.1f);
         }
 
         public void hide()

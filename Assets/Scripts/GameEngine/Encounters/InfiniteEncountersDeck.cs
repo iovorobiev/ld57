@@ -24,6 +24,7 @@ namespace GameEngine
 
         private TutorialEncounterDeck deck;
         private bool tutorialPassed;
+        private int prevEnemyData = -1;
         
         public void initDeck(TutorialEncounterDeck deck)
         {
@@ -82,13 +83,33 @@ namespace GameEngine
             }
 
             var level = levels[Math.Min(Game.currentDepth / 5, levels.Count - 1)];
-            return createRandomEncounter(level.x, level.y, "Prefabs/Enemy/Knight");
+            var positiveProb = Random.Range(0, 100);
+            return positiveProb < 20 ? createMeme(level.x / 2, level.y / 2) : createRandomEncounter(level.x, level.y, "Prefabs/Enemy/Knight");
+        }
+
+        private Encounter createMeme(int minLikes, int maxLikes)
+        {
+            int likes = Random.Range(minLikes, maxLikes + 1);
+            return new Encounter(
+                likes,
+                new[] { Tags.Meme, Tags.NO_COMMENTS }.ToList(),
+                "Prefabs/Memes/MemeEncounter",
+                null,
+                new MemeEncounterExecutable(likes),
+                new TextPrefabData("Prefabs/Memes/Cat_0", "")
+            );
         }
 
         private Encounter createRandomEncounter(int minLikes, int maxLikes, string prefabPath)
         {
             var likes = Random.Range(minLikes, maxLikes + 1);
-            var enemyData = Random.Range(0, enemyPrefabs.Count);
+            var enemyData = -1;
+            do
+            {
+                enemyData = Random.Range(0, enemyPrefabs.Count);
+            } while (enemyData == prevEnemyData);
+
+            prevEnemyData = enemyData;
             return new Encounter(
                 likes,
                 new[] { Tags.Stressful }.ToList(),

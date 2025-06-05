@@ -24,9 +24,12 @@ namespace GameEngine.Encounters
             currentHp = 0;
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Tutorial Encounter");
             Game.keyboard.hideRefresh();
+            Game.currentEncounterController.ui.hideComments();
+            await _tutorialSequence.showNextTip();
             // Tell about comment button
             await _tutorialSequence.showNextTip();
             // Ask to press
+            Game.currentEncounterController.ui.showComments();
             await _tutorialSequence.showNextTip();
             await Game.keyboard.waitForOpen();
             await ((EnemyEncounterView)Game.currentEncounterController.view).showDescription();
@@ -50,8 +53,7 @@ namespace GameEngine.Encounters
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Tutorial Encounter", "Second comment");
             await UniTask.WaitForSeconds(0.25f);
             // Tell about refresh
-            await _tutorialSequence.showNextTip();
-            await Game.keyboard.showRefresh();
+            await UniTask.WhenAll(_tutorialSequence.showNextTip(), Game.keyboard.showRefresh());
             chosenComment = await Game.encountersPresenter.playersComment();
             Game.tutorialView.hide();
             await chosenComment.script.execute();
